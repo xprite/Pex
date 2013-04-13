@@ -1,0 +1,68 @@
+<CodeGenerationInfo>
+  <ToolchainSettings>
+    <option>
+      <name>PE_G_4PEx_ToolChain_Compiler_SearchUserPaths</name>
+      <values lines_count="4">
+        <Line>"${ProcessorExpertPath}/lib/Kinetis/iofiles"</Line>
+        <Line>"${ProcessorExpertPath}/lib/Kinetis/pdd/inc"</Line>
+        <Line>"${ProjDirPath}/Sources"</Line>
+        <Line>"${ProjDirPath}/Generated_Code"</Line>
+      </values>
+    </option>
+  </ToolchainSettings>
+  <GeneratedFilesList>
+    <GeneratedByPE>
+      <File Name="Generated_Code\OdometryTimer.c" FileDate="2013-04-11, 15:41:22" FileAge="1365687682622" FileType="4411" CompNumb="10" />
+      <File Name="Generated_Code\GPIO2.h" FileDate="2013-04-11, 15:41:22" FileAge="1365687682537" FileType="4411" CompNumb="29" />
+      <File Name="Generated_Code\AD1.h" FileDate="2013-04-11, 15:41:22" FileAge="1365687682571" FileType="4411" CompNumb="19" />
+      <File Name="Generated_Code\PE_LDD.h" FileDate="2013-04-11, 16:55:17" FileAge="1365692117551" FileType="4411" CompNumb="0" />
+      <File Name="Generated_Code\AD1.c" FileDate="2013-04-11, 15:41:22" FileAge="1365687682567" FileType="4411" CompNumb="19" />
+      <File Name="Generated_Code\GPIO2.c" FileDate="2013-04-11, 15:41:22" FileAge="1365687682532" FileType="4411" CompNumb="29" />
+      <File Name="Generated_Code\OdometryGPIO.h" FileDate="2013-04-11, 15:41:22" FileAge="1365687682618" FileType="4411" CompNumb="11" />
+      <File Name="Generated_Code\PE_LDD.c" FileDate="2013-04-11, 16:51:47" FileAge="1365691907573" FileType="4411" CompNumb="0" />
+      <File Name="Generated_Code\SiPin.h" FileDate="2013-04-11, 15:41:22" FileAge="1365687682515" FileType="4411" CompNumb="39" />
+      <File Name="Documentation\ProcessorExpert_Settings.xml" FileDate="2013-04-11, 18:50:20" FileAge="1365699020165" FileType="3072" />
+      <File Name="Generated_Code\GPIO1.h" FileDate="2013-04-11, 15:41:22" FileAge="1365687682632" FileType="4411" CompNumb="9" />
+      <File Name="Generated_Code\OdometryGPIO.c" FileDate="2013-04-11, 15:41:22" FileAge="1365687682613" FileType="4411" CompNumb="11" />
+      <File Name="Generated_Code\SiPin.c" FileDate="2013-04-11, 15:41:22" FileAge="1365687682515" FileType="4411" CompNumb="39" />
+      <File Name="Generated_Code\AS1.h" FileDate="2013-04-11, 18:01:04" FileAge="1365696064729" FileType="4411" CompNumb="24" />
+      <File Name="Generated_Code\GPIO1.c" FileDate="2013-04-11, 15:41:22" FileAge="1365687682628" FileType="4411" CompNumb="9" />
+      <File Name="Generated_Code\Period.h" FileDate="2013-04-11, 17:07:15" FileAge="1365692835707" FileType="4411" CompNumb="17" />
+      <File Name="Project_Settings\Debugger\PK40X256.mem" FileDate="2013-04-03, 22:09:02" FileAge="1365019742000" FileType="4411" CompNumb="0" />
+      <File Name="Project_Settings\Debugger\MK40DX256Z.mem" FileDate="2013-04-03, 22:09:02" FileAge="1365019742000" FileType="4411" CompNumb="0" />
+      <File Name="Generated_Code\AS1.c" FileDate="2013-04-11, 18:01:04" FileAge="1365696064798" FileType="4411" CompNumb="24" />
+      <File Name="Generated_Code\Period.c" FileDate="2013-04-11, 17:07:15" FileAge="1365692835735" FileType="4411" CompNumb="17" />
+      <File Name="Documentation\ProcessorExpert_SIGNALS.txt" FileDate="2013-04-11, 18:50:20" FileAge="1365699020100" FileType="3072" />
+      <File Name="Generated_Code\ServoTimer.h" FileDate="2013-04-11, 17:04:44" FileAge="1365692684525" FileType="4411" CompNumb="46" />
+      <File Name="Generated_Code\IO1.h" FileDate="2013-04-11, 15:41:22" FileAge="1365687682610" FileType="4411" />
+      <File Name="Generated_Code\ServoTimer.c" FileDate="2013-04-11, 17:04:44" FileAge="1365692684567" FileType="4411" CompNumb="46" />
+      <File Name="Generated_Code\IO1.c" FileDate="2013-04-11, 15:41:22" FileAge="1365687682606" FileType="4411" />
+      <File Name="Project_Settings\Linker_Files\ProcessorExpert.ld" FileDate="2013-04-11, 17:43:04" FileAge="1365694984652" FileType="4" CompNumb="0" />
+      <File Name="Generated_Code\CameraTimer.h" FileDate="2013-04-11, 15:41:22" FileAge="1365687682579" FileType="4411" CompNumb="38" />
+      <File Name="Documentation\ProcessorExpert.txt" FileDate="2013-04-11, 17:04:46" FileAge="1365692686650" FileType="3072" />
+      <File Name="Generated_Code\CameraTimer.c" FileDate="2013-04-11, 15:41:22" FileAge="1365687682576" FileType="4411" CompNumb="38" />
+      <File Name="Sources\Events.h" FileDate="2013-04-11, 17:43:04" FileAge="1365694984661" FileType="16896" />
+      <File Name="Generated_Code\Vectors.c" FileDate="2013-04-11, 16:55:17" FileAge="1365692117558" FileType="4411" CompNumb="0" />
+      <File Name="Generated_Code\Cpu.h" FileDate="2013-04-11, 17:43:04" FileAge="1365694984641" FileType="4411" CompNumb="4" />
+      <File Name="Sources\Events.c" FileDate="2013-04-11, 17:43:04" FileAge="1365694984667" FileType="16896" />
+      <File Name="Generated_Code\PWMMotor.h" FileDate="2013-04-11, 15:41:22" FileAge="1365687682640" FileType="4411" CompNumb="8" />
+      <File Name="Generated_Code\Cpu.c" FileDate="2013-04-11, 17:43:04" FileAge="1365694984647" FileType="4411" CompNumb="4" />
+      <File Name="Generated_Code\PWMMotor.c" FileDate="2013-04-11, 15:41:22" FileAge="1365687682636" FileType="4411" CompNumb="8" />
+      <File Name="Generated_Code\IO_Map.h" FileDate="2013-04-11, 15:41:22" FileAge="1365687682505" FileType="4411" />
+      <File Name="Generated_Code\CsIO1.h" FileDate="2013-04-11, 15:41:22" FileAge="1365687682603" FileType="4411" CompNumb="12" />
+      <File Name="Sources\ProcessorExpert.c" FileDate="2013-04-11, 18:47:56" FileAge="1365698876038" FileType="128" />
+      <File Name="Generated_Code\CsIO1.c" FileDate="2013-04-11, 15:41:22" FileAge="1365687682599" FileType="4411" CompNumb="12" />
+      <File Name="Generated_Code\I2C2.h" FileDate="2013-04-11, 15:41:22" FileAge="1365687682547" FileType="4411" CompNumb="28" />
+      <File Name="Generated_Code\I2C2.c" FileDate="2013-04-11, 15:41:22" FileAge="1365687682543" FileType="4411" CompNumb="28" />
+      <File Name="Generated_Code\PE_Const.h" FileDate="2013-04-11, 15:41:22" FileAge="1365687682508" FileType="4411" />
+      <File Name="Generated_Code\PE_Types.h" FileDate="2013-04-11, 15:41:22" FileAge="1365687682515" FileType="4411" />
+      <File Name="Generated_Code\GPIO3.h" FileDate="2013-04-11, 15:41:22" FileAge="1365687682515" FileType="4411" CompNumb="30" />
+      <File Name="Generated_Code\AD2.h" FileDate="2013-04-11, 15:41:22" FileAge="1365687682563" FileType="4411" CompNumb="23" />
+      <File Name="Generated_Code\PE_Error.h" FileDate="2013-04-11, 15:41:22" FileAge="1365687682511" FileType="4411" />
+      <File Name="Generated_Code\OdometryTimer.h" FileDate="2013-04-11, 15:41:22" FileAge="1365687682625" FileType="4411" CompNumb="10" />
+      <File Name="Generated_Code\GPIO3.c" FileDate="2013-04-11, 15:41:22" FileAge="1365687682515" FileType="4411" CompNumb="30" />
+      <File Name="Generated_Code\AD2.c" FileDate="2013-04-11, 15:41:22" FileAge="1365687682559" FileType="4411" CompNumb="23" />
+    </GeneratedByPE>
+  </GeneratedFilesList>
+  <CodeGenReference>102</CodeGenReference>
+</CodeGenerationInfo>

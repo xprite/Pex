@@ -1,0 +1,77 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"Odometry.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.OdometryInit,"ax",%progbits
+  19              		.align	2
+  20              		.global	OdometryInit
+  21              		.thumb
+  22              		.thumb_func
+  24              	OdometryInit:
+  25              	.LFB0:
+  26              		.file 1 "../Sources/Odometry.c"
+   1:../Sources/Odometry.c **** /*
+   2:../Sources/Odometry.c ****  * Odometry.c
+   3:../Sources/Odometry.c ****  *
+   4:../Sources/Odometry.c ****  *  Created on: Apr 10, 2013
+   5:../Sources/Odometry.c ****  *      Author: x
+   6:../Sources/Odometry.c ****  */
+   7:../Sources/Odometry.c **** 
+   8:../Sources/Odometry.c **** #include "Odometry.h"
+   9:../Sources/Odometry.c **** 
+  10:../Sources/Odometry.c **** void OdometryInit(TOdometry* aOdometry)
+  11:../Sources/Odometry.c **** {
+  27              		.loc 1 11 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 8
+  30              		@ frame_needed = 1, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32 0000 80B4     		push	{r7}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 4
+  35              		.cfi_offset 7, -4
+  36 0002 83B0     		sub	sp, sp, #12
+  37              	.LCFI1:
+  38              		.cfi_def_cfa_offset 16
+  39 0004 00AF     		add	r7, sp, #0
+  40              	.LCFI2:
+  41              		.cfi_def_cfa_register 7
+  42 0006 7860     		str	r0, [r7, #4]
+  12:../Sources/Odometry.c ****   aOdometry->TotalDistance = 0;
+  43              		.loc 1 12 0
+  44 0008 7B68     		ldr	r3, [r7, #4]
+  45 000a 4FF00002 		mov	r2, #0
+  46 000e 1A60     		str	r2, [r3, #0]
+  13:../Sources/Odometry.c **** }
+  47              		.loc 1 13 0
+  48 0010 07F10C07 		add	r7, r7, #12
+  49 0014 BD46     		mov	sp, r7
+  50 0016 80BC     		pop	{r7}
+  51 0018 7047     		bx	lr
+  52              		.cfi_endproc
+  53              	.LFE0:
+  55 001a 00BF     		.text
+  56              	.Letext0:
+  57              		.file 2 "C:/Freescale/CW MCU v10.3_NOBETA/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
+  58              		.file 3 "C:/workspaceBakalarkaa/Pex/Generated_Code/PE_Types.h"
+  59              		.file 4 "../Sources/Odometry.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 Odometry.c
+C:\Users\x\AppData\Local\Temp\cc4ozX9s.s:19     .text.OdometryInit:00000000 $t
+C:\Users\x\AppData\Local\Temp\cc4ozX9s.s:24     .text.OdometryInit:00000000 OdometryInit
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

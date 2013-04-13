@@ -1,0 +1,497 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"Communication.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.global	GetCameraDataPacket
+  19              		.section	.data.GetCameraDataPacket,"aw",%progbits
+  20              		.align	2
+  23              	GetCameraDataPacket:
+  24 0000 6763616D 		.ascii	"gcameraimg"
+  24      65726169 
+  24      6D67
+  25              		.global	GetAccelerometerDataPacket
+  26 000a 0000     		.section	.data.GetAccelerometerDataPacket,"aw",%progbits
+  27              		.align	2
+  30              	GetAccelerometerDataPacket:
+  31 0000 67616363 		.ascii	"gacceldata"
+  31      656C6461 
+  31      7461
+  32              		.global	GetOdometryTotalDistancePacket
+  33 000a 0000     		.section	.data.GetOdometryTotalDistancePacket,"aw",%progbits
+  34              		.align	2
+  37              	GetOdometryTotalDistancePacket:
+  38 0000 67746469 		.ascii	"gtdistance"
+  38      7374616E 
+  38      6365
+  39              		.global	GetConvolutionResultPacket
+  40 000a 0000     		.section	.data.GetConvolutionResultPacket,"aw",%progbits
+  41              		.align	2
+  44              	GetConvolutionResultPacket:
+  45 0000 67636F6E 		.ascii	"gconvolres"
+  45      766F6C72 
+  45      6573
+  46 000a 0000     		.section	.text.CommunicationHandler,"ax",%progbits
+  47              		.align	2
+  48              		.global	CommunicationHandler
+  49              		.thumb
+  50              		.thumb_func
+  52              	CommunicationHandler:
+  53              	.LFB0:
+  54              		.file 1 "../Sources/Communication.c"
+   1:../Sources/Communication.c **** /*
+   2:../Sources/Communication.c ****  * Communication.c
+   3:../Sources/Communication.c ****  *
+   4:../Sources/Communication.c ****  *  Created on: Mar 16, 2013
+   5:../Sources/Communication.c ****  *      Author: z
+   6:../Sources/Communication.c ****  */
+   7:../Sources/Communication.c **** 
+   8:../Sources/Communication.c **** #include "Communication.h"
+   9:../Sources/Communication.c **** #include "AS1.h"
+  10:../Sources/Communication.c **** #include "Accelerometer.h"
+  11:../Sources/Communication.c **** #include "Camera.h"
+  12:../Sources/Communication.c **** #include "Odometry.h"
+  13:../Sources/Communication.c **** #include "PE_Types.h"
+  14:../Sources/Communication.c **** 
+  15:../Sources/Communication.c **** extern TOdometry Odometry;
+  16:../Sources/Communication.c **** extern TCamera Camera;
+  17:../Sources/Communication.c **** extern TAccelerometer Accelerometer;
+  18:../Sources/Communication.c **** extern TCommunication Communication;
+  19:../Sources/Communication.c **** 
+  20:../Sources/Communication.c **** uint8_t GetCameraDataPacket[PACKET_LENGTH] = "gcameraimg";
+  21:../Sources/Communication.c **** uint8_t GetAccelerometerDataPacket[PACKET_LENGTH] = "gacceldata";
+  22:../Sources/Communication.c **** uint8_t GetOdometryTotalDistancePacket[PACKET_LENGTH] = "gtdistance";
+  23:../Sources/Communication.c **** uint8_t GetConvolutionResultPacket[PACKET_LENGTH] = "gconvolres";
+  24:../Sources/Communication.c **** 
+  25:../Sources/Communication.c **** 
+  26:../Sources/Communication.c **** void CommunicationHandler(TCommunication* CommunicationStruct)
+  27:../Sources/Communication.c **** {
+  55              		.loc 1 27 0
+  56              		.cfi_startproc
+  57              		@ args = 0, pretend = 0, frame = 16
+  58              		@ frame_needed = 1, uses_anonymous_args = 0
+  59 0000 80B5     		push	{r7, lr}
+  60              	.LCFI0:
+  61              		.cfi_def_cfa_offset 8
+  62              		.cfi_offset 14, -4
+  63              		.cfi_offset 7, -8
+  64 0002 84B0     		sub	sp, sp, #16
+  65              	.LCFI1:
+  66              		.cfi_def_cfa_offset 24
+  67 0004 00AF     		add	r7, sp, #0
+  68              	.LCFI2:
+  69              		.cfi_def_cfa_register 7
+  70 0006 7860     		str	r0, [r7, #4]
+  28:../Sources/Communication.c ****   int compare;
+  29:../Sources/Communication.c ****   // Camera
+  30:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, GetCameraDataPacket, PACKET_LENGTH);
+  71              		.loc 1 30 0
+  72 0008 7B68     		ldr	r3, [r7, #4]
+  73 000a 03F58063 		add	r3, r3, #1024
+  74 000e 03F10403 		add	r3, r3, #4
+  75 0012 1846     		mov	r0, r3
+  76 0014 40F20001 		movw	r1, #:lower16:GetCameraDataPacket
+  77 0018 C0F20001 		movt	r1, #:upper16:GetCameraDataPacket
+  78 001c 4FF00A02 		mov	r2, #10
+  79 0020 FFF7FEFF 		bl	memcmp
+  80 0024 0346     		mov	r3, r0
+  81 0026 FB60     		str	r3, [r7, #12]
+  31:../Sources/Communication.c ****   if(compare == 0)
+  82              		.loc 1 31 0
+  83 0028 FB68     		ldr	r3, [r7, #12]
+  84 002a 002B     		cmp	r3, #0
+  85 002c 01D1     		bne	.L2
+  32:../Sources/Communication.c ****   {
+  33:../Sources/Communication.c ****     GetCameraDataPacketHandler();
+  86              		.loc 1 33 0
+  87 002e FFF7FEFF 		bl	GetCameraDataPacketHandler
+  88              	.L2:
+  34:../Sources/Communication.c ****   }
+  35:../Sources/Communication.c ****   
+  36:../Sources/Communication.c ****   //Convolution Result
+  37:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, GetConvolutionResultPacket, PACKET_LENGTH);
+  89              		.loc 1 37 0
+  90 0032 7B68     		ldr	r3, [r7, #4]
+  91 0034 03F58063 		add	r3, r3, #1024
+  92 0038 03F10403 		add	r3, r3, #4
+  93 003c 1846     		mov	r0, r3
+  94 003e 40F20001 		movw	r1, #:lower16:GetConvolutionResultPacket
+  95 0042 C0F20001 		movt	r1, #:upper16:GetConvolutionResultPacket
+  96 0046 4FF00A02 		mov	r2, #10
+  97 004a FFF7FEFF 		bl	memcmp
+  98 004e 0346     		mov	r3, r0
+  99 0050 FB60     		str	r3, [r7, #12]
+  38:../Sources/Communication.c ****     if(compare == 0)
+ 100              		.loc 1 38 0
+ 101 0052 FB68     		ldr	r3, [r7, #12]
+ 102 0054 002B     		cmp	r3, #0
+ 103 0056 01D1     		bne	.L3
+  39:../Sources/Communication.c ****     {
+  40:../Sources/Communication.c ****       GetConvolutionResultPacketHandler();
+ 104              		.loc 1 40 0
+ 105 0058 FFF7FEFF 		bl	GetConvolutionResultPacketHandler
+ 106              	.L3:
+  41:../Sources/Communication.c ****     }
+  42:../Sources/Communication.c ****   
+  43:../Sources/Communication.c ****   // Accelerometer
+  44:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, GetAccelerometerDataPacket, PACKET_LENGTH);
+ 107              		.loc 1 44 0
+ 108 005c 7B68     		ldr	r3, [r7, #4]
+ 109 005e 03F58063 		add	r3, r3, #1024
+ 110 0062 03F10403 		add	r3, r3, #4
+ 111 0066 1846     		mov	r0, r3
+ 112 0068 40F20001 		movw	r1, #:lower16:GetAccelerometerDataPacket
+ 113 006c C0F20001 		movt	r1, #:upper16:GetAccelerometerDataPacket
+ 114 0070 4FF00A02 		mov	r2, #10
+ 115 0074 FFF7FEFF 		bl	memcmp
+ 116 0078 0346     		mov	r3, r0
+ 117 007a FB60     		str	r3, [r7, #12]
+  45:../Sources/Communication.c ****   if(compare == 0)
+ 118              		.loc 1 45 0
+ 119 007c FB68     		ldr	r3, [r7, #12]
+ 120 007e 002B     		cmp	r3, #0
+ 121 0080 01D1     		bne	.L4
+  46:../Sources/Communication.c ****   {
+  47:../Sources/Communication.c ****     GetAccelerometerDataPacketHandler();
+ 122              		.loc 1 47 0
+ 123 0082 FFF7FEFF 		bl	GetAccelerometerDataPacketHandler
+ 124              	.L4:
+  48:../Sources/Communication.c ****   }
+  49:../Sources/Communication.c ****   
+  50:../Sources/Communication.c ****   // Odometry
+  51:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, GetOdometryTotalDistancePacket, PACKET_LENG
+ 125              		.loc 1 51 0
+ 126 0086 7B68     		ldr	r3, [r7, #4]
+ 127 0088 03F58063 		add	r3, r3, #1024
+ 128 008c 03F10403 		add	r3, r3, #4
+ 129 0090 1846     		mov	r0, r3
+ 130 0092 40F20001 		movw	r1, #:lower16:GetOdometryTotalDistancePacket
+ 131 0096 C0F20001 		movt	r1, #:upper16:GetOdometryTotalDistancePacket
+ 132 009a 4FF00A02 		mov	r2, #10
+ 133 009e FFF7FEFF 		bl	memcmp
+ 134 00a2 0346     		mov	r3, r0
+ 135 00a4 FB60     		str	r3, [r7, #12]
+  52:../Sources/Communication.c ****   if(compare == 0)
+ 136              		.loc 1 52 0
+ 137 00a6 FB68     		ldr	r3, [r7, #12]
+ 138 00a8 002B     		cmp	r3, #0
+ 139 00aa 01D1     		bne	.L1
+  53:../Sources/Communication.c ****   {
+  54:../Sources/Communication.c ****     GetOdometryTotalDistancePacketHandler();
+ 140              		.loc 1 54 0
+ 141 00ac FFF7FEFF 		bl	GetOdometryTotalDistancePacketHandler
+ 142              	.L1:
+  55:../Sources/Communication.c ****   }
+  56:../Sources/Communication.c **** }
+ 143              		.loc 1 56 0
+ 144 00b0 07F11007 		add	r7, r7, #16
+ 145 00b4 BD46     		mov	sp, r7
+ 146 00b6 80BD     		pop	{r7, pc}
+ 147              		.cfi_endproc
+ 148              	.LFE0:
+ 150              		.section	.text.GetCameraDataPacketHandler,"ax",%progbits
+ 151              		.align	2
+ 152              		.global	GetCameraDataPacketHandler
+ 153              		.thumb
+ 154              		.thumb_func
+ 156              	GetCameraDataPacketHandler:
+ 157              	.LFB1:
+  57:../Sources/Communication.c **** 
+  58:../Sources/Communication.c **** void GetCameraDataPacketHandler(void)
+  59:../Sources/Communication.c **** {
+ 158              		.loc 1 59 0
+ 159              		.cfi_startproc
+ 160              		@ args = 0, pretend = 0, frame = 0
+ 161              		@ frame_needed = 1, uses_anonymous_args = 0
+ 162 0000 80B5     		push	{r7, lr}
+ 163              	.LCFI3:
+ 164              		.cfi_def_cfa_offset 8
+ 165              		.cfi_offset 14, -4
+ 166              		.cfi_offset 7, -8
+ 167 0002 00AF     		add	r7, sp, #0
+ 168              	.LCFI4:
+ 169              		.cfi_def_cfa_register 7
+  60:../Sources/Communication.c ****   Communication.Error = AS1_SendBlock(AS1_DeviceData, &Camera.readPointerToBuffer[0], PIXEL_NUM);
+ 170              		.loc 1 60 0
+ 171 0004 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 172 0008 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 173 000c 5A6A     		ldr	r2, [r3, #36]
+ 174 000e 40F20003 		movw	r3, #:lower16:Camera
+ 175 0012 C0F20003 		movt	r3, #:upper16:Camera
+ 176 0016 D3F89433 		ldr	r3, [r3, #916]
+ 177 001a 1046     		mov	r0, r2
+ 178 001c 1946     		mov	r1, r3
+ 179 001e 4FF08002 		mov	r2, #128
+ 180 0022 FFF7FEFF 		bl	AS1_SendBlock
+ 181 0026 0346     		mov	r3, r0
+ 182 0028 1A46     		mov	r2, r3
+ 183 002a 40F20003 		movw	r3, #:lower16:Communication
+ 184 002e C0F20003 		movt	r3, #:upper16:Communication
+ 185 0032 1A80     		strh	r2, [r3, #0]	@ movhi
+  61:../Sources/Communication.c ****   if(Communication.Error) {
+  62:../Sources/Communication.c **** 
+  63:../Sources/Communication.c ****   }
+  64:../Sources/Communication.c **** }
+ 186              		.loc 1 64 0
+ 187 0034 80BD     		pop	{r7, pc}
+ 188              		.cfi_endproc
+ 189              	.LFE1:
+ 191 0036 00BF     		.section	.rodata
+ 192              		.align	2
+ 193              	.LC0:
+ 194 0000 256C750A 		.ascii	"%lu\012\000"
+ 194      00
+ 195              		.section	.text.GetOdometryTotalDistancePacketHandler,"ax",%progbits
+ 196              		.align	2
+ 197              		.global	GetOdometryTotalDistancePacketHandler
+ 198              		.thumb
+ 199              		.thumb_func
+ 201              	GetOdometryTotalDistancePacketHandler:
+ 202              	.LFB2:
+  65:../Sources/Communication.c **** 
+  66:../Sources/Communication.c **** void GetOdometryTotalDistancePacketHandler(void)
+  67:../Sources/Communication.c **** {
+ 203              		.loc 1 67 0
+ 204              		.cfi_startproc
+ 205              		@ args = 0, pretend = 0, frame = 0
+ 206              		@ frame_needed = 1, uses_anonymous_args = 0
+ 207 0000 98B5     		push	{r3, r4, r7, lr}
+ 208              	.LCFI5:
+ 209              		.cfi_def_cfa_offset 16
+ 210              		.cfi_offset 14, -4
+ 211              		.cfi_offset 7, -8
+ 212              		.cfi_offset 4, -12
+ 213              		.cfi_offset 3, -16
+ 214 0002 00AF     		add	r7, sp, #0
+ 215              	.LCFI6:
+ 216              		.cfi_def_cfa_register 7
+  68:../Sources/Communication.c ****   sprintf(&Communication.CommunicationString[0], "%lu\n", Odometry.TotalDistance);
+ 217              		.loc 1 68 0
+ 218 0004 40F20003 		movw	r3, #:lower16:.LC0
+ 219 0008 C0F20003 		movt	r3, #:upper16:.LC0
+ 220 000c 40F20002 		movw	r2, #:lower16:Odometry
+ 221 0010 C0F20002 		movt	r2, #:upper16:Odometry
+ 222 0014 1268     		ldr	r2, [r2, #0]
+ 223 0016 0D48     		ldr	r0, .L8
+ 224 0018 1946     		mov	r1, r3
+ 225 001a FFF7FEFF 		bl	sprintf
+  69:../Sources/Communication.c ****   Communication.Error = AS1_SendBlock(AS1_DeviceData, &Communication.CommunicationString[0], strlen
+ 226              		.loc 1 69 0
+ 227 001e 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 228 0022 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 229 0026 5C6A     		ldr	r4, [r3, #36]
+ 230 0028 0848     		ldr	r0, .L8
+ 231 002a FFF7FEFF 		bl	strlen
+ 232 002e 0346     		mov	r3, r0
+ 233 0030 9BB2     		uxth	r3, r3
+ 234 0032 2046     		mov	r0, r4
+ 235 0034 0549     		ldr	r1, .L8
+ 236 0036 1A46     		mov	r2, r3
+ 237 0038 FFF7FEFF 		bl	AS1_SendBlock
+ 238 003c 0346     		mov	r3, r0
+ 239 003e 1A46     		mov	r2, r3
+ 240 0040 40F20003 		movw	r3, #:lower16:Communication
+ 241 0044 C0F20003 		movt	r3, #:upper16:Communication
+ 242 0048 1A80     		strh	r2, [r3, #0]	@ movhi
+  70:../Sources/Communication.c **** }
+ 243              		.loc 1 70 0
+ 244 004a 98BD     		pop	{r3, r4, r7, pc}
+ 245              	.L9:
+ 246              		.align	2
+ 247              	.L8:
+ 248 004c 04000000 		.word	Communication+4
+ 249              		.cfi_endproc
+ 250              	.LFE2:
+ 252              		.section	.rodata
+ 253 0005 000000   		.align	2
+ 254              	.LC1:
+ 255 0008 25692025 		.ascii	"%i %i %i\012\000"
+ 255      69202569 
+ 255      0A00
+ 256 0012 0000     		.section	.text.GetAccelerometerDataPacketHandler,"ax",%progbits
+ 257              		.align	2
+ 258              		.global	GetAccelerometerDataPacketHandler
+ 259              		.thumb
+ 260              		.thumb_func
+ 262              	GetAccelerometerDataPacketHandler:
+ 263              	.LFB3:
+  71:../Sources/Communication.c **** 
+  72:../Sources/Communication.c **** void GetAccelerometerDataPacketHandler(void)
+  73:../Sources/Communication.c **** {
+ 264              		.loc 1 73 0
+ 265              		.cfi_startproc
+ 266              		@ args = 0, pretend = 0, frame = 0
+ 267              		@ frame_needed = 1, uses_anonymous_args = 0
+ 268 0000 B0B5     		push	{r4, r5, r7, lr}
+ 269              	.LCFI7:
+ 270              		.cfi_def_cfa_offset 16
+ 271              		.cfi_offset 14, -4
+ 272              		.cfi_offset 7, -8
+ 273              		.cfi_offset 5, -12
+ 274              		.cfi_offset 4, -16
+ 275 0002 82B0     		sub	sp, sp, #8
+ 276              	.LCFI8:
+ 277              		.cfi_def_cfa_offset 24
+ 278 0004 02AF     		add	r7, sp, #8
+ 279              	.LCFI9:
+ 280              		.cfi_def_cfa 7, 16
+  74:../Sources/Communication.c ****   sprintf(&Communication.CommunicationString[0], "%i %i %i\n", Accelerometer.X, Accelerometer.Y, Ac
+ 281              		.loc 1 74 0
+ 282 0006 40F20003 		movw	r3, #:lower16:.LC1
+ 283 000a C0F20003 		movt	r3, #:upper16:.LC1
+ 284 000e 40F20002 		movw	r2, #:lower16:Accelerometer
+ 285 0012 C0F20002 		movt	r2, #:upper16:Accelerometer
+ 286 0016 1288     		ldrh	r2, [r2, #0]
+ 287 0018 15B2     		sxth	r5, r2
+ 288 001a 40F20002 		movw	r2, #:lower16:Accelerometer
+ 289 001e C0F20002 		movt	r2, #:upper16:Accelerometer
+ 290 0022 5288     		ldrh	r2, [r2, #2]
+ 291 0024 14B2     		sxth	r4, r2
+ 292 0026 40F20002 		movw	r2, #:lower16:Accelerometer
+ 293 002a C0F20002 		movt	r2, #:upper16:Accelerometer
+ 294 002e 9288     		ldrh	r2, [r2, #4]
+ 295 0030 12B2     		sxth	r2, r2
+ 296 0032 0092     		str	r2, [sp, #0]
+ 297 0034 0E48     		ldr	r0, .L11
+ 298 0036 1946     		mov	r1, r3
+ 299 0038 2A46     		mov	r2, r5
+ 300 003a 2346     		mov	r3, r4
+ 301 003c FFF7FEFF 		bl	sprintf
+  75:../Sources/Communication.c ****   Communication.Error = AS1_SendBlock(AS1_DeviceData, &Communication.CommunicationString[0], strlen
+ 302              		.loc 1 75 0
+ 303 0040 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 304 0044 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 305 0048 5C6A     		ldr	r4, [r3, #36]
+ 306 004a 0948     		ldr	r0, .L11
+ 307 004c FFF7FEFF 		bl	strlen
+ 308 0050 0346     		mov	r3, r0
+ 309 0052 9BB2     		uxth	r3, r3
+ 310 0054 2046     		mov	r0, r4
+ 311 0056 0649     		ldr	r1, .L11
+ 312 0058 1A46     		mov	r2, r3
+ 313 005a FFF7FEFF 		bl	AS1_SendBlock
+ 314 005e 0346     		mov	r3, r0
+ 315 0060 1A46     		mov	r2, r3
+ 316 0062 40F20003 		movw	r3, #:lower16:Communication
+ 317 0066 C0F20003 		movt	r3, #:upper16:Communication
+ 318 006a 1A80     		strh	r2, [r3, #0]	@ movhi
+  76:../Sources/Communication.c ****   if(Communication.Error) {
+  77:../Sources/Communication.c **** 
+  78:../Sources/Communication.c ****   }
+  79:../Sources/Communication.c **** }
+ 319              		.loc 1 79 0
+ 320 006c BD46     		mov	sp, r7
+ 321 006e B0BD     		pop	{r4, r5, r7, pc}
+ 322              	.L12:
+ 323              		.align	2
+ 324              	.L11:
+ 325 0070 04000000 		.word	Communication+4
+ 326              		.cfi_endproc
+ 327              	.LFE3:
+ 329              		.section	.text.GetConvolutionResultPacketHandler,"ax",%progbits
+ 330              		.align	2
+ 331              		.global	GetConvolutionResultPacketHandler
+ 332              		.thumb
+ 333              		.thumb_func
+ 335              	GetConvolutionResultPacketHandler:
+ 336              	.LFB4:
+  80:../Sources/Communication.c **** 
+  81:../Sources/Communication.c **** void GetConvolutionResultPacketHandler(void)
+  82:../Sources/Communication.c **** {
+ 337              		.loc 1 82 0
+ 338              		.cfi_startproc
+ 339              		@ args = 0, pretend = 0, frame = 0
+ 340              		@ frame_needed = 1, uses_anonymous_args = 0
+ 341 0000 80B5     		push	{r7, lr}
+ 342              	.LCFI10:
+ 343              		.cfi_def_cfa_offset 8
+ 344              		.cfi_offset 14, -4
+ 345              		.cfi_offset 7, -8
+ 346 0002 00AF     		add	r7, sp, #0
+ 347              	.LCFI11:
+ 348              		.cfi_def_cfa_register 7
+  83:../Sources/Communication.c ****   Communication.Error = AS1_SendBlock(AS1_DeviceData, &Camera.ConvolutionResult[0], PIXEL_NUM);
+ 349              		.loc 1 83 0
+ 350 0004 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 351 0008 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 352 000c 5B6A     		ldr	r3, [r3, #36]
+ 353 000e 1846     		mov	r0, r3
+ 354 0010 0649     		ldr	r1, .L14
+ 355 0012 4FF08002 		mov	r2, #128
+ 356 0016 FFF7FEFF 		bl	AS1_SendBlock
+ 357 001a 0346     		mov	r3, r0
+ 358 001c 1A46     		mov	r2, r3
+ 359 001e 40F20003 		movw	r3, #:lower16:Communication
+ 360 0022 C0F20003 		movt	r3, #:upper16:Communication
+ 361 0026 1A80     		strh	r2, [r3, #0]	@ movhi
+  84:../Sources/Communication.c ****   if(Communication.Error) {
+  85:../Sources/Communication.c **** 
+  86:../Sources/Communication.c ****   }  
+  87:../Sources/Communication.c **** }
+ 362              		.loc 1 87 0
+ 363 0028 80BD     		pop	{r7, pc}
+ 364              	.L15:
+ 365 002a 00BF     		.align	2
+ 366              	.L14:
+ 367 002c A4040000 		.word	Camera+1188
+ 368              		.cfi_endproc
+ 369              	.LFE4:
+ 371              		.text
+ 372              	.Letext0:
+ 373              		.file 2 "C:/Freescale/CW MCU v10.3_NOBETA/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
+ 374              		.file 3 "C:/workspaceBakalarkaa/Pex/Generated_Code/PE_Types.h"
+ 375              		.file 4 "../Sources/Communication.h"
+ 376              		.file 5 "C:/workspaceBakalarkaa/Pex/Generated_Code/PE_LDD.h"
+ 377              		.file 6 "../Sources/Accelerometer.h"
+ 378              		.file 7 "../Sources/Camera.h"
+ 379              		.file 8 "../Sources/Odometry.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 Communication.c
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:23     .data.GetCameraDataPacket:00000000 GetCameraDataPacket
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:20     .data.GetCameraDataPacket:00000000 $d
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:30     .data.GetAccelerometerDataPacket:00000000 GetAccelerometerDataPacket
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:27     .data.GetAccelerometerDataPacket:00000000 $d
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:37     .data.GetOdometryTotalDistancePacket:00000000 GetOdometryTotalDistancePacket
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:34     .data.GetOdometryTotalDistancePacket:00000000 $d
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:44     .data.GetConvolutionResultPacket:00000000 GetConvolutionResultPacket
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:41     .data.GetConvolutionResultPacket:00000000 $d
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:47     .text.CommunicationHandler:00000000 $t
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:52     .text.CommunicationHandler:00000000 CommunicationHandler
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:156    .text.GetCameraDataPacketHandler:00000000 GetCameraDataPacketHandler
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:335    .text.GetConvolutionResultPacketHandler:00000000 GetConvolutionResultPacketHandler
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:262    .text.GetAccelerometerDataPacketHandler:00000000 GetAccelerometerDataPacketHandler
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:201    .text.GetOdometryTotalDistancePacketHandler:00000000 GetOdometryTotalDistancePacketHandler
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:151    .text.GetCameraDataPacketHandler:00000000 $t
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:192    .rodata:00000000 $d
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:193    .rodata:00000000 .LC0
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:196    .text.GetOdometryTotalDistancePacketHandler:00000000 $t
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:248    .text.GetOdometryTotalDistancePacketHandler:0000004c $d
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:254    .rodata:00000008 .LC1
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:257    .text.GetAccelerometerDataPacketHandler:00000000 $t
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:325    .text.GetAccelerometerDataPacketHandler:00000070 $d
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:330    .text.GetConvolutionResultPacketHandler:00000000 $t
+C:\Users\x\AppData\Local\Temp\ccHlwBql.s:367    .text.GetConvolutionResultPacketHandler:0000002c $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+memcmp
+PE_LDD_DeviceDataList
+Camera
+AS1_SendBlock
+Communication
+Odometry
+sprintf
+strlen
+Accelerometer

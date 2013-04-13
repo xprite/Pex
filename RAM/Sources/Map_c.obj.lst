@@ -1,0 +1,228 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"Map.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.MapInit,"ax",%progbits
+  19              		.align	2
+  20              		.global	MapInit
+  21              		.thumb
+  22              		.thumb_func
+  24              	MapInit:
+  25              	.LFB0:
+  26              		.file 1 "../Sources/Map.c"
+   1:../Sources/Map.c **** /*
+   2:../Sources/Map.c ****  * Map.c
+   3:../Sources/Map.c ****  *
+   4:../Sources/Map.c ****  *  Created on: Apr 10, 2013
+   5:../Sources/Map.c ****  *      Author: x
+   6:../Sources/Map.c ****  */
+   7:../Sources/Map.c **** 
+   8:../Sources/Map.c **** #include "Map.h"
+   9:../Sources/Map.c **** 
+  10:../Sources/Map.c **** void MapInit(TMap* aMap)
+  11:../Sources/Map.c **** {
+  27              		.loc 1 11 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 16
+  30              		@ frame_needed = 1, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32 0000 80B4     		push	{r7}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 4
+  35              		.cfi_offset 7, -4
+  36 0002 85B0     		sub	sp, sp, #20
+  37              	.LCFI1:
+  38              		.cfi_def_cfa_offset 24
+  39 0004 00AF     		add	r7, sp, #0
+  40              	.LCFI2:
+  41              		.cfi_def_cfa_register 7
+  42 0006 7860     		str	r0, [r7, #4]
+  12:../Sources/Map.c ****   int i;
+  13:../Sources/Map.c ****   for(i=0 ; i<MAP_LENGTH ; i++)
+  43              		.loc 1 13 0
+  44 0008 4FF00003 		mov	r3, #0
+  45 000c FB60     		str	r3, [r7, #12]
+  46 000e 2BE0     		b	.L2
+  47              	.L3:
+  14:../Sources/Map.c ****   {
+  15:../Sources/Map.c ****     aMap->MapNodes[i].AccelerometerX = 0;
+  48              		.loc 1 15 0 discriminator 2
+  49 0010 7968     		ldr	r1, [r7, #4]
+  50 0012 FA68     		ldr	r2, [r7, #12]
+  51 0014 1346     		mov	r3, r2
+  52 0016 4FEA8303 		lsl	r3, r3, #2
+  53 001a 9B18     		adds	r3, r3, r2
+  54 001c 4FEA4303 		lsl	r3, r3, #1
+  55 0020 CB18     		adds	r3, r1, r3
+  56 0022 4FF00002 		mov	r2, #0
+  57 0026 1A80     		strh	r2, [r3, #0]	@ movhi
+  16:../Sources/Map.c ****     aMap->MapNodes[i].AccelerometerY = 0;
+  58              		.loc 1 16 0 discriminator 2
+  59 0028 7968     		ldr	r1, [r7, #4]
+  60 002a FA68     		ldr	r2, [r7, #12]
+  61 002c 1346     		mov	r3, r2
+  62 002e 4FEA8303 		lsl	r3, r3, #2
+  63 0032 9B18     		adds	r3, r3, r2
+  64 0034 4FEA4303 		lsl	r3, r3, #1
+  65 0038 CB18     		adds	r3, r1, r3
+  66 003a 03F10203 		add	r3, r3, #2
+  67 003e 4FF00002 		mov	r2, #0
+  68 0042 1A80     		strh	r2, [r3, #0]	@ movhi
+  17:../Sources/Map.c ****     aMap->MapNodes[i].AccelerometerZ = 0;    
+  69              		.loc 1 17 0 discriminator 2
+  70 0044 7968     		ldr	r1, [r7, #4]
+  71 0046 FA68     		ldr	r2, [r7, #12]
+  72 0048 1346     		mov	r3, r2
+  73 004a 4FEA8303 		lsl	r3, r3, #2
+  74 004e 9B18     		adds	r3, r3, r2
+  75 0050 4FEA4303 		lsl	r3, r3, #1
+  76 0054 CB18     		adds	r3, r1, r3
+  77 0056 03F10403 		add	r3, r3, #4
+  78 005a 4FF00002 		mov	r2, #0
+  79 005e 1A80     		strh	r2, [r3, #0]	@ movhi
+  13:../Sources/Map.c ****   for(i=0 ; i<MAP_LENGTH ; i++)
+  80              		.loc 1 13 0 discriminator 2
+  81 0060 FB68     		ldr	r3, [r7, #12]
+  82 0062 03F10103 		add	r3, r3, #1
+  83 0066 FB60     		str	r3, [r7, #12]
+  84              	.L2:
+  13:../Sources/Map.c ****   for(i=0 ; i<MAP_LENGTH ; i++)
+  85              		.loc 1 13 0 is_stmt 0 discriminator 1
+  86 0068 FA68     		ldr	r2, [r7, #12]
+  87 006a 40F2E733 		movw	r3, #999
+  88 006e 9A42     		cmp	r2, r3
+  89 0070 CEDD     		ble	.L3
+  18:../Sources/Map.c ****   }
+  19:../Sources/Map.c **** }
+  90              		.loc 1 19 0 is_stmt 1
+  91 0072 07F11407 		add	r7, r7, #20
+  92 0076 BD46     		mov	sp, r7
+  93 0078 80BC     		pop	{r7}
+  94 007a 7047     		bx	lr
+  95              		.cfi_endproc
+  96              	.LFE0:
+  98              		.section	.text.MapMain,"ax",%progbits
+  99              		.align	2
+ 100              		.global	MapMain
+ 101              		.thumb
+ 102              		.thumb_func
+ 104              	MapMain:
+ 105              	.LFB1:
+  20:../Sources/Map.c **** 
+  21:../Sources/Map.c **** //Called when impulse from Odometry sensor is received
+  22:../Sources/Map.c **** void MapMain(TMap* aMap, TOdometry* aOdometry, TAccelerometer* aAccelerometer)
+  23:../Sources/Map.c **** {
+ 106              		.loc 1 23 0
+ 107              		.cfi_startproc
+ 108              		@ args = 0, pretend = 0, frame = 16
+ 109              		@ frame_needed = 1, uses_anonymous_args = 0
+ 110              		@ link register save eliminated.
+ 111 0000 80B4     		push	{r7}
+ 112              	.LCFI3:
+ 113              		.cfi_def_cfa_offset 4
+ 114              		.cfi_offset 7, -4
+ 115 0002 85B0     		sub	sp, sp, #20
+ 116              	.LCFI4:
+ 117              		.cfi_def_cfa_offset 24
+ 118 0004 00AF     		add	r7, sp, #0
+ 119              	.LCFI5:
+ 120              		.cfi_def_cfa_register 7
+ 121 0006 F860     		str	r0, [r7, #12]
+ 122 0008 B960     		str	r1, [r7, #8]
+ 123 000a 7A60     		str	r2, [r7, #4]
+  24:../Sources/Map.c ****   // if is in range - the impulse counter gives index to map
+  25:../Sources/Map.c ****   if(aOdometry->TotalDistance < MAP_LENGTH) {
+ 124              		.loc 1 25 0
+ 125 000c BB68     		ldr	r3, [r7, #8]
+ 126 000e 1B68     		ldr	r3, [r3, #0]
+ 127 0010 1A46     		mov	r2, r3
+ 128 0012 40F2E733 		movw	r3, #999
+ 129 0016 9A42     		cmp	r2, r3
+ 130 0018 30D8     		bhi	.L4
+  26:../Sources/Map.c ****     aMap->MapNodes[aOdometry->TotalDistance].AccelerometerX = aAccelerometer->X;
+ 131              		.loc 1 26 0
+ 132 001a BB68     		ldr	r3, [r7, #8]
+ 133 001c 1B68     		ldr	r3, [r3, #0]
+ 134 001e 1A46     		mov	r2, r3
+ 135 0020 7B68     		ldr	r3, [r7, #4]
+ 136 0022 1988     		ldrh	r1, [r3, #0]
+ 137 0024 F868     		ldr	r0, [r7, #12]
+ 138 0026 1346     		mov	r3, r2
+ 139 0028 4FEA8303 		lsl	r3, r3, #2
+ 140 002c 9B18     		adds	r3, r3, r2
+ 141 002e 4FEA4303 		lsl	r3, r3, #1
+ 142 0032 C318     		adds	r3, r0, r3
+ 143 0034 0A46     		mov	r2, r1	@ movhi
+ 144 0036 1A80     		strh	r2, [r3, #0]	@ movhi
+  27:../Sources/Map.c ****     aMap->MapNodes[aOdometry->TotalDistance].AccelerometerY = aAccelerometer->Y;
+ 145              		.loc 1 27 0
+ 146 0038 BB68     		ldr	r3, [r7, #8]
+ 147 003a 1B68     		ldr	r3, [r3, #0]
+ 148 003c 1A46     		mov	r2, r3
+ 149 003e 7B68     		ldr	r3, [r7, #4]
+ 150 0040 5988     		ldrh	r1, [r3, #2]
+ 151 0042 F868     		ldr	r0, [r7, #12]
+ 152 0044 1346     		mov	r3, r2
+ 153 0046 4FEA8303 		lsl	r3, r3, #2
+ 154 004a 9B18     		adds	r3, r3, r2
+ 155 004c 4FEA4303 		lsl	r3, r3, #1
+ 156 0050 C318     		adds	r3, r0, r3
+ 157 0052 03F10203 		add	r3, r3, #2
+ 158 0056 0A46     		mov	r2, r1	@ movhi
+ 159 0058 1A80     		strh	r2, [r3, #0]	@ movhi
+  28:../Sources/Map.c ****     aMap->MapNodes[aOdometry->TotalDistance].AccelerometerZ = aAccelerometer->Z;
+ 160              		.loc 1 28 0
+ 161 005a BB68     		ldr	r3, [r7, #8]
+ 162 005c 1B68     		ldr	r3, [r3, #0]
+ 163 005e 1A46     		mov	r2, r3
+ 164 0060 7B68     		ldr	r3, [r7, #4]
+ 165 0062 9988     		ldrh	r1, [r3, #4]
+ 166 0064 F868     		ldr	r0, [r7, #12]
+ 167 0066 1346     		mov	r3, r2
+ 168 0068 4FEA8303 		lsl	r3, r3, #2
+ 169 006c 9B18     		adds	r3, r3, r2
+ 170 006e 4FEA4303 		lsl	r3, r3, #1
+ 171 0072 C318     		adds	r3, r0, r3
+ 172 0074 03F10403 		add	r3, r3, #4
+ 173 0078 0A46     		mov	r2, r1	@ movhi
+ 174 007a 1A80     		strh	r2, [r3, #0]	@ movhi
+ 175              	.L4:
+  29:../Sources/Map.c ****   }
+  30:../Sources/Map.c **** }
+ 176              		.loc 1 30 0
+ 177 007c 07F11407 		add	r7, r7, #20
+ 178 0080 BD46     		mov	sp, r7
+ 179 0082 80BC     		pop	{r7}
+ 180 0084 7047     		bx	lr
+ 181              		.cfi_endproc
+ 182              	.LFE1:
+ 184 0086 00BF     		.text
+ 185              	.Letext0:
+ 186              		.file 2 "C:/Freescale/CW MCU v10.3_NOBETA/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
+ 187              		.file 3 "C:/workspaceBakalarkaa/Pex/Generated_Code/PE_Types.h"
+ 188              		.file 4 "../Sources/Odometry.h"
+ 189              		.file 5 "C:/workspaceBakalarkaa/Pex/Generated_Code/PE_LDD.h"
+ 190              		.file 6 "../Sources/Accelerometer.h"
+ 191              		.file 7 "../Sources/Map.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 Map.c
+C:\Users\x\AppData\Local\Temp\cc9E3N45.s:19     .text.MapInit:00000000 $t
+C:\Users\x\AppData\Local\Temp\cc9E3N45.s:24     .text.MapInit:00000000 MapInit
+C:\Users\x\AppData\Local\Temp\cc9E3N45.s:99     .text.MapMain:00000000 $t
+C:\Users\x\AppData\Local\Temp\cc9E3N45.s:104    .text.MapMain:00000000 MapMain
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS
