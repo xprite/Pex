@@ -3,7 +3,7 @@
   <PE_product_version v="version 10.0 for Freescale Microcontrollers" />
   <PE_core_version v="Processor Expert Version 0503" />
   <CPU_Bean name="Cpu" type="MK40N512LQ100">
-    <Enabled v="N" />
+    <Enabled v="Y" />
     <Properties>
       <Component_name v="Cpu" />
       <CPU_type v="MK40DX256ZVLQ10" />
@@ -363,7 +363,7 @@ PE_DEBUGHALT();
     </CompilerProperties>
   </CPU_Bean>
   <CPU_Bean name="Cpu" type="MK40N512LQ100">
-    <Enabled v="Y" />
+    <Enabled v="N" />
     <Properties>
       <Component_name v="Cpu" />
       <CPU_type v="MK40DX256ZVLQ10" />
@@ -959,7 +959,7 @@ PE_DEBUGHALT();
       </enumgroup>
       <enumgroup name="Counter restart" v="On-match">
         <Period_device v="PIT_LDVAL0" />
-        <Period v="89.478485 sec" />
+        <Period v="100 ms" />
         <boolgroup name="Interrupt" v="Enabled">
           <Interrupt v="INT_PIT0" />
           <Interrupt_priority v="medium priority" />
@@ -1056,7 +1056,7 @@ PE_DEBUGHALT();
               <Pin v="PTD6/SPI0_PCS3/UART0_RX/FTM0_CH6/FTM0_FLT0/LCD_P46/ADC0_SE7b" />
               <Pin_signal v="" />
               <boolgroup name="Initial pin direction" v="Input" />
-              <Initial_pin_event v="Falling edge" />
+              <Initial_pin_event v="Both edges" />
               <Lock_initialization_function v="no" />
             </group>
           </list>

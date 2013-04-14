@@ -6,7 +6,7 @@
 **     Component   : TimerUnit_LDD
 **     Version     : Component 01.139, Driver 01.09, CPU db: 3.00.001
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2013-04-11, 15:40, # CodeGen: 91
+**     Date/Time   : 2013-04-13, 22:51, # CodeGen: 106
 **     Abstract    :
 **          This TimerUnit component provides a low level API for unified hardware access across
 **          various timer devices using the Prescaler-Counter-Compare-Capture timer structure.
@@ -21,7 +21,7 @@
 **            Counter frequency                            : 48 MHz
 **          Counter restart                                : On-match
 **            Period device                                : PIT_LDVAL0
-**            Period                                       : 89.478485 sec
+**            Period                                       : 30 ms
 **            Interrupt                                    : Enabled
 **              Interrupt                                  : INT_PIT0
 **              Interrupt priority                         : medium priority
@@ -83,7 +83,7 @@
 #define OdometryTimer_CNT_INP_FREQ_U_0 0x02DC6C00UL /* Counter input frequency in Hz */
 #define OdometryTimer_CNT_INP_FREQ_R_0 48000768.0122882F /* Counter input frequency in Hz */
 #define OdometryTimer_CNT_INP_FREQ_COUNT 0U /* Count of predefined counter input frequencies */
-#define OdometryTimer_PERIOD_TICKS 0xFFFFFFF0UL /* Initialization value of period in 'counter ticks' */
+#define OdometryTimer_PERIOD_TICKS 0x0015F900UL /* Initialization value of period in 'counter ticks' */
 #define OdometryTimer_NUMBER_OF_CHANNELS 0x00U /* Count of predefined channels */
 #define OdometryTimer_COUNTER_WIDTH 0x20U /* Counter width in bits  */
 #define OdometryTimer_COUNTER_DIR DIR_DOWN /* Direction of counting */

@@ -2,9 +2,9 @@
 <PEproject>
   <Header>
     <Name>ProcessorExpert</Name>
-    <SavedBy>x</SavedBy>
-    <ModificationStamp>99</ModificationStamp>
-    <Date>2013-04-11</Date>
+    <SavedBy>z</SavedBy>
+    <ModificationStamp>103</ModificationStamp>
+    <Date>2013-04-13</Date>
     <IDE>Eclipse IDE</IDE>
     <PEversion />
   </Header>
@@ -27,7 +27,7 @@
     <UseExistingModules>true</UseExistingModules>
     <RenamePeripheries>false</RenamePeripheries>
     <Autodependency>true</Autodependency>
-    <ProjectCompNumb>50</ProjectCompNumb>
+    <ProjectCompNumb>54</ProjectCompNumb>
     <DelUnusedPreviouslyGenFiles>true</DelUnusedPreviouslyGenFiles>
     <GeneratedCodeFrozen>false</GeneratedCodeFrozen>
     <AssignInitComponentNameToPrph>false</AssignInitComponentNameToPrph>
@@ -41,7 +41,7 @@
     <BeanType>MK40N512LQ100</BeanType>
     <Name>Cpu</Name>
     <CompNumb>2</CompNumb>
-    <CompEnabled>false</CompEnabled>
+    <CompEnabled>true</CompEnabled>
     <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
     <IconName>CPU_CHIP2</IconName>
     <Comment lines_count="0" />
@@ -10782,7 +10782,7 @@
     <BeanType>MK40N512LQ100</BeanType>
     <Name>Cpu</Name>
     <CompNumb>4</CompNumb>
-    <CompEnabled>true</CompEnabled>
+    <CompEnabled>false</CompEnabled>
     <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
     <IconName>CPU_CHIP2</IconName>
     <Comment lines_count="0" />
@@ -21614,7 +21614,7 @@
   <Configuration>
     <CompNumb>1</CompNumb>
     <NodeName>RAM</NodeName>
-    <CnfgEnabled>false</CnfgEnabled>
+    <CnfgEnabled>true</CnfgEnabled>
     <TargetCPU>2</TargetCPU>
     <ConfigurationComment lines_count="0" />
     <BoolList_FpgaConfig>
@@ -21710,7 +21710,7 @@
   <Configuration>
     <CompNumb>3</CompNumb>
     <NodeName>FLASH</NodeName>
-    <CnfgEnabled>true</CnfgEnabled>
+    <CnfgEnabled>false</CnfgEnabled>
     <TargetCPU>4</TargetCPU>
     <ConfigurationComment lines_count="0" />
     <BoolList_FpgaConfig>
@@ -23750,7 +23750,7 @@
         <ItemSymbol>Tmg_Period</ItemSymbol>
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
-        <Value>89.478485 sec</Value>
+        <Value>30 ms</Value>
         <RuntimeSetting>0</RuntimeSetting>
         <ReqDevPrescHigh>-1</ReqDevPrescHigh>
         <ReqDevPrescLow>-1</ReqDevPrescLow>
@@ -23776,13 +23776,13 @@
         <ReqSrcClkPrescSpeedMode5>-1</ReqSrcClkPrescSpeedMode5>
         <ReqSrcClkPrescSpeedMode6>-1</ReqSrcClkPrescSpeedMode6>
         <ReqSrcClkPrescSpeedMode7>-1</ReqSrcClkPrescSpeedMode7>
-        <InitValue>89.478485 sec</InitValue>
+        <InitValue>30 ms</InitValue>
         <Precision>5.0</Precision>
         <PrecInProc>true</PrecInProc>
         <LowLimit />
         <HighLimit />
         <List lines_count="0" />
-        <UnitText>sec</UnitText>
+        <UnitText>ms</UnitText>
         <MinCounterTicks>0</MinCounterTicks>
       </ItemState>
       <ItemState>
@@ -24538,8 +24538,8 @@
         <ItemSymbol>InitialInterrupt0_0</ItemSymbol>
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
-        <Index>4</Index>
-        <EnumSymbVal>Falling</EnumSymbVal>
+        <Index>5</Index>
+        <EnumSymbVal>Both</EnumSymbVal>
       </ItemState>
       <ItemState>
         <ItemSymbol>LockInitSupport0_0</ItemSymbol>

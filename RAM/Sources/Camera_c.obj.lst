@@ -63,7 +63,7 @@
   50              		.loc 1 14 0
   51 0018 7B68     		ldr	r3, [r7, #4]
   52 001a 4FF00002 		mov	r2, #0
-  53 001e C3F8A024 		str	r2, [r3, #1184]
+  53 001e C3F89824 		str	r2, [r3, #1176]
   15:../Sources/Camera.c ****   aCamera->readPointerToBuffer = aCamera->cameraRawData0;
   54              		.loc 1 15 0
   55 0022 7B68     		ldr	r3, [r7, #4]
@@ -76,8 +76,8 @@
   61 0030 03F56672 		add	r2, r3, #920
   62 0034 7B68     		ldr	r3, [r7, #4]
   63 0036 C3F89023 		str	r2, [r3, #912]
-  17:../Sources/Camera.c ****   memset(&aCamera->cameraRawData0[0], PIXEL_NUM + ((KERNEL_LENGTH/2)*4), 0);
-  18:../Sources/Camera.c ****   memset(&aCamera->cameraRawData1[0], PIXEL_NUM + ((KERNEL_LENGTH/2)*4), 0);
+  17:../Sources/Camera.c ****   memset(&aCamera->cameraRawData0[0], PIXEL_NUM, 0);
+  18:../Sources/Camera.c ****   memset(&aCamera->cameraRawData1[0], PIXEL_NUM, 0);
   19:../Sources/Camera.c **** 
   20:../Sources/Camera.c **** #if 0 
   21:../Sources/Camera.c ****   aCamera->Kernel[0] = 1;
@@ -194,17 +194,17 @@
  138              		.loc 1 55 0 is_stmt 1
  139 00cc 7B68     		ldr	r3, [r7, #4]
  140 00ce 4FF00102 		mov	r2, #1
- 141 00d2 C3F8AC26 		str	r2, [r3, #1708]
+ 141 00d2 C3F8A426 		str	r2, [r3, #1700]
   56:../Sources/Camera.c ****   aCamera->Kernel[1] =  0;
  142              		.loc 1 56 0
  143 00d6 7B68     		ldr	r3, [r7, #4]
  144 00d8 4FF00002 		mov	r2, #0
- 145 00dc C3F8B026 		str	r2, [r3, #1712]
+ 145 00dc C3F8A826 		str	r2, [r3, #1704]
   57:../Sources/Camera.c ****   aCamera->Kernel[2] = -1;
  146              		.loc 1 57 0
  147 00e0 7B68     		ldr	r3, [r7, #4]
  148 00e2 4FF0FF32 		mov	r2, #-1
- 149 00e6 C3F8B426 		str	r2, [r3, #1716]
+ 149 00e6 C3F8AC26 		str	r2, [r3, #1708]
   58:../Sources/Camera.c ****   
   59:../Sources/Camera.c ****   
   60:../Sources/Camera.c **** }
@@ -389,7 +389,7 @@
  304              		.loc 1 84 0
  305 000c 4FF00003 		mov	r3, #0
  306 0010 FB72     		strb	r3, [r7, #11]
-  85:../Sources/Camera.c ****   for(i=0 ; i< VectorLength-1 ; i++)
+  85:../Sources/Camera.c ****   for(i=0 ; i< VectorLength ; i++)
  307              		.loc 1 85 0
  308 0012 4FF00003 		mov	r3, #0
  309 0016 FB60     		str	r3, [r7, #12]
@@ -415,136 +415,223 @@
  326 0036 FB68     		ldr	r3, [r7, #12]
  327 0038 FB72     		strb	r3, [r7, #11]
  328              	.L19:
-  85:../Sources/Camera.c ****   for(i=0 ; i< VectorLength-1 ; i++)
+  85:../Sources/Camera.c ****   for(i=0 ; i< VectorLength ; i++)
  329              		.loc 1 85 0
  330 003a FB68     		ldr	r3, [r7, #12]
  331 003c 03F10103 		add	r3, r3, #1
  332 0040 FB60     		str	r3, [r7, #12]
  333              	.L18:
-  85:../Sources/Camera.c ****   for(i=0 ; i< VectorLength-1 ; i++)
+  85:../Sources/Camera.c ****   for(i=0 ; i< VectorLength ; i++)
  334              		.loc 1 85 0 is_stmt 0 discriminator 1
- 335 0042 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 336 0044 03F1FF32 		add	r2, r3, #-1
- 337 0048 FB68     		ldr	r3, [r7, #12]
- 338 004a 9A42     		cmp	r2, r3
- 339 004c E5DC     		bgt	.L20
+ 335 0042 FA78     		ldrb	r2, [r7, #3]	@ zero_extendqisi2
+ 336 0044 FB68     		ldr	r3, [r7, #12]
+ 337 0046 9A42     		cmp	r2, r3
+ 338 0048 E7DC     		bgt	.L20
   89:../Sources/Camera.c ****     }
   90:../Sources/Camera.c ****   }
   91:../Sources/Camera.c ****   return Minimum;
- 340              		.loc 1 91 0 is_stmt 1
- 341 004e FB7A     		ldrb	r3, [r7, #11]	@ zero_extendqisi2
+ 339              		.loc 1 91 0 is_stmt 1
+ 340 004a FB7A     		ldrb	r3, [r7, #11]	@ zero_extendqisi2
   92:../Sources/Camera.c **** }
- 342              		.loc 1 92 0
- 343 0050 1846     		mov	r0, r3
- 344 0052 07F11407 		add	r7, r7, #20
- 345 0056 BD46     		mov	sp, r7
- 346 0058 80BC     		pop	{r7}
- 347 005a 7047     		bx	lr
- 348              		.cfi_endproc
- 349              	.LFE2:
- 351              		.section	.text.GetMaximumIndex,"ax",%progbits
- 352              		.align	2
- 353              		.global	GetMaximumIndex
- 354              		.thumb
- 355              		.thumb_func
- 357              	GetMaximumIndex:
- 358              	.LFB3:
+ 341              		.loc 1 92 0
+ 342 004c 1846     		mov	r0, r3
+ 343 004e 07F11407 		add	r7, r7, #20
+ 344 0052 BD46     		mov	sp, r7
+ 345 0054 80BC     		pop	{r7}
+ 346 0056 7047     		bx	lr
+ 347              		.cfi_endproc
+ 348              	.LFE2:
+ 350              		.section	.text.GetMaximumIndex,"ax",%progbits
+ 351              		.align	2
+ 352              		.global	GetMaximumIndex
+ 353              		.thumb
+ 354              		.thumb_func
+ 356              	GetMaximumIndex:
+ 357              	.LFB3:
   93:../Sources/Camera.c **** 
   94:../Sources/Camera.c **** uint8_t GetMaximumIndex(int32_t* InputVector, uint8_t VectorLength)
   95:../Sources/Camera.c **** {
- 359              		.loc 1 95 0
- 360              		.cfi_startproc
- 361              		@ args = 0, pretend = 0, frame = 16
- 362              		@ frame_needed = 1, uses_anonymous_args = 0
- 363              		@ link register save eliminated.
- 364 0000 80B4     		push	{r7}
- 365              	.LCFI9:
- 366              		.cfi_def_cfa_offset 4
- 367              		.cfi_offset 7, -4
- 368 0002 85B0     		sub	sp, sp, #20
- 369              	.LCFI10:
- 370              		.cfi_def_cfa_offset 24
- 371 0004 00AF     		add	r7, sp, #0
- 372              	.LCFI11:
- 373              		.cfi_def_cfa_register 7
- 374 0006 7860     		str	r0, [r7, #4]
- 375 0008 0B46     		mov	r3, r1
- 376 000a FB70     		strb	r3, [r7, #3]
+ 358              		.loc 1 95 0
+ 359              		.cfi_startproc
+ 360              		@ args = 0, pretend = 0, frame = 16
+ 361              		@ frame_needed = 1, uses_anonymous_args = 0
+ 362              		@ link register save eliminated.
+ 363 0000 80B4     		push	{r7}
+ 364              	.LCFI9:
+ 365              		.cfi_def_cfa_offset 4
+ 366              		.cfi_offset 7, -4
+ 367 0002 85B0     		sub	sp, sp, #20
+ 368              	.LCFI10:
+ 369              		.cfi_def_cfa_offset 24
+ 370 0004 00AF     		add	r7, sp, #0
+ 371              	.LCFI11:
+ 372              		.cfi_def_cfa_register 7
+ 373 0006 7860     		str	r0, [r7, #4]
+ 374 0008 0B46     		mov	r3, r1
+ 375 000a FB70     		strb	r3, [r7, #3]
   96:../Sources/Camera.c ****   int i;
   97:../Sources/Camera.c ****   uint8_t Maximum = 0;
- 377              		.loc 1 97 0
- 378 000c 4FF00003 		mov	r3, #0
- 379 0010 FB72     		strb	r3, [r7, #11]
-  98:../Sources/Camera.c ****   for(i=0 ; i<VectorLength-1 ; i++)
- 380              		.loc 1 98 0
- 381 0012 4FF00003 		mov	r3, #0
- 382 0016 FB60     		str	r3, [r7, #12]
- 383 0018 13E0     		b	.L22
- 384              	.L24:
+ 376              		.loc 1 97 0
+ 377 000c 4FF00003 		mov	r3, #0
+ 378 0010 FB72     		strb	r3, [r7, #11]
+  98:../Sources/Camera.c ****   for(i=0 ; i<VectorLength ; i++)
+ 379              		.loc 1 98 0
+ 380 0012 4FF00003 		mov	r3, #0
+ 381 0016 FB60     		str	r3, [r7, #12]
+ 382 0018 13E0     		b	.L22
+ 383              	.L24:
   99:../Sources/Camera.c ****   {
  100:../Sources/Camera.c ****     if(InputVector[Maximum] < InputVector[i])
- 385              		.loc 1 100 0
- 386 001a FB7A     		ldrb	r3, [r7, #11]	@ zero_extendqisi2
- 387 001c 4FEA8303 		lsl	r3, r3, #2
- 388 0020 7A68     		ldr	r2, [r7, #4]
- 389 0022 D318     		adds	r3, r2, r3
- 390 0024 1A68     		ldr	r2, [r3, #0]
- 391 0026 FB68     		ldr	r3, [r7, #12]
- 392 0028 4FEA8303 		lsl	r3, r3, #2
- 393 002c 7968     		ldr	r1, [r7, #4]
- 394 002e CB18     		adds	r3, r1, r3
- 395 0030 1B68     		ldr	r3, [r3, #0]
- 396 0032 9A42     		cmp	r2, r3
- 397 0034 01DA     		bge	.L23
+ 384              		.loc 1 100 0
+ 385 001a FB7A     		ldrb	r3, [r7, #11]	@ zero_extendqisi2
+ 386 001c 4FEA8303 		lsl	r3, r3, #2
+ 387 0020 7A68     		ldr	r2, [r7, #4]
+ 388 0022 D318     		adds	r3, r2, r3
+ 389 0024 1A68     		ldr	r2, [r3, #0]
+ 390 0026 FB68     		ldr	r3, [r7, #12]
+ 391 0028 4FEA8303 		lsl	r3, r3, #2
+ 392 002c 7968     		ldr	r1, [r7, #4]
+ 393 002e CB18     		adds	r3, r1, r3
+ 394 0030 1B68     		ldr	r3, [r3, #0]
+ 395 0032 9A42     		cmp	r2, r3
+ 396 0034 01DA     		bge	.L23
  101:../Sources/Camera.c ****     {
  102:../Sources/Camera.c ****       Maximum=i;
- 398              		.loc 1 102 0
- 399 0036 FB68     		ldr	r3, [r7, #12]
- 400 0038 FB72     		strb	r3, [r7, #11]
- 401              	.L23:
-  98:../Sources/Camera.c ****   for(i=0 ; i<VectorLength-1 ; i++)
- 402              		.loc 1 98 0
- 403 003a FB68     		ldr	r3, [r7, #12]
- 404 003c 03F10103 		add	r3, r3, #1
- 405 0040 FB60     		str	r3, [r7, #12]
- 406              	.L22:
-  98:../Sources/Camera.c ****   for(i=0 ; i<VectorLength-1 ; i++)
- 407              		.loc 1 98 0 is_stmt 0 discriminator 1
- 408 0042 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 409 0044 03F1FF32 		add	r2, r3, #-1
- 410 0048 FB68     		ldr	r3, [r7, #12]
- 411 004a 9A42     		cmp	r2, r3
- 412 004c E5DC     		bgt	.L24
+ 397              		.loc 1 102 0
+ 398 0036 FB68     		ldr	r3, [r7, #12]
+ 399 0038 FB72     		strb	r3, [r7, #11]
+ 400              	.L23:
+  98:../Sources/Camera.c ****   for(i=0 ; i<VectorLength ; i++)
+ 401              		.loc 1 98 0
+ 402 003a FB68     		ldr	r3, [r7, #12]
+ 403 003c 03F10103 		add	r3, r3, #1
+ 404 0040 FB60     		str	r3, [r7, #12]
+ 405              	.L22:
+  98:../Sources/Camera.c ****   for(i=0 ; i<VectorLength ; i++)
+ 406              		.loc 1 98 0 is_stmt 0 discriminator 1
+ 407 0042 FA78     		ldrb	r2, [r7, #3]	@ zero_extendqisi2
+ 408 0044 FB68     		ldr	r3, [r7, #12]
+ 409 0046 9A42     		cmp	r2, r3
+ 410 0048 E7DC     		bgt	.L24
  103:../Sources/Camera.c ****     }
  104:../Sources/Camera.c ****   }
  105:../Sources/Camera.c ****   return Maximum;  
- 413              		.loc 1 105 0 is_stmt 1
- 414 004e FB7A     		ldrb	r3, [r7, #11]	@ zero_extendqisi2
+ 411              		.loc 1 105 0 is_stmt 1
+ 412 004a FB7A     		ldrb	r3, [r7, #11]	@ zero_extendqisi2
  106:../Sources/Camera.c **** }
- 415              		.loc 1 106 0
- 416 0050 1846     		mov	r0, r3
- 417 0052 07F11407 		add	r7, r7, #20
- 418 0056 BD46     		mov	sp, r7
- 419 0058 80BC     		pop	{r7}
- 420 005a 7047     		bx	lr
- 421              		.cfi_endproc
- 422              	.LFE3:
- 424              		.text
- 425              	.Letext0:
- 426              		.file 2 "C:/Freescale/CW MCU v10.3_NOBETA/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
- 427              		.file 3 "../Sources/Camera.h"
+ 413              		.loc 1 106 0
+ 414 004c 1846     		mov	r0, r3
+ 415 004e 07F11407 		add	r7, r7, #20
+ 416 0052 BD46     		mov	sp, r7
+ 417 0054 80BC     		pop	{r7}
+ 418 0056 7047     		bx	lr
+ 419              		.cfi_endproc
+ 420              	.LFE3:
+ 422              		.section	.text.GetMaximumValue,"ax",%progbits
+ 423              		.align	2
+ 424              		.global	GetMaximumValue
+ 425              		.thumb
+ 426              		.thumb_func
+ 428              	GetMaximumValue:
+ 429              	.LFB4:
+ 107:../Sources/Camera.c **** 
+ 108:../Sources/Camera.c **** int32_t GetMaximumValue(int32_t* InputVector, uint8_t VectorLength)
+ 109:../Sources/Camera.c **** {
+ 430              		.loc 1 109 0
+ 431              		.cfi_startproc
+ 432              		@ args = 0, pretend = 0, frame = 16
+ 433              		@ frame_needed = 1, uses_anonymous_args = 0
+ 434              		@ link register save eliminated.
+ 435 0000 80B4     		push	{r7}
+ 436              	.LCFI12:
+ 437              		.cfi_def_cfa_offset 4
+ 438              		.cfi_offset 7, -4
+ 439 0002 85B0     		sub	sp, sp, #20
+ 440              	.LCFI13:
+ 441              		.cfi_def_cfa_offset 24
+ 442 0004 00AF     		add	r7, sp, #0
+ 443              	.LCFI14:
+ 444              		.cfi_def_cfa_register 7
+ 445 0006 7860     		str	r0, [r7, #4]
+ 446 0008 0B46     		mov	r3, r1
+ 447 000a FB70     		strb	r3, [r7, #3]
+ 110:../Sources/Camera.c ****   int i;
+ 111:../Sources/Camera.c ****   int32_t Maximum = InputVector[0];
+ 448              		.loc 1 111 0
+ 449 000c 7B68     		ldr	r3, [r7, #4]
+ 450 000e 1B68     		ldr	r3, [r3, #0]
+ 451 0010 BB60     		str	r3, [r7, #8]
+ 112:../Sources/Camera.c ****   for(i=0 ; i<VectorLength ; i++)
+ 452              		.loc 1 112 0
+ 453 0012 4FF00003 		mov	r3, #0
+ 454 0016 FB60     		str	r3, [r7, #12]
+ 455 0018 13E0     		b	.L26
+ 456              	.L28:
+ 113:../Sources/Camera.c ****   {
+ 114:../Sources/Camera.c ****     if(Maximum < InputVector[i])
+ 457              		.loc 1 114 0
+ 458 001a FB68     		ldr	r3, [r7, #12]
+ 459 001c 4FEA8303 		lsl	r3, r3, #2
+ 460 0020 7A68     		ldr	r2, [r7, #4]
+ 461 0022 D318     		adds	r3, r2, r3
+ 462 0024 1A68     		ldr	r2, [r3, #0]
+ 463 0026 BB68     		ldr	r3, [r7, #8]
+ 464 0028 9A42     		cmp	r2, r3
+ 465 002a 06DD     		ble	.L27
+ 115:../Sources/Camera.c ****     {
+ 116:../Sources/Camera.c ****       Maximum = InputVector[i];
+ 466              		.loc 1 116 0
+ 467 002c FB68     		ldr	r3, [r7, #12]
+ 468 002e 4FEA8303 		lsl	r3, r3, #2
+ 469 0032 7A68     		ldr	r2, [r7, #4]
+ 470 0034 D318     		adds	r3, r2, r3
+ 471 0036 1B68     		ldr	r3, [r3, #0]
+ 472 0038 BB60     		str	r3, [r7, #8]
+ 473              	.L27:
+ 112:../Sources/Camera.c ****   for(i=0 ; i<VectorLength ; i++)
+ 474              		.loc 1 112 0
+ 475 003a FB68     		ldr	r3, [r7, #12]
+ 476 003c 03F10103 		add	r3, r3, #1
+ 477 0040 FB60     		str	r3, [r7, #12]
+ 478              	.L26:
+ 112:../Sources/Camera.c ****   for(i=0 ; i<VectorLength ; i++)
+ 479              		.loc 1 112 0 is_stmt 0 discriminator 1
+ 480 0042 FA78     		ldrb	r2, [r7, #3]	@ zero_extendqisi2
+ 481 0044 FB68     		ldr	r3, [r7, #12]
+ 482 0046 9A42     		cmp	r2, r3
+ 483 0048 E7DC     		bgt	.L28
+ 117:../Sources/Camera.c ****     }
+ 118:../Sources/Camera.c ****   }
+ 119:../Sources/Camera.c ****   return Maximum;
+ 484              		.loc 1 119 0 is_stmt 1
+ 485 004a BB68     		ldr	r3, [r7, #8]
+ 120:../Sources/Camera.c **** }
+ 486              		.loc 1 120 0
+ 487 004c 1846     		mov	r0, r3
+ 488 004e 07F11407 		add	r7, r7, #20
+ 489 0052 BD46     		mov	sp, r7
+ 490 0054 80BC     		pop	{r7}
+ 491 0056 7047     		bx	lr
+ 492              		.cfi_endproc
+ 493              	.LFE4:
+ 495              		.text
+ 496              	.Letext0:
+ 497              		.file 2 "C:/Freescale/CW MCU v10.3_121211/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
+ 498              		.file 3 "../Sources/Camera.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 Camera.c
-C:\Users\x\AppData\Local\Temp\ccERBNDv.s:19     .text.CameraInit:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccERBNDv.s:24     .text.CameraInit:00000000 CameraInit
-C:\Users\x\AppData\Local\Temp\ccERBNDv.s:83     .text.CameraInit:00000064 $d
-C:\Users\x\AppData\Local\Temp\ccERBNDv.s:90     .text.CameraInit:00000078 $t
-C:\Users\x\AppData\Local\Temp\ccERBNDv.s:159    .text.Convolution:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccERBNDv.s:164    .text.Convolution:00000000 Convolution
-C:\Users\x\AppData\Local\Temp\ccERBNDv.s:279    .text.GetMinimumIndex:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccERBNDv.s:284    .text.GetMinimumIndex:00000000 GetMinimumIndex
-C:\Users\x\AppData\Local\Temp\ccERBNDv.s:352    .text.GetMaximumIndex:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccERBNDv.s:357    .text.GetMaximumIndex:00000000 GetMaximumIndex
+C:\Users\z\AppData\Local\Temp\ccCiowEe.s:19     .text.CameraInit:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccCiowEe.s:24     .text.CameraInit:00000000 CameraInit
+C:\Users\z\AppData\Local\Temp\ccCiowEe.s:83     .text.CameraInit:00000064 $d
+C:\Users\z\AppData\Local\Temp\ccCiowEe.s:90     .text.CameraInit:00000078 $t
+C:\Users\z\AppData\Local\Temp\ccCiowEe.s:159    .text.Convolution:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccCiowEe.s:164    .text.Convolution:00000000 Convolution
+C:\Users\z\AppData\Local\Temp\ccCiowEe.s:279    .text.GetMinimumIndex:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccCiowEe.s:284    .text.GetMinimumIndex:00000000 GetMinimumIndex
+C:\Users\z\AppData\Local\Temp\ccCiowEe.s:351    .text.GetMaximumIndex:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccCiowEe.s:356    .text.GetMaximumIndex:00000000 GetMaximumIndex
+C:\Users\z\AppData\Local\Temp\ccCiowEe.s:423    .text.GetMaximumValue:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccCiowEe.s:428    .text.GetMaximumValue:00000000 GetMaximumValue
                      .debug_frame:00000010 $d
 
 NO UNDEFINED SYMBOLS

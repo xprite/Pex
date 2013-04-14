@@ -39,7 +39,7 @@
    6:../Generated_Code/OdometryTimer.c **** **     Component   : TimerUnit_LDD
    7:../Generated_Code/OdometryTimer.c **** **     Version     : Component 01.139, Driver 01.09, CPU db: 3.00.001
    8:../Generated_Code/OdometryTimer.c **** **     Compiler    : GNU C Compiler
-   9:../Generated_Code/OdometryTimer.c **** **     Date/Time   : 2013-04-11, 15:40, # CodeGen: 91
+   9:../Generated_Code/OdometryTimer.c **** **     Date/Time   : 2013-04-13, 22:51, # CodeGen: 106
   10:../Generated_Code/OdometryTimer.c **** **     Abstract    :
   11:../Generated_Code/OdometryTimer.c **** **          This TimerUnit component provides a low level API for unified hardware access across
   12:../Generated_Code/OdometryTimer.c **** **          various timer devices using the Prescaler-Counter-Compare-Capture timer structure.
@@ -54,7 +54,7 @@
   21:../Generated_Code/OdometryTimer.c **** **            Counter frequency                            : 48 MHz
   22:../Generated_Code/OdometryTimer.c **** **          Counter restart                                : On-match
   23:../Generated_Code/OdometryTimer.c **** **            Period device                                : PIT_LDVAL0
-  24:../Generated_Code/OdometryTimer.c **** **            Period                                       : 89.478485 sec
+  24:../Generated_Code/OdometryTimer.c **** **            Period                                       : 30 ms
   25:../Generated_Code/OdometryTimer.c **** **            Interrupt                                    : Enabled
   26:../Generated_Code/OdometryTimer.c **** **              Interrupt                                  : INT_PIT0
   27:../Generated_Code/OdometryTimer.c **** **              Interrupt priority                         : medium priority
@@ -213,63 +213,64 @@
   92 006e C4F20303 		movt	r3, 16387
   93 0072 4FF00102 		mov	r2, #1
   94 0076 C3F80C21 		str	r2, [r3, #268]
- 127:../Generated_Code/OdometryTimer.c ****   /* PIT_LDVAL0: TSV=0xFFFFFFEF */
- 128:../Generated_Code/OdometryTimer.c ****   PIT_LDVAL0 = PIT_LDVAL_TSV(0xFFFFFFEF); /* Set up load register */
+ 127:../Generated_Code/OdometryTimer.c ****   /* PIT_LDVAL0: TSV=0x0015F8FF */
+ 128:../Generated_Code/OdometryTimer.c ****   PIT_LDVAL0 = PIT_LDVAL_TSV(0x0015F8FF); /* Set up load register */
   95              		.loc 1 128 0
   96 007a 4FF4E043 		mov	r3, #28672
   97 007e C4F20303 		movt	r3, 16387
-  98 0082 6FF01002 		mvn	r2, #16
-  99 0086 C3F80021 		str	r2, [r3, #256]
+  98 0082 4FF6FF02 		movw	r2, #63743
+  99 0086 C0F21502 		movt	r2, 21
+ 100 008a C3F80021 		str	r2, [r3, #256]
  129:../Generated_Code/OdometryTimer.c ****   /* NVICIP68: PRI68=0x80 */
  130:../Generated_Code/OdometryTimer.c ****   NVICIP68 = NVIC_IP_PRI68(0x80);                                                   
- 100              		.loc 1 130 0
- 101 008a 4FF46143 		mov	r3, #57600
- 102 008e CEF20003 		movt	r3, 57344
- 103 0092 4FF08002 		mov	r2, #128
- 104 0096 83F84423 		strb	r2, [r3, #836]
+ 101              		.loc 1 130 0
+ 102 008e 4FF46143 		mov	r3, #57600
+ 103 0092 CEF20003 		movt	r3, 57344
+ 104 0096 4FF08002 		mov	r2, #128
+ 105 009a 83F84423 		strb	r2, [r3, #836]
  131:../Generated_Code/OdometryTimer.c ****   /* NVICISER2: SETENA|=0x10 */
  132:../Generated_Code/OdometryTimer.c ****   NVICISER2 |= NVIC_ISER_SETENA(0x10);                                                   
- 105              		.loc 1 132 0
- 106 009a 4FF46143 		mov	r3, #57600
- 107 009e CEF20003 		movt	r3, 57344
- 108 00a2 4FF46142 		mov	r2, #57600
- 109 00a6 CEF20002 		movt	r2, 57344
- 110 00aa 9268     		ldr	r2, [r2, #8]
- 111 00ac 42F01002 		orr	r2, r2, #16
- 112 00b0 9A60     		str	r2, [r3, #8]
+ 106              		.loc 1 132 0
+ 107 009e 4FF46143 		mov	r3, #57600
+ 108 00a2 CEF20003 		movt	r3, 57344
+ 109 00a6 4FF46142 		mov	r2, #57600
+ 110 00aa CEF20002 		movt	r2, 57344
+ 111 00ae 9268     		ldr	r2, [r2, #8]
+ 112 00b0 42F01002 		orr	r2, r2, #16
+ 113 00b4 9A60     		str	r2, [r3, #8]
  133:../Generated_Code/OdometryTimer.c ****   /* PIT_TCTRL0: ??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??
  134:../Generated_Code/OdometryTimer.c ****   PIT_TCTRL0 = (PIT_TCTRL_TIE_MASK | PIT_TCTRL_TEN_MASK); /* Set up control register */
- 113              		.loc 1 134 0
- 114 00b2 4FF4E043 		mov	r3, #28672
- 115 00b6 C4F20303 		movt	r3, 16387
- 116 00ba 4FF00302 		mov	r2, #3
- 117 00be C3F80821 		str	r2, [r3, #264]
+ 114              		.loc 1 134 0
+ 115 00b6 4FF4E043 		mov	r3, #28672
+ 116 00ba C4F20303 		movt	r3, 16387
+ 117 00be 4FF00302 		mov	r2, #3
+ 118 00c2 C3F80821 		str	r2, [r3, #264]
  135:../Generated_Code/OdometryTimer.c ****   /* Registration of the device structure */
  136:../Generated_Code/OdometryTimer.c ****   PE_LDD_RegisterDeviceStructure(PE_LDD_COMPONENT_OdometryTimer_ID,DeviceDataPrv);
- 118              		.loc 1 136 0
- 119 00c2 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
- 120 00c6 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
- 121 00ca FA68     		ldr	r2, [r7, #12]
- 122 00cc 9A60     		str	r2, [r3, #8]
+ 119              		.loc 1 136 0
+ 120 00c6 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 121 00ca C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 122 00ce FA68     		ldr	r2, [r7, #12]
+ 123 00d0 9A60     		str	r2, [r3, #8]
  137:../Generated_Code/OdometryTimer.c ****   return ((LDD_TDeviceData *)DeviceDataPrv); /* Return pointer to the device data structure */
- 123              		.loc 1 137 0
- 124 00ce FB68     		ldr	r3, [r7, #12]
+ 124              		.loc 1 137 0
+ 125 00d2 FB68     		ldr	r3, [r7, #12]
  138:../Generated_Code/OdometryTimer.c **** }
- 125              		.loc 1 138 0
- 126 00d0 1846     		mov	r0, r3
- 127 00d2 07F11407 		add	r7, r7, #20
- 128 00d6 BD46     		mov	sp, r7
- 129 00d8 80BC     		pop	{r7}
- 130 00da 7047     		bx	lr
- 131              		.cfi_endproc
- 132              	.LFE0:
- 134              		.section	.text.OdometryTimer_Deinit,"ax",%progbits
- 135              		.align	2
- 136              		.global	OdometryTimer_Deinit
- 137              		.thumb
- 138              		.thumb_func
- 140              	OdometryTimer_Deinit:
- 141              	.LFB1:
+ 126              		.loc 1 138 0
+ 127 00d4 1846     		mov	r0, r3
+ 128 00d6 07F11407 		add	r7, r7, #20
+ 129 00da BD46     		mov	sp, r7
+ 130 00dc 80BC     		pop	{r7}
+ 131 00de 7047     		bx	lr
+ 132              		.cfi_endproc
+ 133              	.LFE0:
+ 135              		.section	.text.OdometryTimer_Deinit,"ax",%progbits
+ 136              		.align	2
+ 137              		.global	OdometryTimer_Deinit
+ 138              		.thumb
+ 139              		.thumb_func
+ 141              	OdometryTimer_Deinit:
+ 142              	.LFB1:
  139:../Generated_Code/OdometryTimer.c **** 
  140:../Generated_Code/OdometryTimer.c **** /*
  141:../Generated_Code/OdometryTimer.c **** ** ===================================================================
@@ -287,72 +288,72 @@
  153:../Generated_Code/OdometryTimer.c **** */
  154:../Generated_Code/OdometryTimer.c **** void OdometryTimer_Deinit(LDD_TDeviceData *DeviceDataPtr)
  155:../Generated_Code/OdometryTimer.c **** {
- 142              		.loc 1 155 0
- 143              		.cfi_startproc
- 144              		@ args = 0, pretend = 0, frame = 16
- 145              		@ frame_needed = 1, uses_anonymous_args = 0
- 146              		@ link register save eliminated.
- 147 0000 80B4     		push	{r7}
- 148              	.LCFI3:
- 149              		.cfi_def_cfa_offset 4
- 150              		.cfi_offset 7, -4
- 151 0002 85B0     		sub	sp, sp, #20
- 152              	.LCFI4:
- 153              		.cfi_def_cfa_offset 24
- 154 0004 00AF     		add	r7, sp, #0
- 155              	.LCFI5:
- 156              		.cfi_def_cfa_register 7
- 157 0006 7860     		str	r0, [r7, #4]
+ 143              		.loc 1 155 0
+ 144              		.cfi_startproc
+ 145              		@ args = 0, pretend = 0, frame = 16
+ 146              		@ frame_needed = 1, uses_anonymous_args = 0
+ 147              		@ link register save eliminated.
+ 148 0000 80B4     		push	{r7}
+ 149              	.LCFI3:
+ 150              		.cfi_def_cfa_offset 4
+ 151              		.cfi_offset 7, -4
+ 152 0002 85B0     		sub	sp, sp, #20
+ 153              	.LCFI4:
+ 154              		.cfi_def_cfa_offset 24
+ 155 0004 00AF     		add	r7, sp, #0
+ 156              	.LCFI5:
+ 157              		.cfi_def_cfa_register 7
+ 158 0006 7860     		str	r0, [r7, #4]
  156:../Generated_Code/OdometryTimer.c ****   OdometryTimer_TDeviceData *DeviceDataPrv = (OdometryTimer_TDeviceData *)DeviceDataPtr;
- 158              		.loc 1 156 0
- 159 0008 7B68     		ldr	r3, [r7, #4]
- 160 000a FB60     		str	r3, [r7, #12]
+ 159              		.loc 1 156 0
+ 160 0008 7B68     		ldr	r3, [r7, #4]
+ 161 000a FB60     		str	r3, [r7, #12]
  157:../Generated_Code/OdometryTimer.c **** 
  158:../Generated_Code/OdometryTimer.c ****   (void)DeviceDataPrv;
  159:../Generated_Code/OdometryTimer.c ****   PIT_PDD_EnableDevice(PIT_BASE_PTR, PIT_PDD_CHANNEL_0, PDD_DISABLE);
- 161              		.loc 1 159 0
- 162 000c 4FF4E043 		mov	r3, #28672
- 163 0010 C4F20303 		movt	r3, 16387
- 164 0014 4FF4E042 		mov	r2, #28672
- 165 0018 C4F20302 		movt	r2, 16387
- 166 001c D2F80821 		ldr	r2, [r2, #264]
- 167 0020 22F00102 		bic	r2, r2, #1
- 168 0024 C3F80821 		str	r2, [r3, #264]
+ 162              		.loc 1 159 0
+ 163 000c 4FF4E043 		mov	r3, #28672
+ 164 0010 C4F20303 		movt	r3, 16387
+ 165 0014 4FF4E042 		mov	r2, #28672
+ 166 0018 C4F20302 		movt	r2, 16387
+ 167 001c D2F80821 		ldr	r2, [r2, #264]
+ 168 0020 22F00102 		bic	r2, r2, #1
+ 169 0024 C3F80821 		str	r2, [r3, #264]
  160:../Generated_Code/OdometryTimer.c ****   /* Interrupt vector(s) deallocation */
  161:../Generated_Code/OdometryTimer.c ****   /* {Default RTOS Adapter} Restore interrupt vector: IVT is static, no code is generated */
  162:../Generated_Code/OdometryTimer.c ****   PIT_PDD_ModuleClock(PIT_BASE_PTR, PIT_PDD_CLOCK_DISABLED);
- 169              		.loc 1 162 0
- 170 0028 4FF4E043 		mov	r3, #28672
- 171 002c C4F20303 		movt	r3, 16387
- 172 0030 4FF4E042 		mov	r2, #28672
- 173 0034 C4F20302 		movt	r2, 16387
- 174 0038 1268     		ldr	r2, [r2, #0]
- 175 003a 42F00202 		orr	r2, r2, #2
- 176 003e 1A60     		str	r2, [r3, #0]
+ 170              		.loc 1 162 0
+ 171 0028 4FF4E043 		mov	r3, #28672
+ 172 002c C4F20303 		movt	r3, 16387
+ 173 0030 4FF4E042 		mov	r2, #28672
+ 174 0034 C4F20302 		movt	r2, 16387
+ 175 0038 1268     		ldr	r2, [r2, #0]
+ 176 003a 42F00202 		orr	r2, r2, #2
+ 177 003e 1A60     		str	r2, [r3, #0]
  163:../Generated_Code/OdometryTimer.c ****   /* Unregistration of the device structure */
  164:../Generated_Code/OdometryTimer.c ****   PE_LDD_UnregisterDeviceStructure(PE_LDD_COMPONENT_OdometryTimer_ID);
- 177              		.loc 1 164 0
- 178 0040 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
- 179 0044 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
- 180 0048 4FF00002 		mov	r2, #0
- 181 004c 9A60     		str	r2, [r3, #8]
+ 178              		.loc 1 164 0
+ 179 0040 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 180 0044 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 181 0048 4FF00002 		mov	r2, #0
+ 182 004c 9A60     		str	r2, [r3, #8]
  165:../Generated_Code/OdometryTimer.c ****   /* Deallocation of the device structure */
  166:../Generated_Code/OdometryTimer.c ****   /* {Default RTOS Adapter} Driver memory deallocation: Dynamic allocation is simulated, no dealloc
  167:../Generated_Code/OdometryTimer.c **** }
- 182              		.loc 1 167 0
- 183 004e 07F11407 		add	r7, r7, #20
- 184 0052 BD46     		mov	sp, r7
- 185 0054 80BC     		pop	{r7}
- 186 0056 7047     		bx	lr
- 187              		.cfi_endproc
- 188              	.LFE1:
- 190              		.section	.text.OdometryTimer_ResetCounter,"ax",%progbits
- 191              		.align	2
- 192              		.global	OdometryTimer_ResetCounter
- 193              		.thumb
- 194              		.thumb_func
- 196              	OdometryTimer_ResetCounter:
- 197              	.LFB2:
+ 183              		.loc 1 167 0
+ 184 004e 07F11407 		add	r7, r7, #20
+ 185 0052 BD46     		mov	sp, r7
+ 186 0054 80BC     		pop	{r7}
+ 187 0056 7047     		bx	lr
+ 188              		.cfi_endproc
+ 189              	.LFE1:
+ 191              		.section	.text.OdometryTimer_ResetCounter,"ax",%progbits
+ 192              		.align	2
+ 193              		.global	OdometryTimer_ResetCounter
+ 194              		.thumb
+ 195              		.thumb_func
+ 197              	OdometryTimer_ResetCounter:
+ 198              	.LFB2:
  168:../Generated_Code/OdometryTimer.c **** 
  169:../Generated_Code/OdometryTimer.c **** /*
  170:../Generated_Code/OdometryTimer.c **** ** ===================================================================
@@ -377,123 +378,123 @@
  189:../Generated_Code/OdometryTimer.c **** */
  190:../Generated_Code/OdometryTimer.c **** LDD_TError OdometryTimer_ResetCounter(LDD_TDeviceData *DeviceDataPtr)
  191:../Generated_Code/OdometryTimer.c **** {
- 198              		.loc 1 191 0
- 199              		.cfi_startproc
- 200              		@ args = 0, pretend = 0, frame = 8
- 201              		@ frame_needed = 1, uses_anonymous_args = 0
- 202              		@ link register save eliminated.
- 203 0000 80B4     		push	{r7}
- 204              	.LCFI6:
- 205              		.cfi_def_cfa_offset 4
- 206              		.cfi_offset 7, -4
- 207 0002 83B0     		sub	sp, sp, #12
- 208              	.LCFI7:
- 209              		.cfi_def_cfa_offset 16
- 210 0004 00AF     		add	r7, sp, #0
- 211              	.LCFI8:
- 212              		.cfi_def_cfa_register 7
- 213 0006 7860     		str	r0, [r7, #4]
+ 199              		.loc 1 191 0
+ 200              		.cfi_startproc
+ 201              		@ args = 0, pretend = 0, frame = 8
+ 202              		@ frame_needed = 1, uses_anonymous_args = 0
+ 203              		@ link register save eliminated.
+ 204 0000 80B4     		push	{r7}
+ 205              	.LCFI6:
+ 206              		.cfi_def_cfa_offset 4
+ 207              		.cfi_offset 7, -4
+ 208 0002 83B0     		sub	sp, sp, #12
+ 209              	.LCFI7:
+ 210              		.cfi_def_cfa_offset 16
+ 211 0004 00AF     		add	r7, sp, #0
+ 212              	.LCFI8:
+ 213              		.cfi_def_cfa_register 7
+ 214 0006 7860     		str	r0, [r7, #4]
  192:../Generated_Code/OdometryTimer.c ****   (void)DeviceDataPtr;                 /* Parameter is not used, suppress unused argument warning *
  193:../Generated_Code/OdometryTimer.c ****   /* {Default RTOS Adapter} Critical section begin, general PE function is used */
  194:../Generated_Code/OdometryTimer.c ****   EnterCritical();
- 214              		.loc 1 194 0
- 215 0008 40F20003 		movw	r3, #:lower16:SR_lock
- 216 000c C0F20003 		movt	r3, #:upper16:SR_lock
- 217 0010 1B78     		ldrb	r3, [r3, #0]
- 218 0012 DBB2     		uxtb	r3, r3
- 219 0014 03F10103 		add	r3, r3, #1
- 220 0018 DBB2     		uxtb	r3, r3
- 221 001a 1A46     		mov	r2, r3
- 222 001c 40F20003 		movw	r3, #:lower16:SR_lock
- 223 0020 C0F20003 		movt	r3, #:upper16:SR_lock
- 224 0024 1146     		mov	r1, r2
- 225 0026 1970     		strb	r1, [r3, #0]
- 226 0028 012A     		cmp	r2, #1
- 227 002a 07D1     		bne	.L4
- 228              		.loc 1 194 0 is_stmt 0 discriminator 1
- 229 002c 40F20003 		movw	r3, #:lower16:SR_reg
- 230 0030 C0F20003 		movt	r3, #:upper16:SR_reg
- 231              	@ 194 "../Generated_Code/OdometryTimer.c" 1
- 232 0034 EFF31380 		MRS R0, FAULTMASK
- 233 0038 71B6     		CPSID f
- 234 003a 1870     		STRB R0, [r3, #0]
- 235              	@ 0 "" 2
- 236              		.thumb
- 237              	.L4:
+ 215              		.loc 1 194 0
+ 216 0008 40F20003 		movw	r3, #:lower16:SR_lock
+ 217 000c C0F20003 		movt	r3, #:upper16:SR_lock
+ 218 0010 1B78     		ldrb	r3, [r3, #0]
+ 219 0012 DBB2     		uxtb	r3, r3
+ 220 0014 03F10103 		add	r3, r3, #1
+ 221 0018 DBB2     		uxtb	r3, r3
+ 222 001a 1A46     		mov	r2, r3
+ 223 001c 40F20003 		movw	r3, #:lower16:SR_lock
+ 224 0020 C0F20003 		movt	r3, #:upper16:SR_lock
+ 225 0024 1146     		mov	r1, r2
+ 226 0026 1970     		strb	r1, [r3, #0]
+ 227 0028 012A     		cmp	r2, #1
+ 228 002a 07D1     		bne	.L4
+ 229              		.loc 1 194 0 is_stmt 0 discriminator 1
+ 230 002c 40F20003 		movw	r3, #:lower16:SR_reg
+ 231 0030 C0F20003 		movt	r3, #:upper16:SR_reg
+ 232              	@ 194 "../Generated_Code/OdometryTimer.c" 1
+ 233 0034 EFF31380 		MRS R0, FAULTMASK
+ 234 0038 71B6     		CPSID f
+ 235 003a 1870     		STRB R0, [r3, #0]
+ 236              	@ 0 "" 2
+ 237              		.thumb
+ 238              	.L4:
  195:../Generated_Code/OdometryTimer.c ****   if ((PIT_PDD_GetEnableDeviceStatus(PIT_BASE_PTR, PIT_PDD_CHANNEL_0)) != 0U) {
- 238              		.loc 1 195 0 is_stmt 1
- 239 003c 4FF4E043 		mov	r3, #28672
- 240 0040 C4F20303 		movt	r3, 16387
- 241 0044 D3F80831 		ldr	r3, [r3, #264]
- 242 0048 03F00103 		and	r3, r3, #1
- 243 004c DBB2     		uxtb	r3, r3
- 244 004e 002B     		cmp	r3, #0
- 245 0050 1BD0     		beq	.L5
+ 239              		.loc 1 195 0 is_stmt 1
+ 240 003c 4FF4E043 		mov	r3, #28672
+ 241 0040 C4F20303 		movt	r3, 16387
+ 242 0044 D3F80831 		ldr	r3, [r3, #264]
+ 243 0048 03F00103 		and	r3, r3, #1
+ 244 004c DBB2     		uxtb	r3, r3
+ 245 004e 002B     		cmp	r3, #0
+ 246 0050 1BD0     		beq	.L5
  196:../Generated_Code/OdometryTimer.c ****     PIT_PDD_EnableDevice(PIT_BASE_PTR, PIT_PDD_CHANNEL_0, PDD_DISABLE);
- 246              		.loc 1 196 0
- 247 0052 4FF4E043 		mov	r3, #28672
- 248 0056 C4F20303 		movt	r3, 16387
- 249 005a 4FF4E042 		mov	r2, #28672
- 250 005e C4F20302 		movt	r2, 16387
- 251 0062 D2F80821 		ldr	r2, [r2, #264]
- 252 0066 22F00102 		bic	r2, r2, #1
- 253 006a C3F80821 		str	r2, [r3, #264]
+ 247              		.loc 1 196 0
+ 248 0052 4FF4E043 		mov	r3, #28672
+ 249 0056 C4F20303 		movt	r3, 16387
+ 250 005a 4FF4E042 		mov	r2, #28672
+ 251 005e C4F20302 		movt	r2, 16387
+ 252 0062 D2F80821 		ldr	r2, [r2, #264]
+ 253 0066 22F00102 		bic	r2, r2, #1
+ 254 006a C3F80821 		str	r2, [r3, #264]
  197:../Generated_Code/OdometryTimer.c ****     PIT_PDD_EnableDevice(PIT_BASE_PTR, PIT_PDD_CHANNEL_0, PDD_ENABLE);
- 254              		.loc 1 197 0
- 255 006e 4FF4E043 		mov	r3, #28672
- 256 0072 C4F20303 		movt	r3, 16387
- 257 0076 4FF4E042 		mov	r2, #28672
- 258 007a C4F20302 		movt	r2, 16387
- 259 007e D2F80821 		ldr	r2, [r2, #264]
- 260 0082 42F00102 		orr	r2, r2, #1
- 261 0086 C3F80821 		str	r2, [r3, #264]
- 262              	.L5:
+ 255              		.loc 1 197 0
+ 256 006e 4FF4E043 		mov	r3, #28672
+ 257 0072 C4F20303 		movt	r3, 16387
+ 258 0076 4FF4E042 		mov	r2, #28672
+ 259 007a C4F20302 		movt	r2, 16387
+ 260 007e D2F80821 		ldr	r2, [r2, #264]
+ 261 0082 42F00102 		orr	r2, r2, #1
+ 262 0086 C3F80821 		str	r2, [r3, #264]
+ 263              	.L5:
  198:../Generated_Code/OdometryTimer.c ****   }
  199:../Generated_Code/OdometryTimer.c ****   /* {Default RTOS Adapter} Critical section end, general PE function is used */
  200:../Generated_Code/OdometryTimer.c ****   ExitCritical();
- 263              		.loc 1 200 0
- 264 008a 40F20003 		movw	r3, #:lower16:SR_lock
- 265 008e C0F20003 		movt	r3, #:upper16:SR_lock
- 266 0092 1B78     		ldrb	r3, [r3, #0]
- 267 0094 DBB2     		uxtb	r3, r3
- 268 0096 03F1FF33 		add	r3, r3, #-1
- 269 009a DBB2     		uxtb	r3, r3
- 270 009c 1A46     		mov	r2, r3
- 271 009e 40F20003 		movw	r3, #:lower16:SR_lock
- 272 00a2 C0F20003 		movt	r3, #:upper16:SR_lock
- 273 00a6 1146     		mov	r1, r2
- 274 00a8 1970     		strb	r1, [r3, #0]
- 275 00aa 002A     		cmp	r2, #0
- 276 00ac 06D1     		bne	.L6
- 277              		.loc 1 200 0 is_stmt 0 discriminator 1
- 278 00ae 40F20003 		movw	r3, #:lower16:SR_reg
- 279 00b2 C0F20003 		movt	r3, #:upper16:SR_reg
- 280              	@ 200 "../Generated_Code/OdometryTimer.c" 1
- 281 00b6 1878     		ldrb r0, [r3, #0]
- 282 00b8 80F31388 		msr FAULTMASK,r0;
- 283              		
- 284              	@ 0 "" 2
- 285              		.thumb
- 286              	.L6:
+ 264              		.loc 1 200 0
+ 265 008a 40F20003 		movw	r3, #:lower16:SR_lock
+ 266 008e C0F20003 		movt	r3, #:upper16:SR_lock
+ 267 0092 1B78     		ldrb	r3, [r3, #0]
+ 268 0094 DBB2     		uxtb	r3, r3
+ 269 0096 03F1FF33 		add	r3, r3, #-1
+ 270 009a DBB2     		uxtb	r3, r3
+ 271 009c 1A46     		mov	r2, r3
+ 272 009e 40F20003 		movw	r3, #:lower16:SR_lock
+ 273 00a2 C0F20003 		movt	r3, #:upper16:SR_lock
+ 274 00a6 1146     		mov	r1, r2
+ 275 00a8 1970     		strb	r1, [r3, #0]
+ 276 00aa 002A     		cmp	r2, #0
+ 277 00ac 06D1     		bne	.L6
+ 278              		.loc 1 200 0 is_stmt 0 discriminator 1
+ 279 00ae 40F20003 		movw	r3, #:lower16:SR_reg
+ 280 00b2 C0F20003 		movt	r3, #:upper16:SR_reg
+ 281              	@ 200 "../Generated_Code/OdometryTimer.c" 1
+ 282 00b6 1878     		ldrb r0, [r3, #0]
+ 283 00b8 80F31388 		msr FAULTMASK,r0;
+ 284              		
+ 285              	@ 0 "" 2
+ 286              		.thumb
+ 287              	.L6:
  201:../Generated_Code/OdometryTimer.c ****   return ERR_OK;                       /* OK */
- 287              		.loc 1 201 0 is_stmt 1
- 288 00bc 4FF00003 		mov	r3, #0
+ 288              		.loc 1 201 0 is_stmt 1
+ 289 00bc 4FF00003 		mov	r3, #0
  202:../Generated_Code/OdometryTimer.c **** }
- 289              		.loc 1 202 0
- 290 00c0 1846     		mov	r0, r3
- 291 00c2 07F10C07 		add	r7, r7, #12
- 292 00c6 BD46     		mov	sp, r7
- 293 00c8 80BC     		pop	{r7}
- 294 00ca 7047     		bx	lr
- 295              		.cfi_endproc
- 296              	.LFE2:
- 298              		.section	.text.OdometryTimer_Interrupt,"ax",%progbits
- 299              		.align	2
- 300              		.global	OdometryTimer_Interrupt
- 301              		.thumb
- 302              		.thumb_func
- 304              	OdometryTimer_Interrupt:
- 305              	.LFB3:
+ 290              		.loc 1 202 0
+ 291 00c0 1846     		mov	r0, r3
+ 292 00c2 07F10C07 		add	r7, r7, #12
+ 293 00c6 BD46     		mov	sp, r7
+ 294 00c8 80BC     		pop	{r7}
+ 295 00ca 7047     		bx	lr
+ 296              		.cfi_endproc
+ 297              	.LFE2:
+ 299              		.section	.text.OdometryTimer_Interrupt,"ax",%progbits
+ 300              		.align	2
+ 301              		.global	OdometryTimer_Interrupt
+ 302              		.thumb
+ 303              		.thumb_func
+ 305              	OdometryTimer_Interrupt:
+ 306              	.LFB3:
  203:../Generated_Code/OdometryTimer.c **** 
  204:../Generated_Code/OdometryTimer.c **** /*
  205:../Generated_Code/OdometryTimer.c **** ** ===================================================================
@@ -507,79 +508,79 @@
  213:../Generated_Code/OdometryTimer.c **** */
  214:../Generated_Code/OdometryTimer.c **** PE_ISR(OdometryTimer_Interrupt)
  215:../Generated_Code/OdometryTimer.c **** {
- 306              		.loc 1 215 0
- 307              		.cfi_startproc
- 308              		@ Stack Align: May be called with mis-aligned SP.
- 309              		@ args = 0, pretend = 0, frame = 8
- 310              		@ frame_needed = 1, uses_anonymous_args = 0
- 311 0000 6846     		mov	r0, sp
- 312              		.cfi_register 13, 0
- 313 0002 20F00701 		bic	r1, r0, #7
- 314 0006 8D46     		mov	sp, r1
- 315 0008 81B5     		push	{r0, r7, lr}
- 316              	.LCFI9:
- 317              		.cfi_def_cfa_offset 12
- 318              		.cfi_offset 14, -4
- 319              		.cfi_offset 7, -8
- 320              		.cfi_offset 13, -12
- 321 000a 83B0     		sub	sp, sp, #12
- 322              	.LCFI10:
- 323              		.cfi_def_cfa_offset 24
- 324 000c 00AF     		add	r7, sp, #0
- 325              	.LCFI11:
- 326              		.cfi_def_cfa_register 7
+ 307              		.loc 1 215 0
+ 308              		.cfi_startproc
+ 309              		@ Stack Align: May be called with mis-aligned SP.
+ 310              		@ args = 0, pretend = 0, frame = 8
+ 311              		@ frame_needed = 1, uses_anonymous_args = 0
+ 312 0000 6846     		mov	r0, sp
+ 313              		.cfi_register 13, 0
+ 314 0002 20F00701 		bic	r1, r0, #7
+ 315 0006 8D46     		mov	sp, r1
+ 316 0008 81B5     		push	{r0, r7, lr}
+ 317              	.LCFI9:
+ 318              		.cfi_def_cfa_offset 12
+ 319              		.cfi_offset 14, -4
+ 320              		.cfi_offset 7, -8
+ 321              		.cfi_offset 13, -12
+ 322 000a 83B0     		sub	sp, sp, #12
+ 323              	.LCFI10:
+ 324              		.cfi_def_cfa_offset 24
+ 325 000c 00AF     		add	r7, sp, #0
+ 326              	.LCFI11:
+ 327              		.cfi_def_cfa_register 7
  216:../Generated_Code/OdometryTimer.c ****   /* {Default RTOS Adapter} ISR parameter is passed through the global variable */
  217:../Generated_Code/OdometryTimer.c ****   OdometryTimer_TDeviceDataPtr DeviceDataPrv = INT_PIT0__DEFAULT_RTOS_ISRPARAM;
- 327              		.loc 1 217 0
- 328 000e 40F20003 		movw	r3, #:lower16:INT_PIT0__DEFAULT_RTOS_ISRPARAM
- 329 0012 C0F20003 		movt	r3, #:upper16:INT_PIT0__DEFAULT_RTOS_ISRPARAM
- 330 0016 1B68     		ldr	r3, [r3, #0]
- 331 0018 7B60     		str	r3, [r7, #4]
+ 328              		.loc 1 217 0
+ 329 000e 40F20003 		movw	r3, #:lower16:INT_PIT0__DEFAULT_RTOS_ISRPARAM
+ 330 0012 C0F20003 		movt	r3, #:upper16:INT_PIT0__DEFAULT_RTOS_ISRPARAM
+ 331 0016 1B68     		ldr	r3, [r3, #0]
+ 332 0018 7B60     		str	r3, [r7, #4]
  218:../Generated_Code/OdometryTimer.c **** 
  219:../Generated_Code/OdometryTimer.c ****   PIT_PDD_ClearInterruptFlag(PIT_BASE_PTR, PIT_PDD_CHANNEL_0); /* Clear interrupt flag */
- 332              		.loc 1 219 0
- 333 001a 4FF4E043 		mov	r3, #28672
- 334 001e C4F20303 		movt	r3, 16387
- 335 0022 4FF00102 		mov	r2, #1
- 336 0026 C3F80C21 		str	r2, [r3, #268]
- 337 002a 4FF4E043 		mov	r3, #28672
- 338 002e C4F20303 		movt	r3, 16387
- 339 0032 D3F80031 		ldr	r3, [r3, #256]
+ 333              		.loc 1 219 0
+ 334 001a 4FF4E043 		mov	r3, #28672
+ 335 001e C4F20303 		movt	r3, 16387
+ 336 0022 4FF00102 		mov	r2, #1
+ 337 0026 C3F80C21 		str	r2, [r3, #268]
+ 338 002a 4FF4E043 		mov	r3, #28672
+ 339 002e C4F20303 		movt	r3, 16387
+ 340 0032 D3F80031 		ldr	r3, [r3, #256]
  220:../Generated_Code/OdometryTimer.c ****   OdometryTimer_OnCounterRestart(DeviceDataPrv->UserDataPtr); /* Invoke OnCounterRestart event */
- 340              		.loc 1 220 0
- 341 0036 7B68     		ldr	r3, [r7, #4]
- 342 0038 1B68     		ldr	r3, [r3, #0]
- 343 003a 1846     		mov	r0, r3
- 344 003c FFF7FEFF 		bl	OdometryTimer_OnCounterRestart
+ 341              		.loc 1 220 0
+ 342 0036 7B68     		ldr	r3, [r7, #4]
+ 343 0038 1B68     		ldr	r3, [r3, #0]
+ 344 003a 1846     		mov	r0, r3
+ 345 003c FFF7FEFF 		bl	OdometryTimer_OnCounterRestart
  221:../Generated_Code/OdometryTimer.c **** }
- 345              		.loc 1 221 0
- 346 0040 07F10C07 		add	r7, r7, #12
- 347 0044 BD46     		mov	sp, r7
- 348 0046 BDE88140 		pop	{r0, r7, lr}
- 349 004a 8546     		mov	sp, r0
- 350 004c 7047     		bx	lr
- 351              		.cfi_endproc
- 352              	.LFE3:
- 354 004e 00BF     		.text
- 355              	.Letext0:
- 356              		.file 2 "C:/Freescale/CW MCU v10.3_NOBETA/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
- 357              		.file 3 "C:/workspaceBakalarkaa/Pex/Generated_Code/IO_Map.h"
- 358              		.file 4 "C:/workspaceBakalarkaa/Pex/Generated_Code/PE_LDD.h"
- 359              		.file 5 "C:/workspaceBakalarkaa/Pex/Generated_Code/Cpu.h"
+ 346              		.loc 1 221 0
+ 347 0040 07F10C07 		add	r7, r7, #12
+ 348 0044 BD46     		mov	sp, r7
+ 349 0046 BDE88140 		pop	{r0, r7, lr}
+ 350 004a 8546     		mov	sp, r0
+ 351 004c 7047     		bx	lr
+ 352              		.cfi_endproc
+ 353              	.LFE3:
+ 355 004e 00BF     		.text
+ 356              	.Letext0:
+ 357              		.file 2 "C:/Freescale/CW MCU v10.3_121211/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
+ 358              		.file 3 "C:/temp2/Pex/Generated_Code/IO_Map.h"
+ 359              		.file 4 "C:/temp2/Pex/Generated_Code/PE_LDD.h"
+ 360              		.file 5 "C:/temp2/Pex/Generated_Code/Cpu.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 OdometryTimer.c
-C:\Users\x\AppData\Local\Temp\ccD22BJm.s:19     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 $d
-C:\Users\x\AppData\Local\Temp\ccD22BJm.s:22     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 DeviceDataPrv__DEFAULT_RTOS_ALLOC
-C:\Users\x\AppData\Local\Temp\ccD22BJm.s:25     .bss.INT_PIT0__DEFAULT_RTOS_ISRPARAM:00000000 $d
-C:\Users\x\AppData\Local\Temp\ccD22BJm.s:28     .bss.INT_PIT0__DEFAULT_RTOS_ISRPARAM:00000000 INT_PIT0__DEFAULT_RTOS_ISRPARAM
-C:\Users\x\AppData\Local\Temp\ccD22BJm.s:31     .text.OdometryTimer_Init:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccD22BJm.s:36     .text.OdometryTimer_Init:00000000 OdometryTimer_Init
-C:\Users\x\AppData\Local\Temp\ccD22BJm.s:135    .text.OdometryTimer_Deinit:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccD22BJm.s:140    .text.OdometryTimer_Deinit:00000000 OdometryTimer_Deinit
-C:\Users\x\AppData\Local\Temp\ccD22BJm.s:191    .text.OdometryTimer_ResetCounter:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccD22BJm.s:196    .text.OdometryTimer_ResetCounter:00000000 OdometryTimer_ResetCounter
-C:\Users\x\AppData\Local\Temp\ccD22BJm.s:299    .text.OdometryTimer_Interrupt:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccD22BJm.s:304    .text.OdometryTimer_Interrupt:00000000 OdometryTimer_Interrupt
+C:\Users\z\AppData\Local\Temp\ccp5ALlk.s:19     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccp5ALlk.s:22     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 DeviceDataPrv__DEFAULT_RTOS_ALLOC
+C:\Users\z\AppData\Local\Temp\ccp5ALlk.s:25     .bss.INT_PIT0__DEFAULT_RTOS_ISRPARAM:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccp5ALlk.s:28     .bss.INT_PIT0__DEFAULT_RTOS_ISRPARAM:00000000 INT_PIT0__DEFAULT_RTOS_ISRPARAM
+C:\Users\z\AppData\Local\Temp\ccp5ALlk.s:31     .text.OdometryTimer_Init:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccp5ALlk.s:36     .text.OdometryTimer_Init:00000000 OdometryTimer_Init
+C:\Users\z\AppData\Local\Temp\ccp5ALlk.s:136    .text.OdometryTimer_Deinit:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccp5ALlk.s:141    .text.OdometryTimer_Deinit:00000000 OdometryTimer_Deinit
+C:\Users\z\AppData\Local\Temp\ccp5ALlk.s:192    .text.OdometryTimer_ResetCounter:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccp5ALlk.s:197    .text.OdometryTimer_ResetCounter:00000000 OdometryTimer_ResetCounter
+C:\Users\z\AppData\Local\Temp\ccp5ALlk.s:300    .text.OdometryTimer_Interrupt:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccp5ALlk.s:305    .text.OdometryTimer_Interrupt:00000000 OdometryTimer_Interrupt
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

@@ -40,7 +40,7 @@
    6:../Generated_Code/OdometryGPIO.c **** **     Component   : GPIO_LDD
    7:../Generated_Code/OdometryGPIO.c **** **     Version     : Component 01.126, Driver 01.06, CPU db: 3.00.001
    8:../Generated_Code/OdometryGPIO.c **** **     Compiler    : GNU C Compiler
-   9:../Generated_Code/OdometryGPIO.c **** **     Date/Time   : 2013-04-11, 15:40, # CodeGen: 91
+   9:../Generated_Code/OdometryGPIO.c **** **     Date/Time   : 2013-04-13, 21:57, # CodeGen: 105
   10:../Generated_Code/OdometryGPIO.c **** **     Abstract    :
   11:../Generated_Code/OdometryGPIO.c **** **         The HAL GPIO component will provide a low level API for unified
   12:../Generated_Code/OdometryGPIO.c **** **         access to general purpose digital input/output pins across
@@ -64,7 +64,7 @@
   30:../Generated_Code/OdometryGPIO.c **** **                  Pin                                    : PTD6/SPI0_PCS3/UART0_RX/FTM0_CH6/FTM0_
   31:../Generated_Code/OdometryGPIO.c **** **                  Pin signal                             : 
   32:../Generated_Code/OdometryGPIO.c **** **                  Initial pin direction                  : Input
-  33:../Generated_Code/OdometryGPIO.c **** **                  Initial pin event                      : Falling edge
+  33:../Generated_Code/OdometryGPIO.c **** **                  Initial pin event                      : Both edges
   34:../Generated_Code/OdometryGPIO.c **** **                  Lock initialization function           : no
   35:../Generated_Code/OdometryGPIO.c **** **          Initialization                                 : 
   36:../Generated_Code/OdometryGPIO.c **** **            Auto initialization                          : yes
@@ -200,7 +200,7 @@
  113:../Generated_Code/OdometryGPIO.c ****                )) | (uint32_t)(
  114:../Generated_Code/OdometryGPIO.c ****                 PORT_PCR_MUX(0x01)
  115:../Generated_Code/OdometryGPIO.c ****                ));                                                  
- 116:../Generated_Code/OdometryGPIO.c ****   /* PORTD_PCR6: ISF=1,IRQC=0x0A */
+ 116:../Generated_Code/OdometryGPIO.c ****   /* PORTD_PCR6: ISF=1,IRQC=0x0B */
  117:../Generated_Code/OdometryGPIO.c ****   PORTD_PCR6 = (uint32_t)((PORTD_PCR6 & (uint32_t)~(uint32_t)(
   92              		.loc 1 117 0
   93 0068 4FF44043 		mov	r3, #49152
@@ -210,56 +210,57 @@
   97 0078 9269     		ldr	r2, [r2, #24]
   98 007a 22F08672 		bic	r2, r2, #17563648
   99 007e 22F44032 		bic	r2, r2, #196608
- 100 0082 42F08572 		orr	r2, r2, #17432576
- 101 0086 9A61     		str	r2, [r3, #24]
- 118:../Generated_Code/OdometryGPIO.c ****                 PORT_PCR_IRQC(0x05)
+ 100 0082 42F08472 		orr	r2, r2, #17301504
+ 101 0086 42F44032 		orr	r2, r2, #196608
+ 102 008a 9A61     		str	r2, [r3, #24]
+ 118:../Generated_Code/OdometryGPIO.c ****                 PORT_PCR_IRQC(0x04)
  119:../Generated_Code/OdometryGPIO.c ****                )) | (uint32_t)(
  120:../Generated_Code/OdometryGPIO.c ****                 PORT_PCR_ISF_MASK |
- 121:../Generated_Code/OdometryGPIO.c ****                 PORT_PCR_IRQC(0x0A)
+ 121:../Generated_Code/OdometryGPIO.c ****                 PORT_PCR_IRQC(0x0B)
  122:../Generated_Code/OdometryGPIO.c ****                ));                                                  
  123:../Generated_Code/OdometryGPIO.c ****   /* NVICIP90: PRI90=0x80 */
  124:../Generated_Code/OdometryGPIO.c ****   NVICIP90 = NVIC_IP_PRI90(0x80);                                                   
- 102              		.loc 1 124 0
- 103 0088 4FF46143 		mov	r3, #57600
- 104 008c CEF20003 		movt	r3, 57344
- 105 0090 4FF08002 		mov	r2, #128
- 106 0094 83F85A23 		strb	r2, [r3, #858]
+ 103              		.loc 1 124 0
+ 104 008c 4FF46143 		mov	r3, #57600
+ 105 0090 CEF20003 		movt	r3, 57344
+ 106 0094 4FF08002 		mov	r2, #128
+ 107 0098 83F85A23 		strb	r2, [r3, #858]
  125:../Generated_Code/OdometryGPIO.c ****   /* NVICISER2: SETENA|=0x04000000 */
  126:../Generated_Code/OdometryGPIO.c ****   NVICISER2 |= NVIC_ISER_SETENA(0x04000000);                                                   
- 107              		.loc 1 126 0
- 108 0098 4FF46143 		mov	r3, #57600
- 109 009c CEF20003 		movt	r3, 57344
- 110 00a0 4FF46142 		mov	r2, #57600
- 111 00a4 CEF20002 		movt	r2, 57344
- 112 00a8 9268     		ldr	r2, [r2, #8]
- 113 00aa 42F08062 		orr	r2, r2, #67108864
- 114 00ae 9A60     		str	r2, [r3, #8]
+ 108              		.loc 1 126 0
+ 109 009c 4FF46143 		mov	r3, #57600
+ 110 00a0 CEF20003 		movt	r3, 57344
+ 111 00a4 4FF46142 		mov	r2, #57600
+ 112 00a8 CEF20002 		movt	r2, 57344
+ 113 00ac 9268     		ldr	r2, [r2, #8]
+ 114 00ae 42F08062 		orr	r2, r2, #67108864
+ 115 00b2 9A60     		str	r2, [r3, #8]
  127:../Generated_Code/OdometryGPIO.c ****   /* Registration of the device structure */
  128:../Generated_Code/OdometryGPIO.c ****   PE_LDD_RegisterDeviceStructure(PE_LDD_COMPONENT_OdometryGPIO_ID,DeviceDataPrv);
- 115              		.loc 1 128 0
- 116 00b0 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
- 117 00b4 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
- 118 00b8 FA68     		ldr	r2, [r7, #12]
- 119 00ba DA60     		str	r2, [r3, #12]
+ 116              		.loc 1 128 0
+ 117 00b4 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 118 00b8 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 119 00bc FA68     		ldr	r2, [r7, #12]
+ 120 00be DA60     		str	r2, [r3, #12]
  129:../Generated_Code/OdometryGPIO.c ****   return ((LDD_TDeviceData *)DeviceDataPrv);
- 120              		.loc 1 129 0
- 121 00bc FB68     		ldr	r3, [r7, #12]
+ 121              		.loc 1 129 0
+ 122 00c0 FB68     		ldr	r3, [r7, #12]
  130:../Generated_Code/OdometryGPIO.c **** }
- 122              		.loc 1 130 0
- 123 00be 1846     		mov	r0, r3
- 124 00c0 07F11407 		add	r7, r7, #20
- 125 00c4 BD46     		mov	sp, r7
- 126 00c6 80BC     		pop	{r7}
- 127 00c8 7047     		bx	lr
- 128              		.cfi_endproc
- 129              	.LFE0:
- 131 00ca 00BF     		.section	.text.OdometryGPIO_Deinit,"ax",%progbits
- 132              		.align	2
- 133              		.global	OdometryGPIO_Deinit
- 134              		.thumb
- 135              		.thumb_func
- 137              	OdometryGPIO_Deinit:
- 138              	.LFB1:
+ 123              		.loc 1 130 0
+ 124 00c2 1846     		mov	r0, r3
+ 125 00c4 07F11407 		add	r7, r7, #20
+ 126 00c8 BD46     		mov	sp, r7
+ 127 00ca 80BC     		pop	{r7}
+ 128 00cc 7047     		bx	lr
+ 129              		.cfi_endproc
+ 130              	.LFE0:
+ 132 00ce 00BF     		.section	.text.OdometryGPIO_Deinit,"ax",%progbits
+ 133              		.align	2
+ 134              		.global	OdometryGPIO_Deinit
+ 135              		.thumb
+ 136              		.thumb_func
+ 138              	OdometryGPIO_Deinit:
+ 139              	.LFB1:
  131:../Generated_Code/OdometryGPIO.c **** 
  132:../Generated_Code/OdometryGPIO.c **** /*
  133:../Generated_Code/OdometryGPIO.c **** ** ===================================================================
@@ -277,69 +278,69 @@
  145:../Generated_Code/OdometryGPIO.c **** */
  146:../Generated_Code/OdometryGPIO.c **** void OdometryGPIO_Deinit(LDD_TDeviceData *DeviceDataPtr)
  147:../Generated_Code/OdometryGPIO.c **** {
- 139              		.loc 1 147 0
- 140              		.cfi_startproc
- 141              		@ args = 0, pretend = 0, frame = 8
- 142              		@ frame_needed = 1, uses_anonymous_args = 0
- 143              		@ link register save eliminated.
- 144 0000 80B4     		push	{r7}
- 145              	.LCFI3:
- 146              		.cfi_def_cfa_offset 4
- 147              		.cfi_offset 7, -4
- 148 0002 83B0     		sub	sp, sp, #12
- 149              	.LCFI4:
- 150              		.cfi_def_cfa_offset 16
- 151 0004 00AF     		add	r7, sp, #0
- 152              	.LCFI5:
- 153              		.cfi_def_cfa_register 7
- 154 0006 7860     		str	r0, [r7, #4]
+ 140              		.loc 1 147 0
+ 141              		.cfi_startproc
+ 142              		@ args = 0, pretend = 0, frame = 8
+ 143              		@ frame_needed = 1, uses_anonymous_args = 0
+ 144              		@ link register save eliminated.
+ 145 0000 80B4     		push	{r7}
+ 146              	.LCFI3:
+ 147              		.cfi_def_cfa_offset 4
+ 148              		.cfi_offset 7, -4
+ 149 0002 83B0     		sub	sp, sp, #12
+ 150              	.LCFI4:
+ 151              		.cfi_def_cfa_offset 16
+ 152 0004 00AF     		add	r7, sp, #0
+ 153              	.LCFI5:
+ 154              		.cfi_def_cfa_register 7
+ 155 0006 7860     		str	r0, [r7, #4]
  148:../Generated_Code/OdometryGPIO.c ****   (void)DeviceDataPtr;                 /* Parameter is not used, suppress unused argument warning *
  149:../Generated_Code/OdometryGPIO.c ****   /* PORTD_PCR6: IRQC=0 */
  150:../Generated_Code/OdometryGPIO.c ****   PORTD_PCR6 &= (uint32_t)~(uint32_t)(PORT_PCR_IRQC(0x0F));                                        
- 155              		.loc 1 150 0
- 156 0008 4FF44043 		mov	r3, #49152
- 157 000c C4F20403 		movt	r3, 16388
- 158 0010 4FF44042 		mov	r2, #49152
- 159 0014 C4F20402 		movt	r2, 16388
- 160 0018 9269     		ldr	r2, [r2, #24]
- 161 001a 22F47022 		bic	r2, r2, #983040
- 162 001e 9A61     		str	r2, [r3, #24]
+ 156              		.loc 1 150 0
+ 157 0008 4FF44043 		mov	r3, #49152
+ 158 000c C4F20403 		movt	r3, 16388
+ 159 0010 4FF44042 		mov	r2, #49152
+ 160 0014 C4F20402 		movt	r2, 16388
+ 161 0018 9269     		ldr	r2, [r2, #24]
+ 162 001a 22F47022 		bic	r2, r2, #983040
+ 163 001e 9A61     		str	r2, [r3, #24]
  151:../Generated_Code/OdometryGPIO.c ****   /* GPIOD_PDDR: PDD&=~0x40 */
  152:../Generated_Code/OdometryGPIO.c ****   GPIOD_PDDR &= (uint32_t)~(uint32_t)(GPIO_PDDR_PDD(0x40));                                        
- 163              		.loc 1 152 0
- 164 0020 4FF2C003 		movw	r3, #61632
- 165 0024 C4F20F03 		movt	r3, 16399
- 166 0028 4FF2C002 		movw	r2, #61632
- 167 002c C4F20F02 		movt	r2, 16399
- 168 0030 5269     		ldr	r2, [r2, #20]
- 169 0032 22F04002 		bic	r2, r2, #64
- 170 0036 5A61     		str	r2, [r3, #20]
+ 164              		.loc 1 152 0
+ 165 0020 4FF2C003 		movw	r3, #61632
+ 166 0024 C4F20F03 		movt	r3, 16399
+ 167 0028 4FF2C002 		movw	r2, #61632
+ 168 002c C4F20F02 		movt	r2, 16399
+ 169 0030 5269     		ldr	r2, [r2, #20]
+ 170 0032 22F04002 		bic	r2, r2, #64
+ 171 0036 5A61     		str	r2, [r3, #20]
  153:../Generated_Code/OdometryGPIO.c ****   /* Interrupt vector(s) deallocation */
  154:../Generated_Code/OdometryGPIO.c ****   /* {Default RTOS Adapter} Restore interrupt vector: IVT is static, no code is generated */
  155:../Generated_Code/OdometryGPIO.c ****   /* Unregistration of the device structure */
  156:../Generated_Code/OdometryGPIO.c ****   PE_LDD_UnregisterDeviceStructure(PE_LDD_COMPONENT_OdometryGPIO_ID);
- 171              		.loc 1 156 0
- 172 0038 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
- 173 003c C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
- 174 0040 4FF00002 		mov	r2, #0
- 175 0044 DA60     		str	r2, [r3, #12]
+ 172              		.loc 1 156 0
+ 173 0038 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 174 003c C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 175 0040 4FF00002 		mov	r2, #0
+ 176 0044 DA60     		str	r2, [r3, #12]
  157:../Generated_Code/OdometryGPIO.c ****   /* Deallocation of the device structure */
  158:../Generated_Code/OdometryGPIO.c ****   /* {Default RTOS Adapter} Driver memory deallocation: Dynamic allocation is simulated, no dealloc
  159:../Generated_Code/OdometryGPIO.c **** }
- 176              		.loc 1 159 0
- 177 0046 07F10C07 		add	r7, r7, #12
- 178 004a BD46     		mov	sp, r7
- 179 004c 80BC     		pop	{r7}
- 180 004e 7047     		bx	lr
- 181              		.cfi_endproc
- 182              	.LFE1:
- 184              		.section	.text.OdometryGPIO_SetFieldValue,"ax",%progbits
- 185              		.align	2
- 186              		.global	OdometryGPIO_SetFieldValue
- 187              		.thumb
- 188              		.thumb_func
- 190              	OdometryGPIO_SetFieldValue:
- 191              	.LFB2:
+ 177              		.loc 1 159 0
+ 178 0046 07F10C07 		add	r7, r7, #12
+ 179 004a BD46     		mov	sp, r7
+ 180 004c 80BC     		pop	{r7}
+ 181 004e 7047     		bx	lr
+ 182              		.cfi_endproc
+ 183              	.LFE1:
+ 185              		.section	.text.OdometryGPIO_SetFieldValue,"ax",%progbits
+ 186              		.align	2
+ 187              		.global	OdometryGPIO_SetFieldValue
+ 188              		.thumb
+ 189              		.thumb_func
+ 191              	OdometryGPIO_SetFieldValue:
+ 192              	.LFB2:
  160:../Generated_Code/OdometryGPIO.c **** 
  161:../Generated_Code/OdometryGPIO.c **** /*
  162:../Generated_Code/OdometryGPIO.c **** ** ===================================================================
@@ -366,45 +367,45 @@
  183:../Generated_Code/OdometryGPIO.c **** */
  184:../Generated_Code/OdometryGPIO.c **** void OdometryGPIO_SetFieldValue(LDD_TDeviceData *DeviceDataPtr, LDD_GPIO_TBitField Field, OdometryG
  185:../Generated_Code/OdometryGPIO.c **** {
- 192              		.loc 1 185 0
- 193              		.cfi_startproc
- 194              		@ args = 0, pretend = 0, frame = 16
- 195              		@ frame_needed = 1, uses_anonymous_args = 0
- 196              		@ link register save eliminated.
- 197 0000 80B4     		push	{r7}
- 198              	.LCFI6:
- 199              		.cfi_def_cfa_offset 4
- 200              		.cfi_offset 7, -4
- 201 0002 85B0     		sub	sp, sp, #20
- 202              	.LCFI7:
- 203              		.cfi_def_cfa_offset 24
- 204 0004 00AF     		add	r7, sp, #0
- 205              	.LCFI8:
- 206              		.cfi_def_cfa_register 7
- 207 0006 F860     		str	r0, [r7, #12]
- 208 0008 B960     		str	r1, [r7, #8]
- 209 000a 7A60     		str	r2, [r7, #4]
+ 193              		.loc 1 185 0
+ 194              		.cfi_startproc
+ 195              		@ args = 0, pretend = 0, frame = 16
+ 196              		@ frame_needed = 1, uses_anonymous_args = 0
+ 197              		@ link register save eliminated.
+ 198 0000 80B4     		push	{r7}
+ 199              	.LCFI6:
+ 200              		.cfi_def_cfa_offset 4
+ 201              		.cfi_offset 7, -4
+ 202 0002 85B0     		sub	sp, sp, #20
+ 203              	.LCFI7:
+ 204              		.cfi_def_cfa_offset 24
+ 205 0004 00AF     		add	r7, sp, #0
+ 206              	.LCFI8:
+ 207              		.cfi_def_cfa_register 7
+ 208 0006 F860     		str	r0, [r7, #12]
+ 209 0008 B960     		str	r1, [r7, #8]
+ 210 000a 7A60     		str	r2, [r7, #4]
  186:../Generated_Code/OdometryGPIO.c ****   (void)DeviceDataPtr;                 /* Parameter is not used, suppress unused argument warning *
  187:../Generated_Code/OdometryGPIO.c ****   switch (Field) {                     /* no break */
- 210              		.loc 1 187 0
- 211 000c BB68     		ldr	r3, [r7, #8]
- 212 000e 002B     		cmp	r3, #0
- 213 0010 12D1     		bne	.L7
- 214              	.L5:
+ 211              		.loc 1 187 0
+ 212 000c BB68     		ldr	r3, [r7, #8]
+ 213 000e 002B     		cmp	r3, #0
+ 214 0010 12D1     		bne	.L7
+ 215              	.L5:
  188:../Generated_Code/OdometryGPIO.c ****     case OdometryRightPin: {           /* bit field #0 */
  189:../Generated_Code/OdometryGPIO.c ****       GPIO_PDD_SetPortDataOutput(OdometryGPIO_MODULE_BASE_ADDRESS,
- 215              		.loc 1 189 0
- 216 0012 4FF2C003 		movw	r3, #61632
- 217 0016 C4F20F03 		movt	r3, 16399
- 218 001a 4FF2C002 		movw	r2, #61632
- 219 001e C4F20F02 		movt	r2, 16399
- 220 0022 1268     		ldr	r2, [r2, #0]
- 221 0024 22F04001 		bic	r1, r2, #64
- 222 0028 7A68     		ldr	r2, [r7, #4]
- 223 002a 4FEA8212 		lsl	r2, r2, #6
- 224 002e 02F04002 		and	r2, r2, #64
- 225 0032 0A43     		orrs	r2, r2, r1
- 226 0034 1A60     		str	r2, [r3, #0]
+ 216              		.loc 1 189 0
+ 217 0012 4FF2C003 		movw	r3, #61632
+ 218 0016 C4F20F03 		movt	r3, 16399
+ 219 001a 4FF2C002 		movw	r2, #61632
+ 220 001e C4F20F02 		movt	r2, 16399
+ 221 0022 1268     		ldr	r2, [r2, #0]
+ 222 0024 22F04001 		bic	r1, r2, #64
+ 223 0028 7A68     		ldr	r2, [r7, #4]
+ 224 002a 4FEA8212 		lsl	r2, r2, #6
+ 225 002e 02F04002 		and	r2, r2, #64
+ 226 0032 0A43     		orrs	r2, r2, r1
+ 227 0034 1A60     		str	r2, [r3, #0]
  190:../Generated_Code/OdometryGPIO.c ****         (
  191:../Generated_Code/OdometryGPIO.c ****           GPIO_PDD_GetPortDataOutput(OdometryGPIO_MODULE_BASE_ADDRESS)
  192:../Generated_Code/OdometryGPIO.c ****           & ((OdometryGPIO_TPortValue)(~((OdometryGPIO_TPortValue)OdometryGPIO_OdometryRightPin_MAS
@@ -415,31 +416,31 @@
  197:../Generated_Code/OdometryGPIO.c ****         )
  198:../Generated_Code/OdometryGPIO.c ****       );
  199:../Generated_Code/OdometryGPIO.c ****       break;
- 227              		.loc 1 199 0
- 228 0036 00E0     		b	.L3
- 229              	.L7:
+ 228              		.loc 1 199 0
+ 229 0036 00E0     		b	.L3
+ 230              	.L7:
  200:../Generated_Code/OdometryGPIO.c ****     }
  201:../Generated_Code/OdometryGPIO.c ****     default:
  202:../Generated_Code/OdometryGPIO.c ****       break;                           /* Invalid Field is not treated, result is undefined */
- 230              		.loc 1 202 0
- 231 0038 00BF     		nop
- 232              	.L3:
+ 231              		.loc 1 202 0
+ 232 0038 00BF     		nop
+ 233              	.L3:
  203:../Generated_Code/OdometryGPIO.c ****   } /* switch (Field) */
  204:../Generated_Code/OdometryGPIO.c **** }
- 233              		.loc 1 204 0
- 234 003a 07F11407 		add	r7, r7, #20
- 235 003e BD46     		mov	sp, r7
- 236 0040 80BC     		pop	{r7}
- 237 0042 7047     		bx	lr
- 238              		.cfi_endproc
- 239              	.LFE2:
- 241              		.section	.text.OdometryGPIO_GetFieldValue,"ax",%progbits
- 242              		.align	2
- 243              		.global	OdometryGPIO_GetFieldValue
- 244              		.thumb
- 245              		.thumb_func
- 247              	OdometryGPIO_GetFieldValue:
- 248              	.LFB3:
+ 234              		.loc 1 204 0
+ 235 003a 07F11407 		add	r7, r7, #20
+ 236 003e BD46     		mov	sp, r7
+ 237 0040 80BC     		pop	{r7}
+ 238 0042 7047     		bx	lr
+ 239              		.cfi_endproc
+ 240              	.LFE2:
+ 242              		.section	.text.OdometryGPIO_GetFieldValue,"ax",%progbits
+ 243              		.align	2
+ 244              		.global	OdometryGPIO_GetFieldValue
+ 245              		.thumb
+ 246              		.thumb_func
+ 248              	OdometryGPIO_GetFieldValue:
+ 249              	.LFB3:
  205:../Generated_Code/OdometryGPIO.c **** 
  206:../Generated_Code/OdometryGPIO.c **** /*
  207:../Generated_Code/OdometryGPIO.c **** ** ===================================================================
@@ -466,76 +467,76 @@
  228:../Generated_Code/OdometryGPIO.c **** */
  229:../Generated_Code/OdometryGPIO.c **** OdometryGPIO_TFieldValue OdometryGPIO_GetFieldValue(LDD_TDeviceData *DeviceDataPtr, LDD_GPIO_TBitFi
  230:../Generated_Code/OdometryGPIO.c **** {
- 249              		.loc 1 230 0
- 250              		.cfi_startproc
- 251              		@ args = 0, pretend = 0, frame = 8
- 252              		@ frame_needed = 1, uses_anonymous_args = 0
- 253              		@ link register save eliminated.
- 254 0000 80B4     		push	{r7}
- 255              	.LCFI9:
- 256              		.cfi_def_cfa_offset 4
- 257              		.cfi_offset 7, -4
- 258 0002 83B0     		sub	sp, sp, #12
- 259              	.LCFI10:
- 260              		.cfi_def_cfa_offset 16
- 261 0004 00AF     		add	r7, sp, #0
- 262              	.LCFI11:
- 263              		.cfi_def_cfa_register 7
- 264 0006 7860     		str	r0, [r7, #4]
- 265 0008 3960     		str	r1, [r7, #0]
+ 250              		.loc 1 230 0
+ 251              		.cfi_startproc
+ 252              		@ args = 0, pretend = 0, frame = 8
+ 253              		@ frame_needed = 1, uses_anonymous_args = 0
+ 254              		@ link register save eliminated.
+ 255 0000 80B4     		push	{r7}
+ 256              	.LCFI9:
+ 257              		.cfi_def_cfa_offset 4
+ 258              		.cfi_offset 7, -4
+ 259 0002 83B0     		sub	sp, sp, #12
+ 260              	.LCFI10:
+ 261              		.cfi_def_cfa_offset 16
+ 262 0004 00AF     		add	r7, sp, #0
+ 263              	.LCFI11:
+ 264              		.cfi_def_cfa_register 7
+ 265 0006 7860     		str	r0, [r7, #4]
+ 266 0008 3960     		str	r1, [r7, #0]
  231:../Generated_Code/OdometryGPIO.c ****   (void)DeviceDataPtr;                 /* Parameter is not used, suppress unused argument warning *
  232:../Generated_Code/OdometryGPIO.c ****   switch (Field) {                     /* no break */
- 266              		.loc 1 232 0
- 267 000a 3B68     		ldr	r3, [r7, #0]
- 268 000c 002B     		cmp	r3, #0
- 269 000e 09D1     		bne	.L12
- 270              	.L10:
+ 267              		.loc 1 232 0
+ 268 000a 3B68     		ldr	r3, [r7, #0]
+ 269 000c 002B     		cmp	r3, #0
+ 270 000e 09D1     		bne	.L12
+ 271              	.L10:
  233:../Generated_Code/OdometryGPIO.c ****     case OdometryRightPin: {           /* bit field #0 */
  234:../Generated_Code/OdometryGPIO.c ****       return
  235:../Generated_Code/OdometryGPIO.c ****         (OdometryGPIO_TFieldValue)(
  236:../Generated_Code/OdometryGPIO.c ****           (
  237:../Generated_Code/OdometryGPIO.c ****             GPIO_PDD_GetPortDataInput(OdometryGPIO_MODULE_BASE_ADDRESS)
- 271              		.loc 1 237 0
- 272 0010 4FF2C003 		movw	r3, #61632
- 273 0014 C4F20F03 		movt	r3, 16399
- 274 0018 1B69     		ldr	r3, [r3, #16]
+ 272              		.loc 1 237 0
+ 273 0010 4FF2C003 		movw	r3, #61632
+ 274 0014 C4F20F03 		movt	r3, 16399
+ 275 0018 1B69     		ldr	r3, [r3, #16]
  238:../Generated_Code/OdometryGPIO.c ****             & (OdometryGPIO_TPortValue)OdometryGPIO_OdometryRightPin_MASK
- 275              		.loc 1 238 0
- 276 001a 03F04003 		and	r3, r3, #64
+ 276              		.loc 1 238 0
+ 277 001a 03F04003 		and	r3, r3, #64
  234:../Generated_Code/OdometryGPIO.c ****       return
- 277              		.loc 1 234 0
- 278 001e 4FEA9313 		lsr	r3, r3, #6
- 279 0022 02E0     		b	.L11
- 280              	.L12:
+ 278              		.loc 1 234 0
+ 279 001e 4FEA9313 		lsr	r3, r3, #6
+ 280 0022 02E0     		b	.L11
+ 281              	.L12:
  239:../Generated_Code/OdometryGPIO.c ****           )
  240:../Generated_Code/OdometryGPIO.c ****           >> OdometryGPIO_OdometryRightPin_START_BIT
  241:../Generated_Code/OdometryGPIO.c ****         );
  242:../Generated_Code/OdometryGPIO.c ****     }
  243:../Generated_Code/OdometryGPIO.c ****     default:
  244:../Generated_Code/OdometryGPIO.c ****       break;                           /* Invalid BitField is not treated, result is undefined */
- 281              		.loc 1 244 0
- 282 0024 00BF     		nop
+ 282              		.loc 1 244 0
+ 283 0024 00BF     		nop
  245:../Generated_Code/OdometryGPIO.c ****   } /* switch (Field) */
  246:../Generated_Code/OdometryGPIO.c ****   return (OdometryGPIO_TFieldValue)0U;
- 283              		.loc 1 246 0
- 284 0026 4FF00003 		mov	r3, #0
- 285              	.L11:
+ 284              		.loc 1 246 0
+ 285 0026 4FF00003 		mov	r3, #0
+ 286              	.L11:
  247:../Generated_Code/OdometryGPIO.c **** }
- 286              		.loc 1 247 0
- 287 002a 1846     		mov	r0, r3
- 288 002c 07F10C07 		add	r7, r7, #12
- 289 0030 BD46     		mov	sp, r7
- 290 0032 80BC     		pop	{r7}
- 291 0034 7047     		bx	lr
- 292              		.cfi_endproc
- 293              	.LFE3:
- 295 0036 00BF     		.section	.text.OdometryGPIO_ClearFieldBits,"ax",%progbits
- 296              		.align	2
- 297              		.global	OdometryGPIO_ClearFieldBits
- 298              		.thumb
- 299              		.thumb_func
- 301              	OdometryGPIO_ClearFieldBits:
- 302              	.LFB4:
+ 287              		.loc 1 247 0
+ 288 002a 1846     		mov	r0, r3
+ 289 002c 07F10C07 		add	r7, r7, #12
+ 290 0030 BD46     		mov	sp, r7
+ 291 0032 80BC     		pop	{r7}
+ 292 0034 7047     		bx	lr
+ 293              		.cfi_endproc
+ 294              	.LFE3:
+ 296 0036 00BF     		.section	.text.OdometryGPIO_ClearFieldBits,"ax",%progbits
+ 297              		.align	2
+ 298              		.global	OdometryGPIO_ClearFieldBits
+ 299              		.thumb
+ 300              		.thumb_func
+ 302              	OdometryGPIO_ClearFieldBits:
+ 303              	.LFB4:
  248:../Generated_Code/OdometryGPIO.c **** 
  249:../Generated_Code/OdometryGPIO.c **** /*
  250:../Generated_Code/OdometryGPIO.c **** ** ===================================================================
@@ -565,69 +566,69 @@
  274:../Generated_Code/OdometryGPIO.c **** */
  275:../Generated_Code/OdometryGPIO.c **** void OdometryGPIO_ClearFieldBits(LDD_TDeviceData *DeviceDataPtr, LDD_GPIO_TBitField Field, Odometry
  276:../Generated_Code/OdometryGPIO.c **** {
- 303              		.loc 1 276 0
- 304              		.cfi_startproc
- 305              		@ args = 0, pretend = 0, frame = 16
- 306              		@ frame_needed = 1, uses_anonymous_args = 0
- 307              		@ link register save eliminated.
- 308 0000 80B4     		push	{r7}
- 309              	.LCFI12:
- 310              		.cfi_def_cfa_offset 4
- 311              		.cfi_offset 7, -4
- 312 0002 85B0     		sub	sp, sp, #20
- 313              	.LCFI13:
- 314              		.cfi_def_cfa_offset 24
- 315 0004 00AF     		add	r7, sp, #0
- 316              	.LCFI14:
- 317              		.cfi_def_cfa_register 7
- 318 0006 F860     		str	r0, [r7, #12]
- 319 0008 B960     		str	r1, [r7, #8]
- 320 000a 7A60     		str	r2, [r7, #4]
+ 304              		.loc 1 276 0
+ 305              		.cfi_startproc
+ 306              		@ args = 0, pretend = 0, frame = 16
+ 307              		@ frame_needed = 1, uses_anonymous_args = 0
+ 308              		@ link register save eliminated.
+ 309 0000 80B4     		push	{r7}
+ 310              	.LCFI12:
+ 311              		.cfi_def_cfa_offset 4
+ 312              		.cfi_offset 7, -4
+ 313 0002 85B0     		sub	sp, sp, #20
+ 314              	.LCFI13:
+ 315              		.cfi_def_cfa_offset 24
+ 316 0004 00AF     		add	r7, sp, #0
+ 317              	.LCFI14:
+ 318              		.cfi_def_cfa_register 7
+ 319 0006 F860     		str	r0, [r7, #12]
+ 320 0008 B960     		str	r1, [r7, #8]
+ 321 000a 7A60     		str	r2, [r7, #4]
  277:../Generated_Code/OdometryGPIO.c ****   (void)DeviceDataPtr;                 /* Parameter is not used, suppress unused argument warning *
  278:../Generated_Code/OdometryGPIO.c ****   switch (Field) {                     /* no break */
- 321              		.loc 1 278 0
- 322 000c BB68     		ldr	r3, [r7, #8]
- 323 000e 002B     		cmp	r3, #0
- 324 0010 0AD1     		bne	.L17
- 325              	.L15:
+ 322              		.loc 1 278 0
+ 323 000c BB68     		ldr	r3, [r7, #8]
+ 324 000e 002B     		cmp	r3, #0
+ 325 0010 0AD1     		bne	.L17
+ 326              	.L15:
  279:../Generated_Code/OdometryGPIO.c ****     case OdometryRightPin: {           /* bit field #0 */
  280:../Generated_Code/OdometryGPIO.c ****       GPIO_PDD_ClearPortDataOutputMask(OdometryGPIO_MODULE_BASE_ADDRESS,
- 326              		.loc 1 280 0
- 327 0012 4FF2C003 		movw	r3, #61632
- 328 0016 C4F20F03 		movt	r3, 16399
- 329 001a 7A68     		ldr	r2, [r7, #4]
- 330 001c 4FEA8212 		lsl	r2, r2, #6
- 331 0020 02F04002 		and	r2, r2, #64
- 332 0024 9A60     		str	r2, [r3, #8]
+ 327              		.loc 1 280 0
+ 328 0012 4FF2C003 		movw	r3, #61632
+ 329 0016 C4F20F03 		movt	r3, 16399
+ 330 001a 7A68     		ldr	r2, [r7, #4]
+ 331 001c 4FEA8212 		lsl	r2, r2, #6
+ 332 0020 02F04002 		and	r2, r2, #64
+ 333 0024 9A60     		str	r2, [r3, #8]
  281:../Generated_Code/OdometryGPIO.c ****         ((OdometryGPIO_TPortValue)OdometryGPIO_OdometryRightPin_MASK)
  282:../Generated_Code/OdometryGPIO.c ****         & ((OdometryGPIO_TPortValue)(Mask << OdometryGPIO_OdometryRightPin_START_BIT))
  283:../Generated_Code/OdometryGPIO.c ****       );
  284:../Generated_Code/OdometryGPIO.c ****       break;
- 333              		.loc 1 284 0
- 334 0026 00E0     		b	.L13
- 335              	.L17:
+ 334              		.loc 1 284 0
+ 335 0026 00E0     		b	.L13
+ 336              	.L17:
  285:../Generated_Code/OdometryGPIO.c ****     }
  286:../Generated_Code/OdometryGPIO.c ****     default:
  287:../Generated_Code/OdometryGPIO.c ****       break;                           /* Invalid Field is not treated, result is undefined */
- 336              		.loc 1 287 0
- 337 0028 00BF     		nop
- 338              	.L13:
+ 337              		.loc 1 287 0
+ 338 0028 00BF     		nop
+ 339              	.L13:
  288:../Generated_Code/OdometryGPIO.c ****   } /* switch (Field) */
  289:../Generated_Code/OdometryGPIO.c **** }
- 339              		.loc 1 289 0
- 340 002a 07F11407 		add	r7, r7, #20
- 341 002e BD46     		mov	sp, r7
- 342 0030 80BC     		pop	{r7}
- 343 0032 7047     		bx	lr
- 344              		.cfi_endproc
- 345              	.LFE4:
- 347              		.section	.text.OdometryGPIO_SetFieldBits,"ax",%progbits
- 348              		.align	2
- 349              		.global	OdometryGPIO_SetFieldBits
- 350              		.thumb
- 351              		.thumb_func
- 353              	OdometryGPIO_SetFieldBits:
- 354              	.LFB5:
+ 340              		.loc 1 289 0
+ 341 002a 07F11407 		add	r7, r7, #20
+ 342 002e BD46     		mov	sp, r7
+ 343 0030 80BC     		pop	{r7}
+ 344 0032 7047     		bx	lr
+ 345              		.cfi_endproc
+ 346              	.LFE4:
+ 348              		.section	.text.OdometryGPIO_SetFieldBits,"ax",%progbits
+ 349              		.align	2
+ 350              		.global	OdometryGPIO_SetFieldBits
+ 351              		.thumb
+ 352              		.thumb_func
+ 354              	OdometryGPIO_SetFieldBits:
+ 355              	.LFB5:
  290:../Generated_Code/OdometryGPIO.c **** 
  291:../Generated_Code/OdometryGPIO.c **** /*
  292:../Generated_Code/OdometryGPIO.c **** ** ===================================================================
@@ -657,69 +658,69 @@
  316:../Generated_Code/OdometryGPIO.c **** */
  317:../Generated_Code/OdometryGPIO.c **** void OdometryGPIO_SetFieldBits(LDD_TDeviceData *DeviceDataPtr, LDD_GPIO_TBitField Field, OdometryGP
  318:../Generated_Code/OdometryGPIO.c **** {
- 355              		.loc 1 318 0
- 356              		.cfi_startproc
- 357              		@ args = 0, pretend = 0, frame = 16
- 358              		@ frame_needed = 1, uses_anonymous_args = 0
- 359              		@ link register save eliminated.
- 360 0000 80B4     		push	{r7}
- 361              	.LCFI15:
- 362              		.cfi_def_cfa_offset 4
- 363              		.cfi_offset 7, -4
- 364 0002 85B0     		sub	sp, sp, #20
- 365              	.LCFI16:
- 366              		.cfi_def_cfa_offset 24
- 367 0004 00AF     		add	r7, sp, #0
- 368              	.LCFI17:
- 369              		.cfi_def_cfa_register 7
- 370 0006 F860     		str	r0, [r7, #12]
- 371 0008 B960     		str	r1, [r7, #8]
- 372 000a 7A60     		str	r2, [r7, #4]
+ 356              		.loc 1 318 0
+ 357              		.cfi_startproc
+ 358              		@ args = 0, pretend = 0, frame = 16
+ 359              		@ frame_needed = 1, uses_anonymous_args = 0
+ 360              		@ link register save eliminated.
+ 361 0000 80B4     		push	{r7}
+ 362              	.LCFI15:
+ 363              		.cfi_def_cfa_offset 4
+ 364              		.cfi_offset 7, -4
+ 365 0002 85B0     		sub	sp, sp, #20
+ 366              	.LCFI16:
+ 367              		.cfi_def_cfa_offset 24
+ 368 0004 00AF     		add	r7, sp, #0
+ 369              	.LCFI17:
+ 370              		.cfi_def_cfa_register 7
+ 371 0006 F860     		str	r0, [r7, #12]
+ 372 0008 B960     		str	r1, [r7, #8]
+ 373 000a 7A60     		str	r2, [r7, #4]
  319:../Generated_Code/OdometryGPIO.c ****   (void)DeviceDataPtr;                 /* Parameter is not used, suppress unused argument warning *
  320:../Generated_Code/OdometryGPIO.c ****   switch (Field) {                     /* no break */
- 373              		.loc 1 320 0
- 374 000c BB68     		ldr	r3, [r7, #8]
- 375 000e 002B     		cmp	r3, #0
- 376 0010 0AD1     		bne	.L22
- 377              	.L20:
+ 374              		.loc 1 320 0
+ 375 000c BB68     		ldr	r3, [r7, #8]
+ 376 000e 002B     		cmp	r3, #0
+ 377 0010 0AD1     		bne	.L22
+ 378              	.L20:
  321:../Generated_Code/OdometryGPIO.c ****     case OdometryRightPin: {           /* bit field #0 */
  322:../Generated_Code/OdometryGPIO.c ****       GPIO_PDD_SetPortDataOutputMask(OdometryGPIO_MODULE_BASE_ADDRESS,
- 378              		.loc 1 322 0
- 379 0012 4FF2C003 		movw	r3, #61632
- 380 0016 C4F20F03 		movt	r3, 16399
- 381 001a 7A68     		ldr	r2, [r7, #4]
- 382 001c 4FEA8212 		lsl	r2, r2, #6
- 383 0020 02F04002 		and	r2, r2, #64
- 384 0024 5A60     		str	r2, [r3, #4]
+ 379              		.loc 1 322 0
+ 380 0012 4FF2C003 		movw	r3, #61632
+ 381 0016 C4F20F03 		movt	r3, 16399
+ 382 001a 7A68     		ldr	r2, [r7, #4]
+ 383 001c 4FEA8212 		lsl	r2, r2, #6
+ 384 0020 02F04002 		and	r2, r2, #64
+ 385 0024 5A60     		str	r2, [r3, #4]
  323:../Generated_Code/OdometryGPIO.c ****         ((OdometryGPIO_TPortValue)OdometryGPIO_OdometryRightPin_MASK)
  324:../Generated_Code/OdometryGPIO.c ****         & ((OdometryGPIO_TPortValue)(Mask << OdometryGPIO_OdometryRightPin_START_BIT))
  325:../Generated_Code/OdometryGPIO.c ****       );
  326:../Generated_Code/OdometryGPIO.c ****       break;
- 385              		.loc 1 326 0
- 386 0026 00E0     		b	.L18
- 387              	.L22:
+ 386              		.loc 1 326 0
+ 387 0026 00E0     		b	.L18
+ 388              	.L22:
  327:../Generated_Code/OdometryGPIO.c ****     }
  328:../Generated_Code/OdometryGPIO.c ****     default:
  329:../Generated_Code/OdometryGPIO.c ****       break;                           /* Invalid Field is not treated, result is undefined */
- 388              		.loc 1 329 0
- 389 0028 00BF     		nop
- 390              	.L18:
+ 389              		.loc 1 329 0
+ 390 0028 00BF     		nop
+ 391              	.L18:
  330:../Generated_Code/OdometryGPIO.c ****   } /* switch (Field) */
  331:../Generated_Code/OdometryGPIO.c **** }
- 391              		.loc 1 331 0
- 392 002a 07F11407 		add	r7, r7, #20
- 393 002e BD46     		mov	sp, r7
- 394 0030 80BC     		pop	{r7}
- 395 0032 7047     		bx	lr
- 396              		.cfi_endproc
- 397              	.LFE5:
- 399              		.section	.text.OdometryGPIO_ToggleFieldBits,"ax",%progbits
- 400              		.align	2
- 401              		.global	OdometryGPIO_ToggleFieldBits
- 402              		.thumb
- 403              		.thumb_func
- 405              	OdometryGPIO_ToggleFieldBits:
- 406              	.LFB6:
+ 392              		.loc 1 331 0
+ 393 002a 07F11407 		add	r7, r7, #20
+ 394 002e BD46     		mov	sp, r7
+ 395 0030 80BC     		pop	{r7}
+ 396 0032 7047     		bx	lr
+ 397              		.cfi_endproc
+ 398              	.LFE5:
+ 400              		.section	.text.OdometryGPIO_ToggleFieldBits,"ax",%progbits
+ 401              		.align	2
+ 402              		.global	OdometryGPIO_ToggleFieldBits
+ 403              		.thumb
+ 404              		.thumb_func
+ 406              	OdometryGPIO_ToggleFieldBits:
+ 407              	.LFB6:
  332:../Generated_Code/OdometryGPIO.c **** 
  333:../Generated_Code/OdometryGPIO.c **** /*
  334:../Generated_Code/OdometryGPIO.c **** ** ===================================================================
@@ -749,69 +750,69 @@
  358:../Generated_Code/OdometryGPIO.c **** */
  359:../Generated_Code/OdometryGPIO.c **** void OdometryGPIO_ToggleFieldBits(LDD_TDeviceData *DeviceDataPtr, LDD_GPIO_TBitField Field, Odometr
  360:../Generated_Code/OdometryGPIO.c **** {
- 407              		.loc 1 360 0
- 408              		.cfi_startproc
- 409              		@ args = 0, pretend = 0, frame = 16
- 410              		@ frame_needed = 1, uses_anonymous_args = 0
- 411              		@ link register save eliminated.
- 412 0000 80B4     		push	{r7}
- 413              	.LCFI18:
- 414              		.cfi_def_cfa_offset 4
- 415              		.cfi_offset 7, -4
- 416 0002 85B0     		sub	sp, sp, #20
- 417              	.LCFI19:
- 418              		.cfi_def_cfa_offset 24
- 419 0004 00AF     		add	r7, sp, #0
- 420              	.LCFI20:
- 421              		.cfi_def_cfa_register 7
- 422 0006 F860     		str	r0, [r7, #12]
- 423 0008 B960     		str	r1, [r7, #8]
- 424 000a 7A60     		str	r2, [r7, #4]
+ 408              		.loc 1 360 0
+ 409              		.cfi_startproc
+ 410              		@ args = 0, pretend = 0, frame = 16
+ 411              		@ frame_needed = 1, uses_anonymous_args = 0
+ 412              		@ link register save eliminated.
+ 413 0000 80B4     		push	{r7}
+ 414              	.LCFI18:
+ 415              		.cfi_def_cfa_offset 4
+ 416              		.cfi_offset 7, -4
+ 417 0002 85B0     		sub	sp, sp, #20
+ 418              	.LCFI19:
+ 419              		.cfi_def_cfa_offset 24
+ 420 0004 00AF     		add	r7, sp, #0
+ 421              	.LCFI20:
+ 422              		.cfi_def_cfa_register 7
+ 423 0006 F860     		str	r0, [r7, #12]
+ 424 0008 B960     		str	r1, [r7, #8]
+ 425 000a 7A60     		str	r2, [r7, #4]
  361:../Generated_Code/OdometryGPIO.c ****   (void)DeviceDataPtr;                 /* Parameter is not used, suppress unused argument warning *
  362:../Generated_Code/OdometryGPIO.c ****   switch (Field) {                     /* no break */
- 425              		.loc 1 362 0
- 426 000c BB68     		ldr	r3, [r7, #8]
- 427 000e 002B     		cmp	r3, #0
- 428 0010 0AD1     		bne	.L27
- 429              	.L25:
+ 426              		.loc 1 362 0
+ 427 000c BB68     		ldr	r3, [r7, #8]
+ 428 000e 002B     		cmp	r3, #0
+ 429 0010 0AD1     		bne	.L27
+ 430              	.L25:
  363:../Generated_Code/OdometryGPIO.c ****     case OdometryRightPin: {           /* bit field #0 */
  364:../Generated_Code/OdometryGPIO.c ****       GPIO_PDD_TogglePortDataOutputMask(OdometryGPIO_MODULE_BASE_ADDRESS,
- 430              		.loc 1 364 0
- 431 0012 4FF2C003 		movw	r3, #61632
- 432 0016 C4F20F03 		movt	r3, 16399
- 433 001a 7A68     		ldr	r2, [r7, #4]
- 434 001c 4FEA8212 		lsl	r2, r2, #6
- 435 0020 02F04002 		and	r2, r2, #64
- 436 0024 DA60     		str	r2, [r3, #12]
+ 431              		.loc 1 364 0
+ 432 0012 4FF2C003 		movw	r3, #61632
+ 433 0016 C4F20F03 		movt	r3, 16399
+ 434 001a 7A68     		ldr	r2, [r7, #4]
+ 435 001c 4FEA8212 		lsl	r2, r2, #6
+ 436 0020 02F04002 		and	r2, r2, #64
+ 437 0024 DA60     		str	r2, [r3, #12]
  365:../Generated_Code/OdometryGPIO.c ****         ((OdometryGPIO_TPortValue)OdometryGPIO_OdometryRightPin_MASK)
  366:../Generated_Code/OdometryGPIO.c ****         & ((OdometryGPIO_TPortValue)(Mask << OdometryGPIO_OdometryRightPin_START_BIT))
  367:../Generated_Code/OdometryGPIO.c ****       );
  368:../Generated_Code/OdometryGPIO.c ****       break;
- 437              		.loc 1 368 0
- 438 0026 00E0     		b	.L23
- 439              	.L27:
+ 438              		.loc 1 368 0
+ 439 0026 00E0     		b	.L23
+ 440              	.L27:
  369:../Generated_Code/OdometryGPIO.c ****     }
  370:../Generated_Code/OdometryGPIO.c ****     default:
  371:../Generated_Code/OdometryGPIO.c ****       break;                           /* Invalid Field is not treated, result is undefined */
- 440              		.loc 1 371 0
- 441 0028 00BF     		nop
- 442              	.L23:
+ 441              		.loc 1 371 0
+ 442 0028 00BF     		nop
+ 443              	.L23:
  372:../Generated_Code/OdometryGPIO.c ****   } /* switch (Field) */
  373:../Generated_Code/OdometryGPIO.c **** }
- 443              		.loc 1 373 0
- 444 002a 07F11407 		add	r7, r7, #20
- 445 002e BD46     		mov	sp, r7
- 446 0030 80BC     		pop	{r7}
- 447 0032 7047     		bx	lr
- 448              		.cfi_endproc
- 449              	.LFE6:
- 451              		.section	.text.OdometryGPIO_SetFieldInputDirection,"ax",%progbits
- 452              		.align	2
- 453              		.global	OdometryGPIO_SetFieldInputDirection
- 454              		.thumb
- 455              		.thumb_func
- 457              	OdometryGPIO_SetFieldInputDirection:
- 458              	.LFB7:
+ 444              		.loc 1 373 0
+ 445 002a 07F11407 		add	r7, r7, #20
+ 446 002e BD46     		mov	sp, r7
+ 447 0030 80BC     		pop	{r7}
+ 448 0032 7047     		bx	lr
+ 449              		.cfi_endproc
+ 450              	.LFE6:
+ 452              		.section	.text.OdometryGPIO_SetFieldInputDirection,"ax",%progbits
+ 453              		.align	2
+ 454              		.global	OdometryGPIO_SetFieldInputDirection
+ 455              		.thumb
+ 456              		.thumb_func
+ 458              	OdometryGPIO_SetFieldInputDirection:
+ 459              	.LFB7:
  374:../Generated_Code/OdometryGPIO.c **** 
  375:../Generated_Code/OdometryGPIO.c **** /*
  376:../Generated_Code/OdometryGPIO.c **** ** ===================================================================
@@ -832,68 +833,68 @@
  391:../Generated_Code/OdometryGPIO.c **** */
  392:../Generated_Code/OdometryGPIO.c **** void OdometryGPIO_SetFieldInputDirection(LDD_TDeviceData *DeviceDataPtr, LDD_GPIO_TBitField Field)
  393:../Generated_Code/OdometryGPIO.c **** {
- 459              		.loc 1 393 0
- 460              		.cfi_startproc
- 461              		@ args = 0, pretend = 0, frame = 8
- 462              		@ frame_needed = 1, uses_anonymous_args = 0
- 463              		@ link register save eliminated.
- 464 0000 80B4     		push	{r7}
- 465              	.LCFI21:
- 466              		.cfi_def_cfa_offset 4
- 467              		.cfi_offset 7, -4
- 468 0002 83B0     		sub	sp, sp, #12
- 469              	.LCFI22:
- 470              		.cfi_def_cfa_offset 16
- 471 0004 00AF     		add	r7, sp, #0
- 472              	.LCFI23:
- 473              		.cfi_def_cfa_register 7
- 474 0006 7860     		str	r0, [r7, #4]
- 475 0008 3960     		str	r1, [r7, #0]
+ 460              		.loc 1 393 0
+ 461              		.cfi_startproc
+ 462              		@ args = 0, pretend = 0, frame = 8
+ 463              		@ frame_needed = 1, uses_anonymous_args = 0
+ 464              		@ link register save eliminated.
+ 465 0000 80B4     		push	{r7}
+ 466              	.LCFI21:
+ 467              		.cfi_def_cfa_offset 4
+ 468              		.cfi_offset 7, -4
+ 469 0002 83B0     		sub	sp, sp, #12
+ 470              	.LCFI22:
+ 471              		.cfi_def_cfa_offset 16
+ 472 0004 00AF     		add	r7, sp, #0
+ 473              	.LCFI23:
+ 474              		.cfi_def_cfa_register 7
+ 475 0006 7860     		str	r0, [r7, #4]
+ 476 0008 3960     		str	r1, [r7, #0]
  394:../Generated_Code/OdometryGPIO.c ****   (void)DeviceDataPtr;                 /* Parameter is not used, suppress unused argument warning *
  395:../Generated_Code/OdometryGPIO.c ****   switch (Field) {                     /* no break */
- 476              		.loc 1 395 0
- 477 000a 3B68     		ldr	r3, [r7, #0]
- 478 000c 002B     		cmp	r3, #0
- 479 000e 0CD1     		bne	.L32
- 480              	.L30:
+ 477              		.loc 1 395 0
+ 478 000a 3B68     		ldr	r3, [r7, #0]
+ 479 000c 002B     		cmp	r3, #0
+ 480 000e 0CD1     		bne	.L32
+ 481              	.L30:
  396:../Generated_Code/OdometryGPIO.c ****     case OdometryRightPin: {           /* bit field #0 */
  397:../Generated_Code/OdometryGPIO.c ****       GPIO_PDD_SetPortInputDirectionMask(OdometryGPIO_MODULE_BASE_ADDRESS,
- 481              		.loc 1 397 0
- 482 0010 4FF2C003 		movw	r3, #61632
- 483 0014 C4F20F03 		movt	r3, 16399
- 484 0018 4FF2C002 		movw	r2, #61632
- 485 001c C4F20F02 		movt	r2, 16399
- 486 0020 5269     		ldr	r2, [r2, #20]
- 487 0022 22F04002 		bic	r2, r2, #64
- 488 0026 5A61     		str	r2, [r3, #20]
+ 482              		.loc 1 397 0
+ 483 0010 4FF2C003 		movw	r3, #61632
+ 484 0014 C4F20F03 		movt	r3, 16399
+ 485 0018 4FF2C002 		movw	r2, #61632
+ 486 001c C4F20F02 		movt	r2, 16399
+ 487 0020 5269     		ldr	r2, [r2, #20]
+ 488 0022 22F04002 		bic	r2, r2, #64
+ 489 0026 5A61     		str	r2, [r3, #20]
  398:../Generated_Code/OdometryGPIO.c ****         OdometryGPIO_OdometryRightPin_MASK
  399:../Generated_Code/OdometryGPIO.c ****       );
  400:../Generated_Code/OdometryGPIO.c ****       break;
- 489              		.loc 1 400 0
- 490 0028 00E0     		b	.L28
- 491              	.L32:
+ 490              		.loc 1 400 0
+ 491 0028 00E0     		b	.L28
+ 492              	.L32:
  401:../Generated_Code/OdometryGPIO.c ****     }
  402:../Generated_Code/OdometryGPIO.c ****     default:
  403:../Generated_Code/OdometryGPIO.c ****       break;                           /* Invalid Field is not treated, result is undefined */
- 492              		.loc 1 403 0
- 493 002a 00BF     		nop
- 494              	.L28:
+ 493              		.loc 1 403 0
+ 494 002a 00BF     		nop
+ 495              	.L28:
  404:../Generated_Code/OdometryGPIO.c ****   } /* switch (Field) */
  405:../Generated_Code/OdometryGPIO.c **** }
- 495              		.loc 1 405 0
- 496 002c 07F10C07 		add	r7, r7, #12
- 497 0030 BD46     		mov	sp, r7
- 498 0032 80BC     		pop	{r7}
- 499 0034 7047     		bx	lr
- 500              		.cfi_endproc
- 501              	.LFE7:
- 503 0036 00BF     		.section	.text.OdometryGPIO_SetFieldOutputDirection,"ax",%progbits
- 504              		.align	2
- 505              		.global	OdometryGPIO_SetFieldOutputDirection
- 506              		.thumb
- 507              		.thumb_func
- 509              	OdometryGPIO_SetFieldOutputDirection:
- 510              	.LFB8:
+ 496              		.loc 1 405 0
+ 497 002c 07F10C07 		add	r7, r7, #12
+ 498 0030 BD46     		mov	sp, r7
+ 499 0032 80BC     		pop	{r7}
+ 500 0034 7047     		bx	lr
+ 501              		.cfi_endproc
+ 502              	.LFE7:
+ 504 0036 00BF     		.section	.text.OdometryGPIO_SetFieldOutputDirection,"ax",%progbits
+ 505              		.align	2
+ 506              		.global	OdometryGPIO_SetFieldOutputDirection
+ 507              		.thumb
+ 508              		.thumb_func
+ 510              	OdometryGPIO_SetFieldOutputDirection:
+ 511              	.LFB8:
  406:../Generated_Code/OdometryGPIO.c **** 
  407:../Generated_Code/OdometryGPIO.c **** /*
  408:../Generated_Code/OdometryGPIO.c **** ** ===================================================================
@@ -918,45 +919,45 @@
  427:../Generated_Code/OdometryGPIO.c **** */
  428:../Generated_Code/OdometryGPIO.c **** void OdometryGPIO_SetFieldOutputDirection(LDD_TDeviceData *DeviceDataPtr, LDD_GPIO_TBitField Field,
  429:../Generated_Code/OdometryGPIO.c **** {
- 511              		.loc 1 429 0
- 512              		.cfi_startproc
- 513              		@ args = 0, pretend = 0, frame = 16
- 514              		@ frame_needed = 1, uses_anonymous_args = 0
- 515              		@ link register save eliminated.
- 516 0000 80B4     		push	{r7}
- 517              	.LCFI24:
- 518              		.cfi_def_cfa_offset 4
- 519              		.cfi_offset 7, -4
- 520 0002 85B0     		sub	sp, sp, #20
- 521              	.LCFI25:
- 522              		.cfi_def_cfa_offset 24
- 523 0004 00AF     		add	r7, sp, #0
- 524              	.LCFI26:
- 525              		.cfi_def_cfa_register 7
- 526 0006 F860     		str	r0, [r7, #12]
- 527 0008 B960     		str	r1, [r7, #8]
- 528 000a 7A60     		str	r2, [r7, #4]
+ 512              		.loc 1 429 0
+ 513              		.cfi_startproc
+ 514              		@ args = 0, pretend = 0, frame = 16
+ 515              		@ frame_needed = 1, uses_anonymous_args = 0
+ 516              		@ link register save eliminated.
+ 517 0000 80B4     		push	{r7}
+ 518              	.LCFI24:
+ 519              		.cfi_def_cfa_offset 4
+ 520              		.cfi_offset 7, -4
+ 521 0002 85B0     		sub	sp, sp, #20
+ 522              	.LCFI25:
+ 523              		.cfi_def_cfa_offset 24
+ 524 0004 00AF     		add	r7, sp, #0
+ 525              	.LCFI26:
+ 526              		.cfi_def_cfa_register 7
+ 527 0006 F860     		str	r0, [r7, #12]
+ 528 0008 B960     		str	r1, [r7, #8]
+ 529 000a 7A60     		str	r2, [r7, #4]
  430:../Generated_Code/OdometryGPIO.c ****   (void)DeviceDataPtr;                 /* Parameter is not used, suppress unused argument warning *
  431:../Generated_Code/OdometryGPIO.c ****   switch (Field) {                     /* no break */
- 529              		.loc 1 431 0
- 530 000c BB68     		ldr	r3, [r7, #8]
- 531 000e 002B     		cmp	r3, #0
- 532 0010 1ED1     		bne	.L37
- 533              	.L35:
+ 530              		.loc 1 431 0
+ 531 000c BB68     		ldr	r3, [r7, #8]
+ 532 000e 002B     		cmp	r3, #0
+ 533 0010 1ED1     		bne	.L37
+ 534              	.L35:
  432:../Generated_Code/OdometryGPIO.c ****     case OdometryRightPin: {           /* bit field #0 */
  433:../Generated_Code/OdometryGPIO.c ****       GPIO_PDD_SetPortDataOutput(OdometryGPIO_MODULE_BASE_ADDRESS,
- 534              		.loc 1 433 0
- 535 0012 4FF2C003 		movw	r3, #61632
- 536 0016 C4F20F03 		movt	r3, 16399
- 537 001a 4FF2C002 		movw	r2, #61632
- 538 001e C4F20F02 		movt	r2, 16399
- 539 0022 1268     		ldr	r2, [r2, #0]
- 540 0024 22F04001 		bic	r1, r2, #64
- 541 0028 7A68     		ldr	r2, [r7, #4]
- 542 002a 4FEA8212 		lsl	r2, r2, #6
- 543 002e 02F04002 		and	r2, r2, #64
- 544 0032 0A43     		orrs	r2, r2, r1
- 545 0034 1A60     		str	r2, [r3, #0]
+ 535              		.loc 1 433 0
+ 536 0012 4FF2C003 		movw	r3, #61632
+ 537 0016 C4F20F03 		movt	r3, 16399
+ 538 001a 4FF2C002 		movw	r2, #61632
+ 539 001e C4F20F02 		movt	r2, 16399
+ 540 0022 1268     		ldr	r2, [r2, #0]
+ 541 0024 22F04001 		bic	r1, r2, #64
+ 542 0028 7A68     		ldr	r2, [r7, #4]
+ 543 002a 4FEA8212 		lsl	r2, r2, #6
+ 544 002e 02F04002 		and	r2, r2, #64
+ 545 0032 0A43     		orrs	r2, r2, r1
+ 546 0034 1A60     		str	r2, [r3, #0]
  434:../Generated_Code/OdometryGPIO.c ****         ((OdometryGPIO_TPortValue)(
  435:../Generated_Code/OdometryGPIO.c ****           GPIO_PDD_GetPortDataOutput(OdometryGPIO_MODULE_BASE_ADDRESS)
  436:../Generated_Code/OdometryGPIO.c ****           & ((OdometryGPIO_TPortValue)(
@@ -969,42 +970,42 @@
  443:../Generated_Code/OdometryGPIO.c ****         )
  444:../Generated_Code/OdometryGPIO.c ****       );
  445:../Generated_Code/OdometryGPIO.c ****       GPIO_PDD_SetPortOutputDirectionMask(OdometryGPIO_MODULE_BASE_ADDRESS,
- 546              		.loc 1 445 0
- 547 0036 4FF2C003 		movw	r3, #61632
- 548 003a C4F20F03 		movt	r3, 16399
- 549 003e 4FF2C002 		movw	r2, #61632
- 550 0042 C4F20F02 		movt	r2, 16399
- 551 0046 5269     		ldr	r2, [r2, #20]
- 552 0048 42F04002 		orr	r2, r2, #64
- 553 004c 5A61     		str	r2, [r3, #20]
+ 547              		.loc 1 445 0
+ 548 0036 4FF2C003 		movw	r3, #61632
+ 549 003a C4F20F03 		movt	r3, 16399
+ 550 003e 4FF2C002 		movw	r2, #61632
+ 551 0042 C4F20F02 		movt	r2, 16399
+ 552 0046 5269     		ldr	r2, [r2, #20]
+ 553 0048 42F04002 		orr	r2, r2, #64
+ 554 004c 5A61     		str	r2, [r3, #20]
  446:../Generated_Code/OdometryGPIO.c ****         OdometryGPIO_OdometryRightPin_MASK
  447:../Generated_Code/OdometryGPIO.c ****       );
  448:../Generated_Code/OdometryGPIO.c ****       break;
- 554              		.loc 1 448 0
- 555 004e 00E0     		b	.L33
- 556              	.L37:
+ 555              		.loc 1 448 0
+ 556 004e 00E0     		b	.L33
+ 557              	.L37:
  449:../Generated_Code/OdometryGPIO.c ****     }
  450:../Generated_Code/OdometryGPIO.c ****     default:
  451:../Generated_Code/OdometryGPIO.c ****       break;                           /* Invalid Field is not treated, result is undefined */
- 557              		.loc 1 451 0
- 558 0050 00BF     		nop
- 559              	.L33:
+ 558              		.loc 1 451 0
+ 559 0050 00BF     		nop
+ 560              	.L33:
  452:../Generated_Code/OdometryGPIO.c ****   } /* switch (Field) */
  453:../Generated_Code/OdometryGPIO.c **** }
- 560              		.loc 1 453 0
- 561 0052 07F11407 		add	r7, r7, #20
- 562 0056 BD46     		mov	sp, r7
- 563 0058 80BC     		pop	{r7}
- 564 005a 7047     		bx	lr
- 565              		.cfi_endproc
- 566              	.LFE8:
- 568              		.section	.text.OdometryGPIO_ConnectPin,"ax",%progbits
- 569              		.align	2
- 570              		.global	OdometryGPIO_ConnectPin
- 571              		.thumb
- 572              		.thumb_func
- 574              	OdometryGPIO_ConnectPin:
- 575              	.LFB9:
+ 561              		.loc 1 453 0
+ 562 0052 07F11407 		add	r7, r7, #20
+ 563 0056 BD46     		mov	sp, r7
+ 564 0058 80BC     		pop	{r7}
+ 565 005a 7047     		bx	lr
+ 566              		.cfi_endproc
+ 567              	.LFE8:
+ 569              		.section	.text.OdometryGPIO_ConnectPin,"ax",%progbits
+ 570              		.align	2
+ 571              		.global	OdometryGPIO_ConnectPin
+ 572              		.thumb
+ 573              		.thumb_func
+ 575              	OdometryGPIO_ConnectPin:
+ 576              	.LFB9:
  454:../Generated_Code/OdometryGPIO.c **** 
  455:../Generated_Code/OdometryGPIO.c **** /*
  456:../Generated_Code/OdometryGPIO.c **** ** ===================================================================
@@ -1031,77 +1032,77 @@
  477:../Generated_Code/OdometryGPIO.c **** */
  478:../Generated_Code/OdometryGPIO.c **** LDD_TError OdometryGPIO_ConnectPin(LDD_TDeviceData *DeviceDataPtr, LDD_TPinMask PinMask)
  479:../Generated_Code/OdometryGPIO.c **** {
- 576              		.loc 1 479 0
- 577              		.cfi_startproc
- 578              		@ args = 0, pretend = 0, frame = 8
- 579              		@ frame_needed = 1, uses_anonymous_args = 0
- 580              		@ link register save eliminated.
- 581 0000 80B4     		push	{r7}
- 582              	.LCFI27:
- 583              		.cfi_def_cfa_offset 4
- 584              		.cfi_offset 7, -4
- 585 0002 83B0     		sub	sp, sp, #12
- 586              	.LCFI28:
- 587              		.cfi_def_cfa_offset 16
- 588 0004 00AF     		add	r7, sp, #0
- 589              	.LCFI29:
- 590              		.cfi_def_cfa_register 7
- 591 0006 7860     		str	r0, [r7, #4]
- 592 0008 3960     		str	r1, [r7, #0]
+ 577              		.loc 1 479 0
+ 578              		.cfi_startproc
+ 579              		@ args = 0, pretend = 0, frame = 8
+ 580              		@ frame_needed = 1, uses_anonymous_args = 0
+ 581              		@ link register save eliminated.
+ 582 0000 80B4     		push	{r7}
+ 583              	.LCFI27:
+ 584              		.cfi_def_cfa_offset 4
+ 585              		.cfi_offset 7, -4
+ 586 0002 83B0     		sub	sp, sp, #12
+ 587              	.LCFI28:
+ 588              		.cfi_def_cfa_offset 16
+ 589 0004 00AF     		add	r7, sp, #0
+ 590              	.LCFI29:
+ 591              		.cfi_def_cfa_register 7
+ 592 0006 7860     		str	r0, [r7, #4]
+ 593 0008 3960     		str	r1, [r7, #0]
  480:../Generated_Code/OdometryGPIO.c ****   (void)DeviceDataPtr;                 /* Parameter is not used, suppress unused argument warning *
  481:../Generated_Code/OdometryGPIO.c ****   /* Pin mask test - this test can be disabled by setting the "Ignore range checking"
  482:../Generated_Code/OdometryGPIO.c ****      property to the "yes" value in the "Configuration inspector" */
  483:../Generated_Code/OdometryGPIO.c ****   if ((PinMask & ((LDD_TPinMask)~((LDD_TPinMask)OdometryGPIO_ALLOCATED_PINS_MASK))) != 0U) {
- 593              		.loc 1 483 0
- 594 000a 3B68     		ldr	r3, [r7, #0]
- 595 000c 23F04003 		bic	r3, r3, #64
- 596 0010 002B     		cmp	r3, #0
- 597 0012 02D0     		beq	.L39
+ 594              		.loc 1 483 0
+ 595 000a 3B68     		ldr	r3, [r7, #0]
+ 596 000c 23F04003 		bic	r3, r3, #64
+ 597 0010 002B     		cmp	r3, #0
+ 598 0012 02D0     		beq	.L39
  484:../Generated_Code/OdometryGPIO.c ****     return ERR_PARAM_MASK;
- 598              		.loc 1 484 0
- 599 0014 4FF08003 		mov	r3, #128
- 600 0018 16E0     		b	.L40
- 601              	.L39:
+ 599              		.loc 1 484 0
+ 600 0014 4FF08003 		mov	r3, #128
+ 601 0018 16E0     		b	.L40
+ 602              	.L39:
  485:../Generated_Code/OdometryGPIO.c ****   }
  486:../Generated_Code/OdometryGPIO.c ****   if ((PinMask & LDD_GPIO_PIN_6) != 0U) {
- 602              		.loc 1 486 0
- 603 001a 3B68     		ldr	r3, [r7, #0]
- 604 001c 03F04003 		and	r3, r3, #64
- 605 0020 002B     		cmp	r3, #0
- 606 0022 0FD0     		beq	.L41
+ 603              		.loc 1 486 0
+ 604 001a 3B68     		ldr	r3, [r7, #0]
+ 605 001c 03F04003 		and	r3, r3, #64
+ 606 0020 002B     		cmp	r3, #0
+ 607 0022 0FD0     		beq	.L41
  487:../Generated_Code/OdometryGPIO.c ****     clrSetReg32Bits(PORTD_PCR6, 0x01000600U, 0x0100U); /* MUX=0x01U */
- 607              		.loc 1 487 0
- 608 0024 4FF44043 		mov	r3, #49152
- 609 0028 C4F20403 		movt	r3, 16388
- 610 002c 4FF44042 		mov	r2, #49152
- 611 0030 C4F20402 		movt	r2, 16388
- 612 0034 9269     		ldr	r2, [r2, #24]
- 613 0036 22F08072 		bic	r2, r2, #16777216
- 614 003a 22F4E062 		bic	r2, r2, #1792
- 615 003e 42F48072 		orr	r2, r2, #256
- 616 0042 9A61     		str	r2, [r3, #24]
- 617              	.L41:
+ 608              		.loc 1 487 0
+ 609 0024 4FF44043 		mov	r3, #49152
+ 610 0028 C4F20403 		movt	r3, 16388
+ 611 002c 4FF44042 		mov	r2, #49152
+ 612 0030 C4F20402 		movt	r2, 16388
+ 613 0034 9269     		ldr	r2, [r2, #24]
+ 614 0036 22F08072 		bic	r2, r2, #16777216
+ 615 003a 22F4E062 		bic	r2, r2, #1792
+ 616 003e 42F48072 		orr	r2, r2, #256
+ 617 0042 9A61     		str	r2, [r3, #24]
+ 618              	.L41:
  488:../Generated_Code/OdometryGPIO.c ****   }
  489:../Generated_Code/OdometryGPIO.c ****   return ERR_OK;
- 618              		.loc 1 489 0
- 619 0044 4FF00003 		mov	r3, #0
- 620              	.L40:
+ 619              		.loc 1 489 0
+ 620 0044 4FF00003 		mov	r3, #0
+ 621              	.L40:
  490:../Generated_Code/OdometryGPIO.c **** }
- 621              		.loc 1 490 0
- 622 0048 1846     		mov	r0, r3
- 623 004a 07F10C07 		add	r7, r7, #12
- 624 004e BD46     		mov	sp, r7
- 625 0050 80BC     		pop	{r7}
- 626 0052 7047     		bx	lr
- 627              		.cfi_endproc
- 628              	.LFE9:
- 630              		.section	.text.OdometryGPIO_Interrupt,"ax",%progbits
- 631              		.align	2
- 632              		.global	OdometryGPIO_Interrupt
- 633              		.thumb
- 634              		.thumb_func
- 636              	OdometryGPIO_Interrupt:
- 637              	.LFB10:
+ 622              		.loc 1 490 0
+ 623 0048 1846     		mov	r0, r3
+ 624 004a 07F10C07 		add	r7, r7, #12
+ 625 004e BD46     		mov	sp, r7
+ 626 0050 80BC     		pop	{r7}
+ 627 0052 7047     		bx	lr
+ 628              		.cfi_endproc
+ 629              	.LFE9:
+ 631              		.section	.text.OdometryGPIO_Interrupt,"ax",%progbits
+ 632              		.align	2
+ 633              		.global	OdometryGPIO_Interrupt
+ 634              		.thumb
+ 635              		.thumb_func
+ 637              	OdometryGPIO_Interrupt:
+ 638              	.LFB10:
  491:../Generated_Code/OdometryGPIO.c **** 
  492:../Generated_Code/OdometryGPIO.c **** /*
  493:../Generated_Code/OdometryGPIO.c **** ** ===================================================================
@@ -1115,107 +1116,107 @@
  501:../Generated_Code/OdometryGPIO.c **** */
  502:../Generated_Code/OdometryGPIO.c **** PE_ISR(OdometryGPIO_Interrupt)
  503:../Generated_Code/OdometryGPIO.c **** {
- 638              		.loc 1 503 0
- 639              		.cfi_startproc
- 640              		@ Stack Align: May be called with mis-aligned SP.
- 641              		@ args = 0, pretend = 0, frame = 8
- 642              		@ frame_needed = 1, uses_anonymous_args = 0
- 643 0000 6846     		mov	r0, sp
- 644              		.cfi_register 13, 0
- 645 0002 20F00701 		bic	r1, r0, #7
- 646 0006 8D46     		mov	sp, r1
- 647 0008 81B5     		push	{r0, r7, lr}
- 648              	.LCFI30:
- 649              		.cfi_def_cfa_offset 12
- 650              		.cfi_offset 14, -4
- 651              		.cfi_offset 7, -8
- 652              		.cfi_offset 13, -12
- 653 000a 83B0     		sub	sp, sp, #12
- 654              	.LCFI31:
- 655              		.cfi_def_cfa_offset 24
- 656 000c 00AF     		add	r7, sp, #0
- 657              	.LCFI32:
- 658              		.cfi_def_cfa_register 7
+ 639              		.loc 1 503 0
+ 640              		.cfi_startproc
+ 641              		@ Stack Align: May be called with mis-aligned SP.
+ 642              		@ args = 0, pretend = 0, frame = 8
+ 643              		@ frame_needed = 1, uses_anonymous_args = 0
+ 644 0000 6846     		mov	r0, sp
+ 645              		.cfi_register 13, 0
+ 646 0002 20F00701 		bic	r1, r0, #7
+ 647 0006 8D46     		mov	sp, r1
+ 648 0008 81B5     		push	{r0, r7, lr}
+ 649              	.LCFI30:
+ 650              		.cfi_def_cfa_offset 12
+ 651              		.cfi_offset 14, -4
+ 652              		.cfi_offset 7, -8
+ 653              		.cfi_offset 13, -12
+ 654 000a 83B0     		sub	sp, sp, #12
+ 655              	.LCFI31:
+ 656              		.cfi_def_cfa_offset 24
+ 657 000c 00AF     		add	r7, sp, #0
+ 658              	.LCFI32:
+ 659              		.cfi_def_cfa_register 7
  504:../Generated_Code/OdometryGPIO.c ****   /* {Default RTOS Adapter} ISR parameter is passed through the global variable */
  505:../Generated_Code/OdometryGPIO.c ****   OdometryGPIO_TDeviceDataPtr DeviceDataPrv = INT_PORTD__DEFAULT_RTOS_ISRPARAM;
- 659              		.loc 1 505 0
- 660 000e 40F20003 		movw	r3, #:lower16:INT_PORTD__DEFAULT_RTOS_ISRPARAM
- 661 0012 C0F20003 		movt	r3, #:upper16:INT_PORTD__DEFAULT_RTOS_ISRPARAM
- 662 0016 1B68     		ldr	r3, [r3, #0]
- 663 0018 7B60     		str	r3, [r7, #4]
+ 660              		.loc 1 505 0
+ 661 000e 40F20003 		movw	r3, #:lower16:INT_PORTD__DEFAULT_RTOS_ISRPARAM
+ 662 0012 C0F20003 		movt	r3, #:upper16:INT_PORTD__DEFAULT_RTOS_ISRPARAM
+ 663 0016 1B68     		ldr	r3, [r3, #0]
+ 664 0018 7B60     		str	r3, [r7, #4]
  506:../Generated_Code/OdometryGPIO.c ****   OdometryGPIO_TPortValue State;
  507:../Generated_Code/OdometryGPIO.c **** 
  508:../Generated_Code/OdometryGPIO.c ****   State = (OdometryGPIO_TPortValue)(PORT_PDD_GetInterruptFlags(OdometryGPIO_PORTCONTROL_BASE_ADDRES
- 664              		.loc 1 508 0
- 665 001a 4FF44043 		mov	r3, #49152
- 666 001e C4F20403 		movt	r3, 16388
- 667 0022 D3F8A030 		ldr	r3, [r3, #160]
- 668 0026 03F04003 		and	r3, r3, #64
- 669 002a 3B60     		str	r3, [r7, #0]
+ 665              		.loc 1 508 0
+ 666 001a 4FF44043 		mov	r3, #49152
+ 667 001e C4F20403 		movt	r3, 16388
+ 668 0022 D3F8A030 		ldr	r3, [r3, #160]
+ 669 0026 03F04003 		and	r3, r3, #64
+ 670 002a 3B60     		str	r3, [r7, #0]
  509:../Generated_Code/OdometryGPIO.c ****           & ((OdometryGPIO_TPortValue)OdometryGPIO_ALLOCATED_PINS_MASK)); /* Retrieve flags */
  510:../Generated_Code/OdometryGPIO.c ****   DeviceDataPrv->EventFlags |= State;
- 670              		.loc 1 510 0
- 671 002c 7B68     		ldr	r3, [r7, #4]
- 672 002e 1A68     		ldr	r2, [r3, #0]
- 673 0030 3B68     		ldr	r3, [r7, #0]
- 674 0032 1A43     		orrs	r2, r2, r3
- 675 0034 7B68     		ldr	r3, [r7, #4]
- 676 0036 1A60     		str	r2, [r3, #0]
+ 671              		.loc 1 510 0
+ 672 002c 7B68     		ldr	r3, [r7, #4]
+ 673 002e 1A68     		ldr	r2, [r3, #0]
+ 674 0030 3B68     		ldr	r3, [r7, #0]
+ 675 0032 1A43     		orrs	r2, r2, r3
+ 676 0034 7B68     		ldr	r3, [r7, #4]
+ 677 0036 1A60     		str	r2, [r3, #0]
  511:../Generated_Code/OdometryGPIO.c ****   PORT_PDD_ClearInterruptFlags(OdometryGPIO_PORTCONTROL_BASE_ADDRESS, State); /* Clears flags */
- 677              		.loc 1 511 0
- 678 0038 4FF44043 		mov	r3, #49152
- 679 003c C4F20403 		movt	r3, 16388
- 680 0040 3A68     		ldr	r2, [r7, #0]
- 681 0042 C3F8A020 		str	r2, [r3, #160]
+ 678              		.loc 1 511 0
+ 679 0038 4FF44043 		mov	r3, #49152
+ 680 003c C4F20403 		movt	r3, 16388
+ 681 0040 3A68     		ldr	r2, [r7, #0]
+ 682 0042 C3F8A020 		str	r2, [r3, #160]
  512:../Generated_Code/OdometryGPIO.c ****   OdometryGPIO_OnPortEvent(DeviceDataPrv->UserData); /* Call OnPortEvent event */
- 682              		.loc 1 512 0
- 683 0046 7B68     		ldr	r3, [r7, #4]
- 684 0048 5B68     		ldr	r3, [r3, #4]
- 685 004a 1846     		mov	r0, r3
- 686 004c FFF7FEFF 		bl	OdometryGPIO_OnPortEvent
+ 683              		.loc 1 512 0
+ 684 0046 7B68     		ldr	r3, [r7, #4]
+ 685 0048 5B68     		ldr	r3, [r3, #4]
+ 686 004a 1846     		mov	r0, r3
+ 687 004c FFF7FEFF 		bl	OdometryGPIO_OnPortEvent
  513:../Generated_Code/OdometryGPIO.c **** }
- 687              		.loc 1 513 0
- 688 0050 07F10C07 		add	r7, r7, #12
- 689 0054 BD46     		mov	sp, r7
- 690 0056 BDE88140 		pop	{r0, r7, lr}
- 691 005a 8546     		mov	sp, r0
- 692 005c 7047     		bx	lr
- 693              		.cfi_endproc
- 694              	.LFE10:
- 696 005e 00BF     		.text
- 697              	.Letext0:
- 698              		.file 2 "C:/Freescale/CW MCU v10.3_NOBETA/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
- 699              		.file 3 "C:/workspaceBakalarkaa/Pex/Generated_Code/IO_Map.h"
- 700              		.file 4 "C:/workspaceBakalarkaa/Pex/Generated_Code/PE_LDD.h"
- 701              		.file 5 "C:/workspaceBakalarkaa/Pex/Generated_Code/OdometryGPIO.h"
+ 688              		.loc 1 513 0
+ 689 0050 07F10C07 		add	r7, r7, #12
+ 690 0054 BD46     		mov	sp, r7
+ 691 0056 BDE88140 		pop	{r0, r7, lr}
+ 692 005a 8546     		mov	sp, r0
+ 693 005c 7047     		bx	lr
+ 694              		.cfi_endproc
+ 695              	.LFE10:
+ 697 005e 00BF     		.text
+ 698              	.Letext0:
+ 699              		.file 2 "C:/Freescale/CW MCU v10.3_121211/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
+ 700              		.file 3 "C:/temp2/Pex/Generated_Code/IO_Map.h"
+ 701              		.file 4 "C:/temp2/Pex/Generated_Code/PE_LDD.h"
+ 702              		.file 5 "C:/temp2/Pex/Generated_Code/OdometryGPIO.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 OdometryGPIO.c
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:19     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 $d
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:22     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 DeviceDataPrv__DEFAULT_RTOS_ALLOC
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:25     .bss.INT_PORTD__DEFAULT_RTOS_ISRPARAM:00000000 $d
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:28     .bss.INT_PORTD__DEFAULT_RTOS_ISRPARAM:00000000 INT_PORTD__DEFAULT_RTOS_ISRPARAM
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:31     .text.OdometryGPIO_Init:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:36     .text.OdometryGPIO_Init:00000000 OdometryGPIO_Init
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:132    .text.OdometryGPIO_Deinit:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:137    .text.OdometryGPIO_Deinit:00000000 OdometryGPIO_Deinit
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:185    .text.OdometryGPIO_SetFieldValue:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:190    .text.OdometryGPIO_SetFieldValue:00000000 OdometryGPIO_SetFieldValue
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:242    .text.OdometryGPIO_GetFieldValue:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:247    .text.OdometryGPIO_GetFieldValue:00000000 OdometryGPIO_GetFieldValue
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:296    .text.OdometryGPIO_ClearFieldBits:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:301    .text.OdometryGPIO_ClearFieldBits:00000000 OdometryGPIO_ClearFieldBits
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:348    .text.OdometryGPIO_SetFieldBits:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:353    .text.OdometryGPIO_SetFieldBits:00000000 OdometryGPIO_SetFieldBits
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:400    .text.OdometryGPIO_ToggleFieldBits:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:405    .text.OdometryGPIO_ToggleFieldBits:00000000 OdometryGPIO_ToggleFieldBits
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:452    .text.OdometryGPIO_SetFieldInputDirection:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:457    .text.OdometryGPIO_SetFieldInputDirection:00000000 OdometryGPIO_SetFieldInputDirection
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:504    .text.OdometryGPIO_SetFieldOutputDirection:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:509    .text.OdometryGPIO_SetFieldOutputDirection:00000000 OdometryGPIO_SetFieldOutputDirection
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:569    .text.OdometryGPIO_ConnectPin:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:574    .text.OdometryGPIO_ConnectPin:00000000 OdometryGPIO_ConnectPin
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:631    .text.OdometryGPIO_Interrupt:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccZIiCRe.s:636    .text.OdometryGPIO_Interrupt:00000000 OdometryGPIO_Interrupt
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:19     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:22     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 DeviceDataPrv__DEFAULT_RTOS_ALLOC
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:25     .bss.INT_PORTD__DEFAULT_RTOS_ISRPARAM:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:28     .bss.INT_PORTD__DEFAULT_RTOS_ISRPARAM:00000000 INT_PORTD__DEFAULT_RTOS_ISRPARAM
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:31     .text.OdometryGPIO_Init:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:36     .text.OdometryGPIO_Init:00000000 OdometryGPIO_Init
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:133    .text.OdometryGPIO_Deinit:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:138    .text.OdometryGPIO_Deinit:00000000 OdometryGPIO_Deinit
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:186    .text.OdometryGPIO_SetFieldValue:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:191    .text.OdometryGPIO_SetFieldValue:00000000 OdometryGPIO_SetFieldValue
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:243    .text.OdometryGPIO_GetFieldValue:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:248    .text.OdometryGPIO_GetFieldValue:00000000 OdometryGPIO_GetFieldValue
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:297    .text.OdometryGPIO_ClearFieldBits:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:302    .text.OdometryGPIO_ClearFieldBits:00000000 OdometryGPIO_ClearFieldBits
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:349    .text.OdometryGPIO_SetFieldBits:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:354    .text.OdometryGPIO_SetFieldBits:00000000 OdometryGPIO_SetFieldBits
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:401    .text.OdometryGPIO_ToggleFieldBits:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:406    .text.OdometryGPIO_ToggleFieldBits:00000000 OdometryGPIO_ToggleFieldBits
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:453    .text.OdometryGPIO_SetFieldInputDirection:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:458    .text.OdometryGPIO_SetFieldInputDirection:00000000 OdometryGPIO_SetFieldInputDirection
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:505    .text.OdometryGPIO_SetFieldOutputDirection:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:510    .text.OdometryGPIO_SetFieldOutputDirection:00000000 OdometryGPIO_SetFieldOutputDirection
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:570    .text.OdometryGPIO_ConnectPin:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:575    .text.OdometryGPIO_ConnectPin:00000000 OdometryGPIO_ConnectPin
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:632    .text.OdometryGPIO_Interrupt:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccl93OIF.s:637    .text.OdometryGPIO_Interrupt:00000000 OdometryGPIO_Interrupt
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

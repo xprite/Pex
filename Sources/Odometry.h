@@ -16,7 +16,8 @@
 typedef struct Odometry{
   volatile uint32_t TotalDistance;
   volatile uint32_t MeasuredSpeed[AVERAGE_SAMPLES_COUNT];
-  volatile uint32_t RealSpeed;
+  volatile uint32_t Speed;
+  volatile uint32_t SpeedCounter;
   volatile uint32_t DefaultValue;
   volatile bool SetReset;
 }TOdometry;

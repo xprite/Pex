@@ -6,7 +6,7 @@
 **     Component   : GPIO_LDD
 **     Version     : Component 01.126, Driver 01.06, CPU db: 3.00.001
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2013-04-11, 15:40, # CodeGen: 91
+**     Date/Time   : 2013-04-13, 21:57, # CodeGen: 105
 **     Abstract    :
 **         The HAL GPIO component will provide a low level API for unified
 **         access to general purpose digital input/output pins across
@@ -30,7 +30,7 @@
 **                  Pin                                    : PTD6/SPI0_PCS3/UART0_RX/FTM0_CH6/FTM0_FLT0/LCD_P46/ADC0_SE7b
 **                  Pin signal                             : 
 **                  Initial pin direction                  : Input
-**                  Initial pin event                      : Falling edge
+**                  Initial pin event                      : Both edges
 **                  Lock initialization function           : no
 **          Initialization                                 : 
 **            Auto initialization                          : yes

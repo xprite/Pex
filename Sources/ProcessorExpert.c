@@ -42,6 +42,7 @@
 #include "IO_Map.h"
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
+#include "Controller.h"
 #include "Odometry.h"
 #include "Communication.h"
 #include "Accelerometer.h"
@@ -53,14 +54,17 @@
 #include <cstdio>
 
 /*********************************/
+TController Controller;
 TCommunication Communication;
 TOdometry Odometry;
 TAccelerometer Accelerometer;
 TCamera Camera;
 TMap Map;
+TSteering Steering;
 /********************************/
 
 
+int32_t AbsoluteServoPosition = 0; //TODO DELETE
 
 
 int main(void)
@@ -85,12 +89,14 @@ int main(void)
   /* Write your code here */
   /* For example: for(;;) { } */
 
- // GPIO1_SetFieldBits(GPIO1_DeviceData, EnableLeftMotor, 0x01);
- // GPIO1_SetFieldBits(GPIO1_DeviceData, EnableRightMotor, 0x01);
+  //GPIO1_SetFieldBits(GPIO1_DeviceData, EnableLeftMotor, 0x01);
+  //GPIO1_SetFieldBits(GPIO1_DeviceData, EnableRightMotor, 0x01);
   
   PWMMotor_SetOffsetTicks(PWMMotor_DeviceData, 0, 1000);
   PWMMotor_SetOffsetTicks(PWMMotor_DeviceData, 1, 1000);
   
+  ControllerInit(&Controller);
+  SteeringInit(&Steering);
   MapInit(&Map);
   OdometryInit(&Odometry);
   CameraInit(&Camera);
@@ -118,12 +124,19 @@ int main(void)
       AS1_SendBlock(AS1_DeviceData, &text[0], strlen(text));
     }
     
-    minimum = GetMinimumIndex(&Camera.ConvolutionResult[0], CONVOLUTIN_RESULT_LENGTH);
-    maximum = GetMaximumIndex(&Camera.ConvolutionResult[0], CONVOLUTIN_RESULT_LENGTH);
+    minimum = GetMinimumIndex(&Camera.ConvolutionResult[KERNEL_LENGTH-1], CONVOLUTIN_RESULT_LENGTH - ((KERNEL_LENGTH-1)*2));
+    maximum = GetMaximumIndex(&Camera.ConvolutionResult[KERNEL_LENGTH-1], CONVOLUTIN_RESULT_LENGTH - ((KERNEL_LENGTH-1)*2));
     
+    //AbsoluteServoPosition = ((minimum+maximum)/2);
     
+    //SetServoPosition(AbsoluteServoPosition);
     
-    SetServoPosition(((minimum+maximum)/2)*20 + 3000);
+    Steering.LinePosition = 65 - ((minimum+maximum)/2);
+    
+    SteeringControll(&Steering);
+    
+    //SetServoPosition( (minimum+maximum)/2 );
+   
     
 	  if(Accelerometer.Received) {
 	    Accelerometer.Received = FALSE;

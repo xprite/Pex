@@ -47,7 +47,7 @@
    6:../Generated_Code/AS1.c **** **     Component   : Serial_LDD
    7:../Generated_Code/AS1.c **** **     Version     : Component 01.165, Driver 01.10, CPU db: 3.00.001
    8:../Generated_Code/AS1.c **** **     Compiler    : GNU C Compiler
-   9:../Generated_Code/AS1.c **** **     Date/Time   : 2013-04-11, 17:31, # CodeGen: 97
+   9:../Generated_Code/AS1.c **** **     Date/Time   : 2013-04-11, 18:00, # CodeGen: 100
   10:../Generated_Code/AS1.c **** **     Abstract    :
   11:../Generated_Code/AS1.c **** **         This component "Serial_LDD" implements an asynchronous serial
   12:../Generated_Code/AS1.c **** **         communication. The component supports different settings of
@@ -70,7 +70,7 @@
   29:../Generated_Code/AS1.c **** **            Parity                                       : None
   30:../Generated_Code/AS1.c **** **            Stop bits                                    : 1
   31:../Generated_Code/AS1.c **** **            Loop mode                                    : Normal
-  32:../Generated_Code/AS1.c **** **            Baud rate                                    : 38400 baud
+  32:../Generated_Code/AS1.c **** **            Baud rate                                    : 57600 baud
   33:../Generated_Code/AS1.c **** **            Wakeup condition                             : Idle line wakeup
   34:../Generated_Code/AS1.c **** **            Stop in wait mode                            : no
   35:../Generated_Code/AS1.c **** **            Idle line mode                               : Starts after start bit
@@ -370,7 +370,7 @@
  202 0186 C4F20603 		movt	r3, 16390
  203 018a 4FF00002 		mov	r2, #0
  204 018e 5A73     		strb	r2, [r3, #13]
- 172:../Generated_Code/AS1.c ****   UART_PDD_SetBaudRateFineAdjust(UART3_BASE_PTR, 4u); /* Set baud rate fine adjust */
+ 172:../Generated_Code/AS1.c ****   UART_PDD_SetBaudRateFineAdjust(UART3_BASE_PTR, 3u); /* Set baud rate fine adjust */
  205              		.loc 1 172 0
  206 0190 4FF45043 		mov	r3, #53248
  207 0194 C4F20603 		movt	r3, 16390
@@ -381,11 +381,11 @@
  212 01a4 D2B2     		uxtb	r2, r2
  213 01a6 22F01F02 		bic	r2, r2, #31
  214 01aa D2B2     		uxtb	r2, r2
- 215 01ac 42F00402 		orr	r2, r2, #4
+ 215 01ac 42F00302 		orr	r2, r2, #3
  216 01b0 D2B2     		uxtb	r2, r2
  217 01b2 D2B2     		uxtb	r2, r2
  218 01b4 9A72     		strb	r2, [r3, #10]
- 173:../Generated_Code/AS1.c ****   UART_PDD_SetBaudRate(UART3_BASE_PTR, 78U); /* Set the baud rate register. */
+ 173:../Generated_Code/AS1.c ****   UART_PDD_SetBaudRate(UART3_BASE_PTR, 52U); /* Set the baud rate register. */
  219              		.loc 1 173 0
  220 01b6 4FF45043 		mov	r3, #53248
  221 01ba C4F20603 		movt	r3, 16390
@@ -398,7 +398,7 @@
  228 01d0 1A70     		strb	r2, [r3, #0]
  229 01d2 4FF45043 		mov	r3, #53248
  230 01d6 C4F20603 		movt	r3, 16390
- 231 01da 4FF04E02 		mov	r2, #78
+ 231 01da 4FF03402 		mov	r2, #52
  232 01de 5A70     		strb	r2, [r3, #1]
  174:../Generated_Code/AS1.c ****   UART_PDD_EnableFifo(UART3_BASE_PTR, (UART_PDD_TX_FIFO_ENABLE | UART_PDD_RX_FIFO_ENABLE)); /* Enab
  233              		.loc 1 174 0
@@ -1406,37 +1406,37 @@
  991              	.LFE8:
  993 007e 00BF     		.text
  994              	.Letext0:
- 995              		.file 2 "C:/Freescale/CW MCU v10.3_NOBETA/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
+ 995              		.file 2 "C:/Freescale/CW MCU v10.3_121211/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
  996              		.file 3 "../Generated_Code/PE_LDD.h"
  997              		.file 4 "../Generated_Code/IO_Map.h"
  998              		.file 5 "../Generated_Code/AS1.h"
  999              		.file 6 "../Generated_Code/Cpu.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 AS1.c
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:19     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 $d
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:22     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 DeviceDataPrv__DEFAULT_RTOS_ALLOC
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:25     .bss.INT_UART3_RX_TX__DEFAULT_RTOS_ISRPARAM:00000000 $d
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:28     .bss.INT_UART3_RX_TX__DEFAULT_RTOS_ISRPARAM:00000000 INT_UART3_RX_TX__DEFAULT_RTOS_ISRPARAM
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:31     .bss.INT_UART3_ERR__DEFAULT_RTOS_ISRPARAM:00000000 $d
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:34     .bss.INT_UART3_ERR__DEFAULT_RTOS_ISRPARAM:00000000 INT_UART3_ERR__DEFAULT_RTOS_ISRPARAM
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:37     .text.AS1_Init:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:42     .text.AS1_Init:00000000 AS1_Init
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:311    .text.AS1_Deinit:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:316    .text.AS1_Deinit:00000000 AS1_Deinit
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:395    .text.AS1_ReceiveBlock:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:400    .text.AS1_ReceiveBlock:00000000 AS1_ReceiveBlock
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:514    .text.AS1_SendBlock:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:519    .text.AS1_SendBlock:00000000 AS1_SendBlock
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:657    .text.AS1_GetReceivedDataNum:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:662    .text.AS1_GetReceivedDataNum:00000000 AS1_GetReceivedDataNum
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:696    .text.AS1_GetSentDataNum:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:701    .text.AS1_GetSentDataNum:00000000 AS1_GetSentDataNum
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:735    .text.InterruptRx:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:739    .text.InterruptRx:00000000 InterruptRx
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:809    .text.InterruptTx:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:813    .text.InterruptTx:00000000 InterruptTx
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:906    .text.AS1_Interrupt:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccVDppMt.s:911    .text.AS1_Interrupt:00000000 AS1_Interrupt
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:19     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:22     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 DeviceDataPrv__DEFAULT_RTOS_ALLOC
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:25     .bss.INT_UART3_RX_TX__DEFAULT_RTOS_ISRPARAM:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:28     .bss.INT_UART3_RX_TX__DEFAULT_RTOS_ISRPARAM:00000000 INT_UART3_RX_TX__DEFAULT_RTOS_ISRPARAM
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:31     .bss.INT_UART3_ERR__DEFAULT_RTOS_ISRPARAM:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:34     .bss.INT_UART3_ERR__DEFAULT_RTOS_ISRPARAM:00000000 INT_UART3_ERR__DEFAULT_RTOS_ISRPARAM
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:37     .text.AS1_Init:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:42     .text.AS1_Init:00000000 AS1_Init
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:311    .text.AS1_Deinit:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:316    .text.AS1_Deinit:00000000 AS1_Deinit
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:395    .text.AS1_ReceiveBlock:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:400    .text.AS1_ReceiveBlock:00000000 AS1_ReceiveBlock
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:514    .text.AS1_SendBlock:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:519    .text.AS1_SendBlock:00000000 AS1_SendBlock
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:657    .text.AS1_GetReceivedDataNum:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:662    .text.AS1_GetReceivedDataNum:00000000 AS1_GetReceivedDataNum
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:696    .text.AS1_GetSentDataNum:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:701    .text.AS1_GetSentDataNum:00000000 AS1_GetSentDataNum
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:735    .text.InterruptRx:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:739    .text.InterruptRx:00000000 InterruptRx
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:809    .text.InterruptTx:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:813    .text.InterruptTx:00000000 InterruptTx
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:906    .text.AS1_Interrupt:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccwPFSNY.s:911    .text.AS1_Interrupt:00000000 AS1_Interrupt
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

@@ -10,5 +10,7 @@
 void OdometryInit(TOdometry* aOdometry)
 {
   aOdometry->TotalDistance = 0;
+  aOdometry->SpeedCounter = 0;
+  aOdometry->Speed = 0;
 }
 

@@ -23,8 +23,8 @@ typedef struct{
   uint32_t clockExposureOffset;
   uint8_t *writePointerToBuffer;
   uint8_t *readPointerToBuffer;
-	uint8_t cameraRawData0[PIXEL_NUM + ((KERNEL_LENGTH/2)*4)];
-	uint8_t cameraRawData1[PIXEL_NUM + ((KERNEL_LENGTH/2)*4)];
+	uint8_t cameraRawData0[PIXEL_NUM];
+	uint8_t cameraRawData1[PIXEL_NUM];
   uint32_t pixelClockCounter;
   int32_t ConvolutionResult[PIXEL_NUM + KERNEL_LENGTH -1];
   int32_t Kernel[KERNEL_LENGTH];  

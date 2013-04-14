@@ -14,8 +14,8 @@ void CameraInit(TCamera* aCamera)
   aCamera->pixelClockCounter = 0;
   aCamera->readPointerToBuffer = aCamera->cameraRawData0;
   aCamera->writePointerToBuffer = aCamera->cameraRawData0;
-  memset(&aCamera->cameraRawData0[0], PIXEL_NUM + ((KERNEL_LENGTH/2)*4), 0);
-  memset(&aCamera->cameraRawData1[0], PIXEL_NUM + ((KERNEL_LENGTH/2)*4), 0);
+  memset(&aCamera->cameraRawData0[0], PIXEL_NUM, 0);
+  memset(&aCamera->cameraRawData1[0], PIXEL_NUM, 0);
 
 #if 0 
   aCamera->Kernel[0] = 1;

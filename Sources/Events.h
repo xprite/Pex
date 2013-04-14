@@ -124,27 +124,6 @@ void Period_OnCounterRestart(LDD_TUserData *UserDataPtr);
 ** ===================================================================
 */
 
-void OdoTimer_OnCounterRestart(LDD_TUserData *UserDataPtr);
-/*
-** ===================================================================
-**     Event       :  OdoTimer_OnCounterRestart (module Events)
-**
-**     Component   :  OdoTimer [TimerUnit_LDD]
-**     Description :
-**         Called if counter overflow/underflow or counter is
-**         reinitialized by modulo or compare register matching.
-**         OnCounterRestart event and Timer unit must be enabled. See
-**         <SetEventMask> and <GetEventMask> methods. This event is
-**         available only if a <Interrupt> is enabled.
-**     Parameters  :
-**         NAME            - DESCRIPTION
-**       * UserDataPtr     - Pointer to the user or
-**                           RTOS specific data. The pointer passed as
-**                           the parameter of Init method.
-**     Returns     : Nothing
-** ===================================================================
-*/
-
 void AS1_OnBlockReceived(LDD_TUserData *UserDataPtr);
 /*
 ** ===================================================================
@@ -344,10 +323,10 @@ void CameraTimer_OnChannel1(LDD_TUserData *UserDataPtr);
 ** ===================================================================
 */
 
-void Cpu_OnNMIINT0(void);
+void Cpu_OnNMIINT(void);
 /*
 ** ===================================================================
-**     Event       :  Cpu_OnNMIINT0 (module Events)
+**     Event       :  Cpu_OnNMIINT (module Events)
 **
 **     Component   :  Cpu [MK40N512LQ100]
 **     Description :

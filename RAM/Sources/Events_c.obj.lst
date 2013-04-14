@@ -44,1151 +44,1130 @@
   19:../Sources/Events.c **** #include "Cpu.h"
   20:../Sources/Events.c **** #include "Events.h"
   21:../Sources/Events.c **** 
-  22:../Sources/Events.c **** #include "Odometry.h"
-  23:../Sources/Events.c **** #include "Accelerometer.h"
-  24:../Sources/Events.c **** #include "Communication.h"
-  25:../Sources/Events.c **** #include "Camera.h"
-  26:../Sources/Events.c **** #include "Map.h"
-  27:../Sources/Events.c **** 
-  28:../Sources/Events.c **** /* User includes (#include below this line is not maintained by Processor Expert) */
-  29:../Sources/Events.c **** 
-  30:../Sources/Events.c **** extern TCamera Camera;
-  31:../Sources/Events.c **** extern TOdometry Odometry;
-  32:../Sources/Events.c **** extern TCommunication Communication;
-  33:../Sources/Events.c **** extern TAccelerometer Accelerometer;
-  34:../Sources/Events.c **** extern TMap Map;
-  35:../Sources/Events.c **** 
-  36:../Sources/Events.c **** /*
-  37:../Sources/Events.c **** ** ===================================================================
-  38:../Sources/Events.c **** **     Event       :  OdometryTimer_OnCounterRestart (module Events)
-  39:../Sources/Events.c **** **
-  40:../Sources/Events.c **** **     Component   :  OdometryTimer [TimerUnit_LDD]
-  41:../Sources/Events.c **** **     Description :
-  42:../Sources/Events.c **** **         Called if counter overflow/underflow or counter is
-  43:../Sources/Events.c **** **         reinitialized by modulo or compare register matching.
-  44:../Sources/Events.c **** **         OnCounterRestart event and Timer unit must be enabled. See
-  45:../Sources/Events.c **** **         <SetEventMask> and <GetEventMask> methods. This event is
-  46:../Sources/Events.c **** **         available only if a <Interrupt> is enabled.
-  47:../Sources/Events.c **** **     Parameters  :
-  48:../Sources/Events.c **** **         NAME            - DESCRIPTION
-  49:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
-  50:../Sources/Events.c **** **                           RTOS specific data. The pointer passed as
-  51:../Sources/Events.c **** **                           the parameter of Init method.
-  52:../Sources/Events.c **** **     Returns     : Nothing
-  53:../Sources/Events.c **** ** ===================================================================
-  54:../Sources/Events.c **** */
-  55:../Sources/Events.c **** void OdometryTimer_OnCounterRestart(LDD_TUserData *UserDataPtr)
-  56:../Sources/Events.c **** {
-  27              		.loc 1 56 0
+  22:../Sources/Events.c **** #include "Controller.h"
+  23:../Sources/Events.c **** #include "Odometry.h"
+  24:../Sources/Events.c **** #include "Accelerometer.h"
+  25:../Sources/Events.c **** #include "Communication.h"
+  26:../Sources/Events.c **** #include "Camera.h"
+  27:../Sources/Events.c **** #include "Map.h"
+  28:../Sources/Events.c **** 
+  29:../Sources/Events.c **** /* User includes (#include below this line is not maintained by Processor Expert) */
+  30:../Sources/Events.c **** 
+  31:../Sources/Events.c **** 
+  32:../Sources/Events.c **** extern TController Controller;
+  33:../Sources/Events.c **** extern TCamera Camera;
+  34:../Sources/Events.c **** extern TOdometry Odometry;
+  35:../Sources/Events.c **** extern TCommunication Communication;
+  36:../Sources/Events.c **** extern TAccelerometer Accelerometer;
+  37:../Sources/Events.c **** extern TMap Map;
+  38:../Sources/Events.c **** 
+  39:../Sources/Events.c **** /*
+  40:../Sources/Events.c **** ** ===================================================================
+  41:../Sources/Events.c **** **     Event       :  OdometryTimer_OnCounterRestart (module Events)
+  42:../Sources/Events.c **** **
+  43:../Sources/Events.c **** **     Component   :  OdometryTimer [TimerUnit_LDD]
+  44:../Sources/Events.c **** **     Description :
+  45:../Sources/Events.c **** **         Called if counter overflow/underflow or counter is
+  46:../Sources/Events.c **** **         reinitialized by modulo or compare register matching.
+  47:../Sources/Events.c **** **         OnCounterRestart event and Timer unit must be enabled. See
+  48:../Sources/Events.c **** **         <SetEventMask> and <GetEventMask> methods. This event is
+  49:../Sources/Events.c **** **         available only if a <Interrupt> is enabled.
+  50:../Sources/Events.c **** **     Parameters  :
+  51:../Sources/Events.c **** **         NAME            - DESCRIPTION
+  52:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
+  53:../Sources/Events.c **** **                           RTOS specific data. The pointer passed as
+  54:../Sources/Events.c **** **                           the parameter of Init method.
+  55:../Sources/Events.c **** **     Returns     : Nothing
+  56:../Sources/Events.c **** ** ===================================================================
+  57:../Sources/Events.c **** */
+  58:../Sources/Events.c **** void OdometryTimer_OnCounterRestart(LDD_TUserData *UserDataPtr)
+  59:../Sources/Events.c **** {
+  27              		.loc 1 59 0
   28              		.cfi_startproc
   29              		@ args = 0, pretend = 0, frame = 8
   30              		@ frame_needed = 1, uses_anonymous_args = 0
-  31              		@ link register save eliminated.
-  32 0000 80B4     		push	{r7}
-  33              	.LCFI0:
-  34              		.cfi_def_cfa_offset 4
-  35              		.cfi_offset 7, -4
-  36 0002 83B0     		sub	sp, sp, #12
+  31 0000 80B5     		push	{r7, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 14, -4
+  35              		.cfi_offset 7, -8
+  36 0002 82B0     		sub	sp, sp, #8
   37              	.LCFI1:
   38              		.cfi_def_cfa_offset 16
   39 0004 00AF     		add	r7, sp, #0
   40              	.LCFI2:
   41              		.cfi_def_cfa_register 7
   42 0006 7860     		str	r0, [r7, #4]
-  57:../Sources/Events.c ****   //Odometry.MeasuredSpeed++;
-  58:../Sources/Events.c ****   //if(Odometry.MeasuredSpeed > MAX_SPEED)
-  59:../Sources/Events.c ****   //  Odometry.MeasuredSpeed = MAX_SPEED;
-  60:../Sources/Events.c **** }
+  60:../Sources/Events.c ****   Odometry.Speed = Odometry.SpeedCounter;
   43              		.loc 1 60 0
-  44 0008 07F10C07 		add	r7, r7, #12
-  45 000c BD46     		mov	sp, r7
-  46 000e 80BC     		pop	{r7}
-  47 0010 7047     		bx	lr
-  48              		.cfi_endproc
-  49              	.LFE0:
-  51 0012 00BF     		.section	.text.PWMMotor_OnCounterRestart,"ax",%progbits
-  52              		.align	2
-  53              		.global	PWMMotor_OnCounterRestart
-  54              		.thumb
-  55              		.thumb_func
-  57              	PWMMotor_OnCounterRestart:
-  58              	.LFB1:
-  61:../Sources/Events.c **** 
-  62:../Sources/Events.c **** /*
-  63:../Sources/Events.c **** ** ===================================================================
-  64:../Sources/Events.c **** **     Event       :  PWMMotor_OnCounterRestart (module Events)
-  65:../Sources/Events.c **** **
-  66:../Sources/Events.c **** **     Component   :  PWMMotor [TimerUnit_LDD]
-  67:../Sources/Events.c **** **     Description :
-  68:../Sources/Events.c **** **         Called if counter overflow/underflow or counter is
-  69:../Sources/Events.c **** **         reinitialized by modulo or compare register matching.
-  70:../Sources/Events.c **** **         OnCounterRestart event and Timer unit must be enabled. See
-  71:../Sources/Events.c **** **         <SetEventMask> and <GetEventMask> methods. This event is
-  72:../Sources/Events.c **** **         available only if a <Interrupt> is enabled.
-  73:../Sources/Events.c **** **     Parameters  :
-  74:../Sources/Events.c **** **         NAME            - DESCRIPTION
-  75:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
-  76:../Sources/Events.c **** **                           RTOS specific data. The pointer passed as
-  77:../Sources/Events.c **** **                           the parameter of Init method.
-  78:../Sources/Events.c **** **     Returns     : Nothing
-  79:../Sources/Events.c **** ** ===================================================================
-  80:../Sources/Events.c **** */
-  81:../Sources/Events.c **** void PWMMotor_OnCounterRestart(LDD_TUserData *UserDataPtr)
-  82:../Sources/Events.c **** {
-  59              		.loc 1 82 0
-  60              		.cfi_startproc
-  61              		@ args = 0, pretend = 0, frame = 8
-  62              		@ frame_needed = 1, uses_anonymous_args = 0
-  63              		@ link register save eliminated.
-  64 0000 80B4     		push	{r7}
-  65              	.LCFI3:
-  66              		.cfi_def_cfa_offset 4
-  67              		.cfi_offset 7, -4
-  68 0002 83B0     		sub	sp, sp, #12
-  69              	.LCFI4:
-  70              		.cfi_def_cfa_offset 16
-  71 0004 00AF     		add	r7, sp, #0
-  72              	.LCFI5:
-  73              		.cfi_def_cfa_register 7
-  74 0006 7860     		str	r0, [r7, #4]
-  83:../Sources/Events.c ****   /* Write your code here ... */
-  84:../Sources/Events.c **** }
-  75              		.loc 1 84 0
-  76 0008 07F10C07 		add	r7, r7, #12
-  77 000c BD46     		mov	sp, r7
-  78 000e 80BC     		pop	{r7}
-  79 0010 7047     		bx	lr
-  80              		.cfi_endproc
-  81              	.LFE1:
-  83 0012 00BF     		.section	.text.OdometryGPIO_OnPortEvent,"ax",%progbits
-  84              		.align	2
-  85              		.global	OdometryGPIO_OnPortEvent
-  86              		.thumb
-  87              		.thumb_func
-  89              	OdometryGPIO_OnPortEvent:
-  90              	.LFB2:
-  85:../Sources/Events.c **** 
-  86:../Sources/Events.c **** /*
-  87:../Sources/Events.c **** ** ===================================================================
-  88:../Sources/Events.c **** **     Event       :  OdometryGPIO_OnPortEvent (module Events)
-  89:../Sources/Events.c **** **
-  90:../Sources/Events.c **** **     Component   :  OdometryGPIO [GPIO_LDD]
-  91:../Sources/Events.c **** **     Description :
-  92:../Sources/Events.c **** **         Called if defined event on any pin of the port occured.
-  93:../Sources/Events.c **** **         OnPortEvent event and GPIO interrupt must be enabled. See
-  94:../Sources/Events.c **** **         SetPortEventMask() and GetPortEventMask() methods. This
-  95:../Sources/Events.c **** **         event is enabled if <Interrupt service/event> is Enabled and
-  96:../Sources/Events.c **** **         disabled if <Interrupt service/event> is Disabled.
-  97:../Sources/Events.c **** **     Parameters  :
-  98:../Sources/Events.c **** **         NAME            - DESCRIPTION
-  99:../Sources/Events.c **** **       * UserDataPtr     - Pointer to RTOS device
- 100:../Sources/Events.c **** **                           data structure pointer.
- 101:../Sources/Events.c **** **     Returns     : Nothing
- 102:../Sources/Events.c **** ** ===================================================================
- 103:../Sources/Events.c **** */
- 104:../Sources/Events.c **** void OdometryGPIO_OnPortEvent(LDD_TUserData *UserDataPtr)
- 105:../Sources/Events.c **** {
-  91              		.loc 1 105 0
-  92              		.cfi_startproc
-  93              		@ args = 0, pretend = 0, frame = 8
-  94              		@ frame_needed = 1, uses_anonymous_args = 0
-  95 0000 80B5     		push	{r7, lr}
-  96              	.LCFI6:
-  97              		.cfi_def_cfa_offset 8
-  98              		.cfi_offset 14, -4
-  99              		.cfi_offset 7, -8
- 100 0002 82B0     		sub	sp, sp, #8
- 101              	.LCFI7:
- 102              		.cfi_def_cfa_offset 16
- 103 0004 00AF     		add	r7, sp, #0
- 104              	.LCFI8:
- 105              		.cfi_def_cfa_register 7
- 106 0006 7860     		str	r0, [r7, #4]
- 106:../Sources/Events.c ****   MapMain(&Map, &Odometry, &Accelerometer);
- 107              		.loc 1 106 0
- 108 0008 40F20000 		movw	r0, #:lower16:Map
- 109 000c C0F20000 		movt	r0, #:upper16:Map
- 110 0010 40F20001 		movw	r1, #:lower16:Odometry
- 111 0014 C0F20001 		movt	r1, #:upper16:Odometry
- 112 0018 40F20002 		movw	r2, #:lower16:Accelerometer
- 113 001c C0F20002 		movt	r2, #:upper16:Accelerometer
- 114 0020 FFF7FEFF 		bl	MapMain
- 107:../Sources/Events.c ****   Odometry.TotalDistance++;
- 115              		.loc 1 107 0
- 116 0024 40F20003 		movw	r3, #:lower16:Odometry
- 117 0028 C0F20003 		movt	r3, #:upper16:Odometry
- 118 002c 1B68     		ldr	r3, [r3, #0]
- 119 002e 03F10102 		add	r2, r3, #1
- 120 0032 40F20003 		movw	r3, #:lower16:Odometry
- 121 0036 C0F20003 		movt	r3, #:upper16:Odometry
- 122 003a 1A60     		str	r2, [r3, #0]
- 108:../Sources/Events.c **** }
- 123              		.loc 1 108 0
- 124 003c 07F10807 		add	r7, r7, #8
- 125 0040 BD46     		mov	sp, r7
- 126 0042 80BD     		pop	{r7, pc}
- 127              		.cfi_endproc
- 128              	.LFE2:
- 130              		.section	.text.Period_OnCounterRestart,"ax",%progbits
- 131              		.align	2
- 132              		.global	Period_OnCounterRestart
- 133              		.thumb
- 134              		.thumb_func
- 136              	Period_OnCounterRestart:
- 137              	.LFB3:
- 109:../Sources/Events.c **** 
- 110:../Sources/Events.c **** /*
- 111:../Sources/Events.c **** ** ===================================================================
- 112:../Sources/Events.c **** **     Event       :  Period_OnCounterRestart (module Events)
- 113:../Sources/Events.c **** **
- 114:../Sources/Events.c **** **     Component   :  Period [TimerUnit_LDD]
- 115:../Sources/Events.c **** **     Description :
- 116:../Sources/Events.c **** **         Called if counter overflow/underflow or counter is
- 117:../Sources/Events.c **** **         reinitialized by modulo or compare register matching.
- 118:../Sources/Events.c **** **         OnCounterRestart event and Timer unit must be enabled. See
- 119:../Sources/Events.c **** **         <SetEventMask> and <GetEventMask> methods. This event is
- 120:../Sources/Events.c **** **         available only if a <Interrupt> is enabled.
- 121:../Sources/Events.c **** **     Parameters  :
- 122:../Sources/Events.c **** **         NAME            - DESCRIPTION
- 123:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
- 124:../Sources/Events.c **** **                           RTOS specific data. The pointer passed as
- 125:../Sources/Events.c **** **                           the parameter of Init method.
- 126:../Sources/Events.c **** **     Returns     : Nothing
- 127:../Sources/Events.c **** ** ===================================================================
- 128:../Sources/Events.c **** */
- 129:../Sources/Events.c **** void Period_OnCounterRestart(LDD_TUserData *UserDataPtr)
- 130:../Sources/Events.c **** {
- 138              		.loc 1 130 0
- 139              		.cfi_startproc
- 140              		@ args = 0, pretend = 0, frame = 8
- 141              		@ frame_needed = 1, uses_anonymous_args = 0
- 142              		@ link register save eliminated.
- 143 0000 80B4     		push	{r7}
- 144              	.LCFI9:
- 145              		.cfi_def_cfa_offset 4
- 146              		.cfi_offset 7, -4
- 147 0002 83B0     		sub	sp, sp, #12
- 148              	.LCFI10:
- 149              		.cfi_def_cfa_offset 16
- 150 0004 00AF     		add	r7, sp, #0
- 151              	.LCFI11:
- 152              		.cfi_def_cfa_register 7
- 153 0006 7860     		str	r0, [r7, #4]
- 131:../Sources/Events.c **** 
- 132:../Sources/Events.c **** }
- 154              		.loc 1 132 0
- 155 0008 07F10C07 		add	r7, r7, #12
- 156 000c BD46     		mov	sp, r7
- 157 000e 80BC     		pop	{r7}
- 158 0010 7047     		bx	lr
+  44 0008 40F20003 		movw	r3, #:lower16:Odometry
+  45 000c C0F20003 		movt	r3, #:upper16:Odometry
+  46 0010 DB69     		ldr	r3, [r3, #28]
+  47 0012 1A46     		mov	r2, r3
+  48 0014 40F20003 		movw	r3, #:lower16:Odometry
+  49 0018 C0F20003 		movt	r3, #:upper16:Odometry
+  50 001c 9A61     		str	r2, [r3, #24]
+  61:../Sources/Events.c ****   Controller.RealValue = Odometry.Speed;
+  51              		.loc 1 61 0
+  52 001e 40F20003 		movw	r3, #:lower16:Odometry
+  53 0022 C0F20003 		movt	r3, #:upper16:Odometry
+  54 0026 9B69     		ldr	r3, [r3, #24]
+  55 0028 1A46     		mov	r2, r3
+  56 002a 40F20003 		movw	r3, #:lower16:Controller
+  57 002e C0F20003 		movt	r3, #:upper16:Controller
+  58 0032 DA61     		str	r2, [r3, #28]
+  62:../Sources/Events.c ****   ControllerMain(&Controller);
+  59              		.loc 1 62 0
+  60 0034 40F20000 		movw	r0, #:lower16:Controller
+  61 0038 C0F20000 		movt	r0, #:upper16:Controller
+  62 003c FFF7FEFF 		bl	ControllerMain
+  63:../Sources/Events.c ****   Odometry.SpeedCounter = 0;  
+  63              		.loc 1 63 0
+  64 0040 40F20003 		movw	r3, #:lower16:Odometry
+  65 0044 C0F20003 		movt	r3, #:upper16:Odometry
+  66 0048 4FF00002 		mov	r2, #0
+  67 004c DA61     		str	r2, [r3, #28]
+  64:../Sources/Events.c **** }
+  68              		.loc 1 64 0
+  69 004e 07F10807 		add	r7, r7, #8
+  70 0052 BD46     		mov	sp, r7
+  71 0054 80BD     		pop	{r7, pc}
+  72              		.cfi_endproc
+  73              	.LFE0:
+  75 0056 00BF     		.section	.text.PWMMotor_OnCounterRestart,"ax",%progbits
+  76              		.align	2
+  77              		.global	PWMMotor_OnCounterRestart
+  78              		.thumb
+  79              		.thumb_func
+  81              	PWMMotor_OnCounterRestart:
+  82              	.LFB1:
+  65:../Sources/Events.c **** 
+  66:../Sources/Events.c **** /*
+  67:../Sources/Events.c **** ** ===================================================================
+  68:../Sources/Events.c **** **     Event       :  PWMMotor_OnCounterRestart (module Events)
+  69:../Sources/Events.c **** **
+  70:../Sources/Events.c **** **     Component   :  PWMMotor [TimerUnit_LDD]
+  71:../Sources/Events.c **** **     Description :
+  72:../Sources/Events.c **** **         Called if counter overflow/underflow or counter is
+  73:../Sources/Events.c **** **         reinitialized by modulo or compare register matching.
+  74:../Sources/Events.c **** **         OnCounterRestart event and Timer unit must be enabled. See
+  75:../Sources/Events.c **** **         <SetEventMask> and <GetEventMask> methods. This event is
+  76:../Sources/Events.c **** **         available only if a <Interrupt> is enabled.
+  77:../Sources/Events.c **** **     Parameters  :
+  78:../Sources/Events.c **** **         NAME            - DESCRIPTION
+  79:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
+  80:../Sources/Events.c **** **                           RTOS specific data. The pointer passed as
+  81:../Sources/Events.c **** **                           the parameter of Init method.
+  82:../Sources/Events.c **** **     Returns     : Nothing
+  83:../Sources/Events.c **** ** ===================================================================
+  84:../Sources/Events.c **** */
+  85:../Sources/Events.c **** void PWMMotor_OnCounterRestart(LDD_TUserData *UserDataPtr)
+  86:../Sources/Events.c **** {
+  83              		.loc 1 86 0
+  84              		.cfi_startproc
+  85              		@ args = 0, pretend = 0, frame = 8
+  86              		@ frame_needed = 1, uses_anonymous_args = 0
+  87              		@ link register save eliminated.
+  88 0000 80B4     		push	{r7}
+  89              	.LCFI3:
+  90              		.cfi_def_cfa_offset 4
+  91              		.cfi_offset 7, -4
+  92 0002 83B0     		sub	sp, sp, #12
+  93              	.LCFI4:
+  94              		.cfi_def_cfa_offset 16
+  95 0004 00AF     		add	r7, sp, #0
+  96              	.LCFI5:
+  97              		.cfi_def_cfa_register 7
+  98 0006 7860     		str	r0, [r7, #4]
+  87:../Sources/Events.c ****   /* Write your code here ... */
+  88:../Sources/Events.c **** }
+  99              		.loc 1 88 0
+ 100 0008 07F10C07 		add	r7, r7, #12
+ 101 000c BD46     		mov	sp, r7
+ 102 000e 80BC     		pop	{r7}
+ 103 0010 7047     		bx	lr
+ 104              		.cfi_endproc
+ 105              	.LFE1:
+ 107 0012 00BF     		.section	.text.OdometryGPIO_OnPortEvent,"ax",%progbits
+ 108              		.align	2
+ 109              		.global	OdometryGPIO_OnPortEvent
+ 110              		.thumb
+ 111              		.thumb_func
+ 113              	OdometryGPIO_OnPortEvent:
+ 114              	.LFB2:
+  89:../Sources/Events.c **** 
+  90:../Sources/Events.c **** /*
+  91:../Sources/Events.c **** ** ===================================================================
+  92:../Sources/Events.c **** **     Event       :  OdometryGPIO_OnPortEvent (module Events)
+  93:../Sources/Events.c **** **
+  94:../Sources/Events.c **** **     Component   :  OdometryGPIO [GPIO_LDD]
+  95:../Sources/Events.c **** **     Description :
+  96:../Sources/Events.c **** **         Called if defined event on any pin of the port occured.
+  97:../Sources/Events.c **** **         OnPortEvent event and GPIO interrupt must be enabled. See
+  98:../Sources/Events.c **** **         SetPortEventMask() and GetPortEventMask() methods. This
+  99:../Sources/Events.c **** **         event is enabled if <Interrupt service/event> is Enabled and
+ 100:../Sources/Events.c **** **         disabled if <Interrupt service/event> is Disabled.
+ 101:../Sources/Events.c **** **     Parameters  :
+ 102:../Sources/Events.c **** **         NAME            - DESCRIPTION
+ 103:../Sources/Events.c **** **       * UserDataPtr     - Pointer to RTOS device
+ 104:../Sources/Events.c **** **                           data structure pointer.
+ 105:../Sources/Events.c **** **     Returns     : Nothing
+ 106:../Sources/Events.c **** ** ===================================================================
+ 107:../Sources/Events.c **** */
+ 108:../Sources/Events.c **** void OdometryGPIO_OnPortEvent(LDD_TUserData *UserDataPtr)
+ 109:../Sources/Events.c **** {
+ 115              		.loc 1 109 0
+ 116              		.cfi_startproc
+ 117              		@ args = 0, pretend = 0, frame = 8
+ 118              		@ frame_needed = 1, uses_anonymous_args = 0
+ 119 0000 80B5     		push	{r7, lr}
+ 120              	.LCFI6:
+ 121              		.cfi_def_cfa_offset 8
+ 122              		.cfi_offset 14, -4
+ 123              		.cfi_offset 7, -8
+ 124 0002 82B0     		sub	sp, sp, #8
+ 125              	.LCFI7:
+ 126              		.cfi_def_cfa_offset 16
+ 127 0004 00AF     		add	r7, sp, #0
+ 128              	.LCFI8:
+ 129              		.cfi_def_cfa_register 7
+ 130 0006 7860     		str	r0, [r7, #4]
+ 110:../Sources/Events.c ****   MapMain(&Map, &Odometry, &Accelerometer);
+ 131              		.loc 1 110 0
+ 132 0008 40F20000 		movw	r0, #:lower16:Map
+ 133 000c C0F20000 		movt	r0, #:upper16:Map
+ 134 0010 40F20001 		movw	r1, #:lower16:Odometry
+ 135 0014 C0F20001 		movt	r1, #:upper16:Odometry
+ 136 0018 40F20002 		movw	r2, #:lower16:Accelerometer
+ 137 001c C0F20002 		movt	r2, #:upper16:Accelerometer
+ 138 0020 FFF7FEFF 		bl	MapMain
+ 111:../Sources/Events.c ****   Odometry.SpeedCounter++;
+ 139              		.loc 1 111 0
+ 140 0024 40F20003 		movw	r3, #:lower16:Odometry
+ 141 0028 C0F20003 		movt	r3, #:upper16:Odometry
+ 142 002c DB69     		ldr	r3, [r3, #28]
+ 143 002e 03F10102 		add	r2, r3, #1
+ 144 0032 40F20003 		movw	r3, #:lower16:Odometry
+ 145 0036 C0F20003 		movt	r3, #:upper16:Odometry
+ 146 003a DA61     		str	r2, [r3, #28]
+ 112:../Sources/Events.c ****   Odometry.TotalDistance++;
+ 147              		.loc 1 112 0
+ 148 003c 40F20003 		movw	r3, #:lower16:Odometry
+ 149 0040 C0F20003 		movt	r3, #:upper16:Odometry
+ 150 0044 1B68     		ldr	r3, [r3, #0]
+ 151 0046 03F10102 		add	r2, r3, #1
+ 152 004a 40F20003 		movw	r3, #:lower16:Odometry
+ 153 004e C0F20003 		movt	r3, #:upper16:Odometry
+ 154 0052 1A60     		str	r2, [r3, #0]
+ 113:../Sources/Events.c **** }
+ 155              		.loc 1 113 0
+ 156 0054 07F10807 		add	r7, r7, #8
+ 157 0058 BD46     		mov	sp, r7
+ 158 005a 80BD     		pop	{r7, pc}
  159              		.cfi_endproc
- 160              	.LFE3:
- 162 0012 00BF     		.section	.text.OdoTimer_OnCounterRestart,"ax",%progbits
+ 160              	.LFE2:
+ 162              		.section	.text.Period_OnCounterRestart,"ax",%progbits
  163              		.align	2
- 164              		.global	OdoTimer_OnCounterRestart
+ 164              		.global	Period_OnCounterRestart
  165              		.thumb
  166              		.thumb_func
- 168              	OdoTimer_OnCounterRestart:
- 169              	.LFB4:
- 133:../Sources/Events.c **** 
- 134:../Sources/Events.c **** /*
- 135:../Sources/Events.c **** ** ===================================================================
- 136:../Sources/Events.c **** **     Event       :  OdoTimer_OnCounterRestart (module Events)
- 137:../Sources/Events.c **** **
- 138:../Sources/Events.c **** **     Component   :  OdoTimer [TimerUnit_LDD]
- 139:../Sources/Events.c **** **     Description :
- 140:../Sources/Events.c **** **         Called if counter overflow/underflow or counter is
- 141:../Sources/Events.c **** **         reinitialized by modulo or compare register matching.
- 142:../Sources/Events.c **** **         OnCounterRestart event and Timer unit must be enabled. See
- 143:../Sources/Events.c **** **         <SetEventMask> and <GetEventMask> methods. This event is
- 144:../Sources/Events.c **** **         available only if a <Interrupt> is enabled.
- 145:../Sources/Events.c **** **     Parameters  :
- 146:../Sources/Events.c **** **         NAME            - DESCRIPTION
- 147:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
- 148:../Sources/Events.c **** **                           RTOS specific data. The pointer passed as
- 149:../Sources/Events.c **** **                           the parameter of Init method.
- 150:../Sources/Events.c **** **     Returns     : Nothing
- 151:../Sources/Events.c **** ** ===================================================================
- 152:../Sources/Events.c **** */
- 153:../Sources/Events.c **** void OdoTimer_OnCounterRestart(LDD_TUserData *UserDataPtr)
- 154:../Sources/Events.c **** {
- 170              		.loc 1 154 0
+ 168              	Period_OnCounterRestart:
+ 169              	.LFB3:
+ 114:../Sources/Events.c **** 
+ 115:../Sources/Events.c **** /*
+ 116:../Sources/Events.c **** ** ===================================================================
+ 117:../Sources/Events.c **** **     Event       :  Period_OnCounterRestart (module Events)
+ 118:../Sources/Events.c **** **
+ 119:../Sources/Events.c **** **     Component   :  Period [TimerUnit_LDD]
+ 120:../Sources/Events.c **** **     Description :
+ 121:../Sources/Events.c **** **         Called if counter overflow/underflow or counter is
+ 122:../Sources/Events.c **** **         reinitialized by modulo or compare register matching.
+ 123:../Sources/Events.c **** **         OnCounterRestart event and Timer unit must be enabled. See
+ 124:../Sources/Events.c **** **         <SetEventMask> and <GetEventMask> methods. This event is
+ 125:../Sources/Events.c **** **         available only if a <Interrupt> is enabled.
+ 126:../Sources/Events.c **** **     Parameters  :
+ 127:../Sources/Events.c **** **         NAME            - DESCRIPTION
+ 128:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
+ 129:../Sources/Events.c **** **                           RTOS specific data. The pointer passed as
+ 130:../Sources/Events.c **** **                           the parameter of Init method.
+ 131:../Sources/Events.c **** **     Returns     : Nothing
+ 132:../Sources/Events.c **** ** ===================================================================
+ 133:../Sources/Events.c **** */
+ 134:../Sources/Events.c **** void Period_OnCounterRestart(LDD_TUserData *UserDataPtr)
+ 135:../Sources/Events.c **** {
+ 170              		.loc 1 135 0
  171              		.cfi_startproc
  172              		@ args = 0, pretend = 0, frame = 8
  173              		@ frame_needed = 1, uses_anonymous_args = 0
  174              		@ link register save eliminated.
  175 0000 80B4     		push	{r7}
- 176              	.LCFI12:
+ 176              	.LCFI9:
  177              		.cfi_def_cfa_offset 4
  178              		.cfi_offset 7, -4
  179 0002 83B0     		sub	sp, sp, #12
- 180              	.LCFI13:
+ 180              	.LCFI10:
  181              		.cfi_def_cfa_offset 16
  182 0004 00AF     		add	r7, sp, #0
- 183              	.LCFI14:
+ 183              	.LCFI11:
  184              		.cfi_def_cfa_register 7
  185 0006 7860     		str	r0, [r7, #4]
- 155:../Sources/Events.c ****   Odometry.RealSpeed = 12000;
- 186              		.loc 1 155 0
- 187 0008 40F20003 		movw	r3, #:lower16:Odometry
- 188 000c C0F20003 		movt	r3, #:upper16:Odometry
- 189 0010 42F6E062 		movw	r2, #12000
- 190 0014 9A61     		str	r2, [r3, #24]
- 156:../Sources/Events.c **** }
- 191              		.loc 1 156 0
- 192 0016 07F10C07 		add	r7, r7, #12
- 193 001a BD46     		mov	sp, r7
- 194 001c 80BC     		pop	{r7}
- 195 001e 7047     		bx	lr
- 196              		.cfi_endproc
- 197              	.LFE4:
- 199              		.section	.text.AS1_OnBlockReceived,"ax",%progbits
- 200              		.align	2
- 201              		.global	AS1_OnBlockReceived
- 202              		.thumb
- 203              		.thumb_func
- 205              	AS1_OnBlockReceived:
- 206              	.LFB5:
- 157:../Sources/Events.c **** 
- 158:../Sources/Events.c **** /*
- 159:../Sources/Events.c **** ** ===================================================================
- 160:../Sources/Events.c **** **     Event       :  AS1_OnBlockReceived (module Events)
- 161:../Sources/Events.c **** **
- 162:../Sources/Events.c **** **     Component   :  AS1 [Serial_LDD]
- 163:../Sources/Events.c **** **     Description :
- 164:../Sources/Events.c **** **         This event is called when the requested number of data is
- 165:../Sources/Events.c **** **         moved to the input buffer.
- 166:../Sources/Events.c **** **     Parameters  :
- 167:../Sources/Events.c **** **         NAME            - DESCRIPTION
- 168:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
- 169:../Sources/Events.c **** **                           RTOS specific data. This pointer is passed
- 170:../Sources/Events.c **** **                           as the parameter of Init method.
- 171:../Sources/Events.c **** **     Returns     : Nothing
- 172:../Sources/Events.c **** ** ===================================================================
- 173:../Sources/Events.c **** */
- 174:../Sources/Events.c **** void AS1_OnBlockReceived(LDD_TUserData *UserDataPtr)
- 175:../Sources/Events.c **** {
- 207              		.loc 1 175 0
- 208              		.cfi_startproc
- 209              		@ args = 0, pretend = 0, frame = 8
- 210              		@ frame_needed = 1, uses_anonymous_args = 0
- 211 0000 80B5     		push	{r7, lr}
- 212              	.LCFI15:
- 213              		.cfi_def_cfa_offset 8
- 214              		.cfi_offset 14, -4
- 215              		.cfi_offset 7, -8
- 216 0002 82B0     		sub	sp, sp, #8
- 217              	.LCFI16:
- 218              		.cfi_def_cfa_offset 16
- 219 0004 00AF     		add	r7, sp, #0
- 220              	.LCFI17:
- 221              		.cfi_def_cfa_register 7
- 222 0006 7860     		str	r0, [r7, #4]
- 176:../Sources/Events.c ****   CommunicationHandler(&Communication);
- 223              		.loc 1 176 0
- 224 0008 40F20000 		movw	r0, #:lower16:Communication
- 225 000c C0F20000 		movt	r0, #:upper16:Communication
- 226 0010 FFF7FEFF 		bl	CommunicationHandler
- 177:../Sources/Events.c ****   AS1_ReceiveBlock(AS1_DeviceData, &Communication.ReceivedPacket[0], PACKET_LENGTH);
- 227              		.loc 1 177 0
- 228 0014 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
- 229 0018 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
- 230 001c 5B6A     		ldr	r3, [r3, #36]
- 231 001e 1846     		mov	r0, r3
- 232 0020 0449     		ldr	r1, .L7
- 233 0022 4FF00A02 		mov	r2, #10
- 234 0026 FFF7FEFF 		bl	AS1_ReceiveBlock
- 178:../Sources/Events.c **** //  AS1_ReceiveBlock(AS1_DeviceData, &Communication.ReceivedPacket[0], PACKET_LENGTH);
- 179:../Sources/Events.c **** }
- 235              		.loc 1 179 0
- 236 002a 07F10807 		add	r7, r7, #8
- 237 002e BD46     		mov	sp, r7
- 238 0030 80BD     		pop	{r7, pc}
- 239              	.L8:
- 240 0032 00BF     		.align	2
- 241              	.L7:
- 242 0034 04040000 		.word	Communication+1028
- 243              		.cfi_endproc
- 244              	.LFE5:
- 246              		.section	.text.AS1_OnBlockSent,"ax",%progbits
- 247              		.align	2
- 248              		.global	AS1_OnBlockSent
- 249              		.thumb
- 250              		.thumb_func
- 252              	AS1_OnBlockSent:
- 253              	.LFB6:
- 180:../Sources/Events.c **** 
- 181:../Sources/Events.c **** /*
- 182:../Sources/Events.c **** ** ===================================================================
- 183:../Sources/Events.c **** **     Event       :  AS1_OnBlockSent (module Events)
- 184:../Sources/Events.c **** **
- 185:../Sources/Events.c **** **     Component   :  AS1 [Serial_LDD]
- 186:../Sources/Events.c **** **     Description :
- 187:../Sources/Events.c **** **         This event is called after the last character from the
- 188:../Sources/Events.c **** **         output buffer is moved to the transmitter. 
- 189:../Sources/Events.c **** **     Parameters  :
- 190:../Sources/Events.c **** **         NAME            - DESCRIPTION
- 191:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
- 192:../Sources/Events.c **** **                           RTOS specific data. This pointer is passed
- 193:../Sources/Events.c **** **                           as the parameter of Init method.
- 194:../Sources/Events.c **** **     Returns     : Nothing
- 195:../Sources/Events.c **** ** ===================================================================
- 196:../Sources/Events.c **** */    
- 197:../Sources/Events.c **** void AS1_OnBlockSent(LDD_TUserData *UserDataPtr)
- 198:../Sources/Events.c **** {
- 254              		.loc 1 198 0
- 255              		.cfi_startproc
- 256              		@ args = 0, pretend = 0, frame = 8
- 257              		@ frame_needed = 1, uses_anonymous_args = 0
- 258              		@ link register save eliminated.
- 259 0000 80B4     		push	{r7}
- 260              	.LCFI18:
- 261              		.cfi_def_cfa_offset 4
- 262              		.cfi_offset 7, -4
- 263 0002 83B0     		sub	sp, sp, #12
- 264              	.LCFI19:
- 265              		.cfi_def_cfa_offset 16
- 266 0004 00AF     		add	r7, sp, #0
- 267              	.LCFI20:
- 268              		.cfi_def_cfa_register 7
- 269 0006 7860     		str	r0, [r7, #4]
- 199:../Sources/Events.c ****   
- 200:../Sources/Events.c **** }
- 270              		.loc 1 200 0
- 271 0008 07F10C07 		add	r7, r7, #12
- 272 000c BD46     		mov	sp, r7
- 273 000e 80BC     		pop	{r7}
- 274 0010 7047     		bx	lr
- 275              		.cfi_endproc
- 276              	.LFE6:
- 278 0012 00BF     		.section	.text.I2C2_OnMasterBlockSent,"ax",%progbits
- 279              		.align	2
- 280              		.global	I2C2_OnMasterBlockSent
- 281              		.thumb
- 282              		.thumb_func
- 284              	I2C2_OnMasterBlockSent:
- 285              	.LFB7:
- 201:../Sources/Events.c **** 
- 202:../Sources/Events.c **** /*
- 203:../Sources/Events.c **** ** ===================================================================
- 204:../Sources/Events.c **** **     Event       :  I2C2_OnMasterBlockSent (module Events)
- 205:../Sources/Events.c **** **
- 206:../Sources/Events.c **** **     Component   :  I2C2 [I2C_LDD]
- 207:../Sources/Events.c **** **     Description :
- 208:../Sources/Events.c **** **         This event is called when I2C in master mode finishes the
- 209:../Sources/Events.c **** **         transmission of the data successfully. This event is not
- 210:../Sources/Events.c **** **         available for the SLAVE mode and if MasterSendBlock is
- 211:../Sources/Events.c **** **         disabled. 
- 212:../Sources/Events.c **** **     Parameters  :
- 213:../Sources/Events.c **** **         NAME            - DESCRIPTION
- 214:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
- 215:../Sources/Events.c **** **                           RTOS specific data. This pointer is passed
- 216:../Sources/Events.c **** **                           as the parameter of Init method.
- 217:../Sources/Events.c **** **     Returns     : Nothing
- 218:../Sources/Events.c **** ** ===================================================================
- 219:../Sources/Events.c **** */
- 220:../Sources/Events.c **** void I2C2_OnMasterBlockSent(LDD_TUserData *UserDataPtr)
- 221:../Sources/Events.c **** {
- 286              		.loc 1 221 0
- 287              		.cfi_startproc
- 288              		@ args = 0, pretend = 0, frame = 8
- 289              		@ frame_needed = 1, uses_anonymous_args = 0
- 290              		@ link register save eliminated.
- 291 0000 80B4     		push	{r7}
- 292              	.LCFI21:
- 293              		.cfi_def_cfa_offset 4
- 294              		.cfi_offset 7, -4
- 295 0002 83B0     		sub	sp, sp, #12
- 296              	.LCFI22:
- 297              		.cfi_def_cfa_offset 16
- 298 0004 00AF     		add	r7, sp, #0
- 299              	.LCFI23:
- 300              		.cfi_def_cfa_register 7
- 301 0006 7860     		str	r0, [r7, #4]
- 222:../Sources/Events.c ****   Accelerometer.Sent = TRUE;
- 302              		.loc 1 222 0
- 303 0008 40F20003 		movw	r3, #:lower16:Accelerometer
- 304 000c C0F20003 		movt	r3, #:upper16:Accelerometer
- 305 0010 4FF00102 		mov	r2, #1
- 306 0014 1A76     		strb	r2, [r3, #24]
- 223:../Sources/Events.c **** }
- 307              		.loc 1 223 0
- 308 0016 07F10C07 		add	r7, r7, #12
- 309 001a BD46     		mov	sp, r7
- 310 001c 80BC     		pop	{r7}
- 311 001e 7047     		bx	lr
- 312              		.cfi_endproc
- 313              	.LFE7:
- 315              		.section	.text.I2C2_OnMasterBlockReceived,"ax",%progbits
- 316              		.align	2
- 317              		.global	I2C2_OnMasterBlockReceived
- 318              		.thumb
- 319              		.thumb_func
- 321              	I2C2_OnMasterBlockReceived:
- 322              	.LFB8:
- 224:../Sources/Events.c **** 
- 225:../Sources/Events.c **** /*
- 226:../Sources/Events.c **** ** ===================================================================
- 227:../Sources/Events.c **** **     Event       :  I2C2_OnMasterBlockReceived (module Events)
- 228:../Sources/Events.c **** **
- 229:../Sources/Events.c **** **     Component   :  I2C2 [I2C_LDD]
- 230:../Sources/Events.c **** **     Description :
- 231:../Sources/Events.c **** **         This event is called when I2C is in master mode and finishes
- 232:../Sources/Events.c **** **         the reception of the data successfully. This event is not
- 233:../Sources/Events.c **** **         available for the SLAVE mode and if MasterReceiveBlock is
- 234:../Sources/Events.c **** **         disabled.
- 235:../Sources/Events.c **** **     Parameters  :
- 236:../Sources/Events.c **** **         NAME            - DESCRIPTION
- 237:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
- 238:../Sources/Events.c **** **                           RTOS specific data. This pointer is passed
- 239:../Sources/Events.c **** **                           as the parameter of Init method.
- 240:../Sources/Events.c **** **     Returns     : Nothing
- 241:../Sources/Events.c **** ** ===================================================================
- 242:../Sources/Events.c **** */
- 243:../Sources/Events.c **** void I2C2_OnMasterBlockReceived(LDD_TUserData *UserDataPtr)
- 244:../Sources/Events.c **** {
- 323              		.loc 1 244 0
- 324              		.cfi_startproc
- 325              		@ args = 0, pretend = 0, frame = 8
- 326              		@ frame_needed = 1, uses_anonymous_args = 0
- 327              		@ link register save eliminated.
- 328 0000 80B4     		push	{r7}
- 329              	.LCFI24:
- 330              		.cfi_def_cfa_offset 4
- 331              		.cfi_offset 7, -4
- 332 0002 83B0     		sub	sp, sp, #12
- 333              	.LCFI25:
- 334              		.cfi_def_cfa_offset 16
- 335 0004 00AF     		add	r7, sp, #0
- 336              	.LCFI26:
- 337              		.cfi_def_cfa_register 7
- 338 0006 7860     		str	r0, [r7, #4]
- 245:../Sources/Events.c ****   Accelerometer.Received = TRUE;
- 339              		.loc 1 245 0
- 340 0008 40F20003 		movw	r3, #:lower16:Accelerometer
- 341 000c C0F20003 		movt	r3, #:upper16:Accelerometer
- 342 0010 4FF00102 		mov	r2, #1
- 343 0014 5A76     		strb	r2, [r3, #25]
- 246:../Sources/Events.c **** }
- 344              		.loc 1 246 0
- 345 0016 07F10C07 		add	r7, r7, #12
- 346 001a BD46     		mov	sp, r7
- 347 001c 80BC     		pop	{r7}
- 348 001e 7047     		bx	lr
- 349              		.cfi_endproc
- 350              	.LFE8:
- 352              		.section	.text.I2C2_OnError,"ax",%progbits
- 353              		.align	2
- 354              		.global	I2C2_OnError
- 355              		.thumb
- 356              		.thumb_func
- 358              	I2C2_OnError:
- 359              	.LFB9:
- 247:../Sources/Events.c **** 
- 248:../Sources/Events.c **** /*
- 249:../Sources/Events.c **** ** ===================================================================
- 250:../Sources/Events.c **** **     Event       :  I2C2_OnError (module Events)
- 251:../Sources/Events.c **** **
- 252:../Sources/Events.c **** **     Component   :  I2C2 [I2C_LDD]
- 253:../Sources/Events.c **** **     Description :
- 254:../Sources/Events.c **** **         This event is called when an error (e.g. Arbitration lost)
- 255:../Sources/Events.c **** **         occurs. The errors can be read with GetError method.
- 256:../Sources/Events.c **** **     Parameters  :
- 257:../Sources/Events.c **** **         NAME            - DESCRIPTION
- 258:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
- 259:../Sources/Events.c **** **                           RTOS specific data. This pointer is passed
- 260:../Sources/Events.c **** **                           as the parameter of Init method.
- 261:../Sources/Events.c **** **     Returns     : Nothing
- 262:../Sources/Events.c **** ** ===================================================================
- 263:../Sources/Events.c **** */
- 264:../Sources/Events.c **** void I2C2_OnError(LDD_TUserData *UserDataPtr)
- 265:../Sources/Events.c **** {
- 360              		.loc 1 265 0
- 361              		.cfi_startproc
- 362              		@ args = 0, pretend = 0, frame = 8
- 363              		@ frame_needed = 1, uses_anonymous_args = 0
- 364              		@ link register save eliminated.
- 365 0000 80B4     		push	{r7}
- 366              	.LCFI27:
- 367              		.cfi_def_cfa_offset 4
- 368              		.cfi_offset 7, -4
- 369 0002 83B0     		sub	sp, sp, #12
- 370              	.LCFI28:
- 371              		.cfi_def_cfa_offset 16
- 372 0004 00AF     		add	r7, sp, #0
- 373              	.LCFI29:
- 374              		.cfi_def_cfa_register 7
- 375 0006 7860     		str	r0, [r7, #4]
- 266:../Sources/Events.c ****   /* Write your code here ... */
- 267:../Sources/Events.c **** }
- 376              		.loc 1 267 0
- 377 0008 07F10C07 		add	r7, r7, #12
- 378 000c BD46     		mov	sp, r7
- 379 000e 80BC     		pop	{r7}
- 380 0010 7047     		bx	lr
- 381              		.cfi_endproc
- 382              	.LFE9:
- 384 0012 00BF     		.section	.text.GPIO3_OnPortEvent,"ax",%progbits
- 385              		.align	2
- 386              		.global	GPIO3_OnPortEvent
- 387              		.thumb
- 388              		.thumb_func
- 390              	GPIO3_OnPortEvent:
- 391              	.LFB10:
- 268:../Sources/Events.c **** 
- 269:../Sources/Events.c **** /*
- 270:../Sources/Events.c **** ** ===================================================================
- 271:../Sources/Events.c **** **     Event       :  GPIO3_OnPortEvent (module Events)
- 272:../Sources/Events.c **** **
- 273:../Sources/Events.c **** **     Component   :  GPIO3 [GPIO_LDD]
- 274:../Sources/Events.c **** **     Description :
- 275:../Sources/Events.c **** **         Called if defined event on any pin of the port occured.
- 276:../Sources/Events.c **** **         OnPortEvent event and GPIO interrupt must be enabled. See
- 277:../Sources/Events.c **** **         SetPortEventMask() and GetPortEventMask() methods. This
- 278:../Sources/Events.c **** **         event is enabled if <Interrupt service/event> is Enabled and
- 279:../Sources/Events.c **** **         disabled if <Interrupt service/event> is Disabled.
- 280:../Sources/Events.c **** **     Parameters  :
- 281:../Sources/Events.c **** **         NAME            - DESCRIPTION
- 282:../Sources/Events.c **** **       * UserDataPtr     - Pointer to RTOS device
- 283:../Sources/Events.c **** **                           data structure pointer.
- 284:../Sources/Events.c **** **     Returns     : Nothing
- 285:../Sources/Events.c **** ** ===================================================================
- 286:../Sources/Events.c **** */
- 287:../Sources/Events.c **** void GPIO3_OnPortEvent(LDD_TUserData *UserDataPtr)
- 288:../Sources/Events.c **** {
- 392              		.loc 1 288 0
- 393              		.cfi_startproc
- 394              		@ args = 0, pretend = 0, frame = 8
- 395              		@ frame_needed = 1, uses_anonymous_args = 0
- 396 0000 80B5     		push	{r7, lr}
- 397              	.LCFI30:
- 398              		.cfi_def_cfa_offset 8
- 399              		.cfi_offset 14, -4
- 400              		.cfi_offset 7, -8
- 401 0002 82B0     		sub	sp, sp, #8
- 402              	.LCFI31:
- 403              		.cfi_def_cfa_offset 16
- 404 0004 00AF     		add	r7, sp, #0
- 405              	.LCFI32:
- 406              		.cfi_def_cfa_register 7
- 407 0006 7860     		str	r0, [r7, #4]
- 289:../Sources/Events.c ****   Accelerometer.TransmitBuffer[0] = 0x01;
- 408              		.loc 1 289 0
- 409 0008 40F20003 		movw	r3, #:lower16:Accelerometer
- 410 000c C0F20003 		movt	r3, #:upper16:Accelerometer
- 411 0010 4FF00102 		mov	r2, #1
- 412 0014 9A74     		strb	r2, [r3, #18]
- 290:../Sources/Events.c ****   Accelerometer.Sent = FALSE;
- 413              		.loc 1 290 0
- 414 0016 40F20003 		movw	r3, #:lower16:Accelerometer
- 415 001a C0F20003 		movt	r3, #:upper16:Accelerometer
- 416 001e 4FF00002 		mov	r2, #0
- 417 0022 1A76     		strb	r2, [r3, #24]
- 291:../Sources/Events.c ****   Accelerometer.Error = I2C2_MasterSendBlock(I2C2_DeviceData, &Accelerometer.TransmitBuffer[0], 0x0
- 418              		.loc 1 291 0
- 419 0024 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
- 420 0028 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
- 421 002c 9B6A     		ldr	r3, [r3, #40]
- 422 002e 1846     		mov	r0, r3
- 423 0030 1A49     		ldr	r1, .L15
- 424 0032 4FF00102 		mov	r2, #1
- 425 0036 4FF00003 		mov	r3, #0
- 426 003a FFF7FEFF 		bl	I2C2_MasterSendBlock
- 427 003e 0346     		mov	r3, r0
- 428 0040 1A46     		mov	r2, r3
- 429 0042 40F20003 		movw	r3, #:lower16:Accelerometer
- 430 0046 C0F20003 		movt	r3, #:upper16:Accelerometer
- 431 004a 5A83     		strh	r2, [r3, #26]	@ movhi
- 292:../Sources/Events.c ****   while(!Accelerometer.Sent);
- 432              		.loc 1 292 0
- 433 004c 00BF     		nop
- 434              	.L14:
- 435              		.loc 1 292 0 is_stmt 0 discriminator 1
- 436 004e 40F20003 		movw	r3, #:lower16:Accelerometer
- 437 0052 C0F20003 		movt	r3, #:upper16:Accelerometer
- 438 0056 1B7E     		ldrb	r3, [r3, #24]
- 439 0058 DBB2     		uxtb	r3, r3
- 440 005a 002B     		cmp	r3, #0
- 441 005c F7D0     		beq	.L14
- 293:../Sources/Events.c ****   
- 294:../Sources/Events.c ****   Accelerometer.Received = FALSE;
- 442              		.loc 1 294 0 is_stmt 1
- 443 005e 40F20003 		movw	r3, #:lower16:Accelerometer
- 444 0062 C0F20003 		movt	r3, #:upper16:Accelerometer
- 445 0066 4FF00002 		mov	r2, #0
- 446 006a 5A76     		strb	r2, [r3, #25]
- 295:../Sources/Events.c ****   Accelerometer.Error = I2C2_MasterReceiveBlock(I2C2_DeviceData, &Accelerometer.ReceiveBuffer[0], 0
- 447              		.loc 1 295 0
- 448 006c 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
- 449 0070 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
- 450 0074 9B6A     		ldr	r3, [r3, #40]
- 451 0076 1846     		mov	r0, r3
- 452 0078 0949     		ldr	r1, .L15+4
- 453 007a 4FF00602 		mov	r2, #6
- 454 007e 4FF00103 		mov	r3, #1
- 455 0082 FFF7FEFF 		bl	I2C2_MasterReceiveBlock
- 456 0086 0346     		mov	r3, r0
- 457 0088 1A46     		mov	r2, r3
- 458 008a 40F20003 		movw	r3, #:lower16:Accelerometer
- 459 008e C0F20003 		movt	r3, #:upper16:Accelerometer
- 460 0092 5A83     		strh	r2, [r3, #26]	@ movhi
- 296:../Sources/Events.c **** 
- 297:../Sources/Events.c **** }
- 461              		.loc 1 297 0
- 462 0094 07F10807 		add	r7, r7, #8
- 463 0098 BD46     		mov	sp, r7
- 464 009a 80BD     		pop	{r7, pc}
- 465              	.L16:
- 466              		.align	2
- 467              	.L15:
- 468 009c 12000000 		.word	Accelerometer+18
- 469 00a0 0C000000 		.word	Accelerometer+12
- 470              		.cfi_endproc
- 471              	.LFE10:
- 473              		.section	.text.CameraTimer_OnCounterRestart,"ax",%progbits
- 474              		.align	2
- 475              		.global	CameraTimer_OnCounterRestart
- 476              		.thumb
- 477              		.thumb_func
- 479              	CameraTimer_OnCounterRestart:
- 480              	.LFB11:
- 298:../Sources/Events.c **** 
- 299:../Sources/Events.c **** /*
- 300:../Sources/Events.c **** ** ===================================================================
- 301:../Sources/Events.c **** **     Event       :  CameraTimer_OnCounterRestart (module Events)
- 302:../Sources/Events.c **** **
- 303:../Sources/Events.c **** **     Component   :  CameraTimer [TimerUnit_LDD]
- 304:../Sources/Events.c **** **     Description :
- 305:../Sources/Events.c **** **         Called if counter overflow/underflow or counter is
- 306:../Sources/Events.c **** **         reinitialized by modulo or compare register matching.
- 307:../Sources/Events.c **** **         OnCounterRestart event and Timer unit must be enabled. See
- 308:../Sources/Events.c **** **         <SetEventMask> and <GetEventMask> methods. This event is
- 309:../Sources/Events.c **** **         available only if a <Interrupt> is enabled.
- 310:../Sources/Events.c **** **     Parameters  :
- 311:../Sources/Events.c **** **         NAME            - DESCRIPTION
- 312:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
- 313:../Sources/Events.c **** **                           RTOS specific data. The pointer passed as
- 314:../Sources/Events.c **** **                           the parameter of Init method.
- 315:../Sources/Events.c **** **     Returns     : Nothing
- 316:../Sources/Events.c **** ** ===================================================================
- 317:../Sources/Events.c **** */
- 318:../Sources/Events.c **** void CameraTimer_OnCounterRestart(LDD_TUserData *UserDataPtr)
- 319:../Sources/Events.c **** {
- 481              		.loc 1 319 0
- 482              		.cfi_startproc
- 483              		@ args = 0, pretend = 0, frame = 8
- 484              		@ frame_needed = 1, uses_anonymous_args = 0
- 485 0000 80B5     		push	{r7, lr}
- 486              	.LCFI33:
- 487              		.cfi_def_cfa_offset 8
- 488              		.cfi_offset 14, -4
- 489              		.cfi_offset 7, -8
- 490 0002 82B0     		sub	sp, sp, #8
- 491              	.LCFI34:
- 492              		.cfi_def_cfa_offset 16
- 493 0004 00AF     		add	r7, sp, #0
- 494              	.LCFI35:
- 495              		.cfi_def_cfa_register 7
- 496 0006 7860     		str	r0, [r7, #4]
- 320:../Sources/Events.c **** 	  if(Camera.pixelClockCounter == ( PIXEL_NUM + Camera.clockExposureOffset-1)) {
- 497              		.loc 1 320 0
- 498 0008 40F20003 		movw	r3, #:lower16:Camera
- 499 000c C0F20003 		movt	r3, #:upper16:Camera
- 500 0010 D3F8A024 		ldr	r2, [r3, #1184]
- 501 0014 40F20003 		movw	r3, #:lower16:Camera
- 502 0018 C0F20003 		movt	r3, #:upper16:Camera
- 503 001c D3F88C33 		ldr	r3, [r3, #908]
- 504 0020 03F17F03 		add	r3, r3, #127
- 505 0024 9A42     		cmp	r2, r3
- 506 0026 0BD1     		bne	.L17
- 321:../Sources/Events.c **** 	    SiPin_SetFieldBits(SiPin_DeviceData, Si, 0x01U);
- 507              		.loc 1 321 0
- 508 0028 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
- 509 002c C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
- 510 0030 5B6B     		ldr	r3, [r3, #52]
- 511 0032 1846     		mov	r0, r3
- 512 0034 4FF00001 		mov	r1, #0
- 513 0038 4FF00102 		mov	r2, #1
- 514 003c FFF7FEFF 		bl	SiPin_SetFieldBits
- 515              	.L17:
- 322:../Sources/Events.c **** 	  }
- 323:../Sources/Events.c **** }
- 516              		.loc 1 323 0
- 517 0040 07F10807 		add	r7, r7, #8
- 518 0044 BD46     		mov	sp, r7
- 519 0046 80BD     		pop	{r7, pc}
- 520              		.cfi_endproc
- 521              	.LFE11:
- 523              		.section	.text.CameraTimer_OnChannel0,"ax",%progbits
- 524              		.align	2
- 525              		.global	CameraTimer_OnChannel0
- 526              		.thumb
- 527              		.thumb_func
- 529              	CameraTimer_OnChannel0:
- 530              	.LFB12:
- 324:../Sources/Events.c **** 
- 325:../Sources/Events.c **** /*
- 326:../Sources/Events.c **** ** ===================================================================
- 327:../Sources/Events.c **** **     Event       :  CameraTimer_OnChannel0 (module Events)
- 328:../Sources/Events.c **** **
- 329:../Sources/Events.c **** **     Component   :  CameraTimer [TimerUnit_LDD]
- 330:../Sources/Events.c **** **     Description :
- 331:../Sources/Events.c **** **         Called if compare register match the counter registers or
- 332:../Sources/Events.c **** **         capture register has a new content. OnChannel0 event and
- 333:../Sources/Events.c **** **         Timer unit must be enabled. See <SetEventMask> and
- 334:../Sources/Events.c **** **         <GetEventMask> methods. This event is available only if a
- 335:../Sources/Events.c **** **         <Interrupt> is enabled.
- 336:../Sources/Events.c **** **     Parameters  :
- 337:../Sources/Events.c **** **         NAME            - DESCRIPTION
- 338:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
- 339:../Sources/Events.c **** **                           RTOS specific data. The pointer passed as
- 340:../Sources/Events.c **** **                           the parameter of Init method.
- 341:../Sources/Events.c **** **     Returns     : Nothing
- 342:../Sources/Events.c **** ** ===================================================================
- 343:../Sources/Events.c **** */
- 344:../Sources/Events.c **** void CameraTimer_OnChannel0(LDD_TUserData *UserDataPtr)
- 345:../Sources/Events.c **** {
- 531              		.loc 1 345 0
- 532              		.cfi_startproc
- 533              		@ args = 0, pretend = 0, frame = 8
- 534              		@ frame_needed = 1, uses_anonymous_args = 0
- 535              		@ link register save eliminated.
- 536 0000 80B4     		push	{r7}
- 537              	.LCFI36:
- 538              		.cfi_def_cfa_offset 4
- 539              		.cfi_offset 7, -4
- 540 0002 83B0     		sub	sp, sp, #12
- 541              	.LCFI37:
- 542              		.cfi_def_cfa_offset 16
- 543 0004 00AF     		add	r7, sp, #0
- 544              	.LCFI38:
- 545              		.cfi_def_cfa_register 7
- 546 0006 7860     		str	r0, [r7, #4]
- 346:../Sources/Events.c ****   Camera.pixelClockCounter++;
- 547              		.loc 1 346 0
- 548 0008 40F20003 		movw	r3, #:lower16:Camera
- 549 000c C0F20003 		movt	r3, #:upper16:Camera
- 550 0010 D3F8A034 		ldr	r3, [r3, #1184]
- 551 0014 03F10102 		add	r2, r3, #1
- 552 0018 40F20003 		movw	r3, #:lower16:Camera
- 553 001c C0F20003 		movt	r3, #:upper16:Camera
- 554 0020 C3F8A024 		str	r2, [r3, #1184]
- 347:../Sources/Events.c ****   Camera.pixelClockCounter %= (PIXEL_NUM + Camera.clockExposureOffset);
- 555              		.loc 1 347 0
- 556 0024 40F20003 		movw	r3, #:lower16:Camera
- 557 0028 C0F20003 		movt	r3, #:upper16:Camera
- 558 002c D3F8A024 		ldr	r2, [r3, #1184]
- 559 0030 40F20003 		movw	r3, #:lower16:Camera
- 560 0034 C0F20003 		movt	r3, #:upper16:Camera
- 561 0038 D3F88C33 		ldr	r3, [r3, #908]
- 562 003c 03F18003 		add	r3, r3, #128
- 563 0040 B2FBF3F1 		udiv	r1, r2, r3
- 564 0044 03FB01F3 		mul	r3, r3, r1
- 565 0048 D21A     		subs	r2, r2, r3
- 566 004a 40F20003 		movw	r3, #:lower16:Camera
- 567 004e C0F20003 		movt	r3, #:upper16:Camera
- 568 0052 C3F8A024 		str	r2, [r3, #1184]
- 348:../Sources/Events.c **** 
- 349:../Sources/Events.c ****   //AD1_StartSingleMeasurement(AD1_DeviceData);
- 350:../Sources/Events.c **** }
- 569              		.loc 1 350 0
- 570 0056 07F10C07 		add	r7, r7, #12
- 571 005a BD46     		mov	sp, r7
- 572 005c 80BC     		pop	{r7}
- 573 005e 7047     		bx	lr
- 574              		.cfi_endproc
- 575              	.LFE12:
- 577              		.section	.text.AD1_OnMeasurementComplete,"ax",%progbits
- 578              		.align	2
- 579              		.global	AD1_OnMeasurementComplete
- 580              		.thumb
- 581              		.thumb_func
- 583              	AD1_OnMeasurementComplete:
- 584              	.LFB13:
- 351:../Sources/Events.c **** /*
- 352:../Sources/Events.c **** ** ===================================================================
- 353:../Sources/Events.c **** **     Event       :  AD1_OnMeasurementComplete (module Events)
- 354:../Sources/Events.c **** **
- 355:../Sources/Events.c **** **     Component   :  AD1 [ADC_LDD]
- 356:../Sources/Events.c **** **     Description :
- 357:../Sources/Events.c **** **         Called after measurement is done, <Interrupt service/event>
- 358:../Sources/Events.c **** **         is enabled, OnMeasurementComplete event is enabled and ADC
- 359:../Sources/Events.c **** **         device is enabled. See <SetEventMask()> method or <Event
- 360:../Sources/Events.c **** **         mask> property group to enable this event and <Enable>
- 361:../Sources/Events.c **** **         method or <Enabled in init. code> property to enable ADC
- 362:../Sources/Events.c **** **         device.  
- 363:../Sources/Events.c **** **     Parameters  :
- 364:../Sources/Events.c **** **         NAME            - DESCRIPTION
- 365:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
- 366:../Sources/Events.c **** **                           RTOS specific data. The pointer is passed
- 367:../Sources/Events.c **** **                           as the parameter of Init method. 
- 368:../Sources/Events.c **** **     Returns     : Nothing
- 369:../Sources/Events.c **** ** ===================================================================
- 370:../Sources/Events.c **** */
- 371:../Sources/Events.c **** void AD1_OnMeasurementComplete(LDD_TUserData *UserDataPtr)
- 372:../Sources/Events.c **** {
- 585              		.loc 1 372 0
- 586              		.cfi_startproc
- 587              		@ args = 0, pretend = 0, frame = 8
- 588              		@ frame_needed = 1, uses_anonymous_args = 0
- 589 0000 80B5     		push	{r7, lr}
- 590              	.LCFI39:
- 591              		.cfi_def_cfa_offset 8
- 592              		.cfi_offset 14, -4
- 593              		.cfi_offset 7, -8
- 594 0002 82B0     		sub	sp, sp, #8
- 595              	.LCFI40:
- 596              		.cfi_def_cfa_offset 16
- 597 0004 00AF     		add	r7, sp, #0
- 598              	.LCFI41:
- 599              		.cfi_def_cfa_register 7
- 600 0006 7860     		str	r0, [r7, #4]
- 373:../Sources/Events.c ****   if(Camera.pixelClockCounter < PIXEL_NUM) {
- 601              		.loc 1 373 0
- 602 0008 40F20003 		movw	r3, #:lower16:Camera
- 603 000c C0F20003 		movt	r3, #:upper16:Camera
- 604 0010 D3F8A034 		ldr	r3, [r3, #1184]
- 605 0014 7F2B     		cmp	r3, #127
- 606 0016 4ED8     		bhi	.L20
- 374:../Sources/Events.c ****     AD1_GetMeasuredValues(AD1_DeviceData, &Camera.writePointerToBuffer[Camera.pixelClockCounter + K
- 607              		.loc 1 374 0
- 608 0018 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
- 609 001c C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
- 610 0020 DA69     		ldr	r2, [r3, #28]
- 611 0022 40F20003 		movw	r3, #:lower16:Camera
- 612 0026 C0F20003 		movt	r3, #:upper16:Camera
- 613 002a D3F89013 		ldr	r1, [r3, #912]
- 614 002e 40F20003 		movw	r3, #:lower16:Camera
- 615 0032 C0F20003 		movt	r3, #:upper16:Camera
- 616 0036 D3F8A034 		ldr	r3, [r3, #1184]
- 617 003a 03F10203 		add	r3, r3, #2
- 618 003e CB18     		adds	r3, r1, r3
- 619 0040 1046     		mov	r0, r2
- 620 0042 1946     		mov	r1, r3
- 621 0044 FFF7FEFF 		bl	AD1_GetMeasuredValues
- 375:../Sources/Events.c ****     if(Camera.pixelClockCounter == 127) {
- 622              		.loc 1 375 0
- 623 0048 40F20003 		movw	r3, #:lower16:Camera
- 624 004c C0F20003 		movt	r3, #:upper16:Camera
- 625 0050 D3F8A034 		ldr	r3, [r3, #1184]
- 626 0054 7F2B     		cmp	r3, #127
- 627 0056 2ED1     		bne	.L20
- 376:../Sources/Events.c ****       if(Camera.writePointerToBuffer == Camera.cameraRawData0) {
- 628              		.loc 1 376 0
- 629 0058 40F20003 		movw	r3, #:lower16:Camera
- 630 005c C0F20003 		movt	r3, #:upper16:Camera
- 631 0060 D3F89023 		ldr	r2, [r3, #912]
- 632 0064 164B     		ldr	r3, .L23
- 633 0066 9A42     		cmp	r2, r3
- 634 0068 0ED1     		bne	.L22
- 377:../Sources/Events.c ****         Camera.writePointerToBuffer = Camera.cameraRawData1;
- 635              		.loc 1 377 0
- 636 006a 40F20003 		movw	r3, #:lower16:Camera
- 637 006e C0F20003 		movt	r3, #:upper16:Camera
- 638 0072 144A     		ldr	r2, .L23+4
- 639 0074 C3F89023 		str	r2, [r3, #912]
- 378:../Sources/Events.c ****         Camera.readPointerToBuffer = Camera.cameraRawData0;
- 640              		.loc 1 378 0
- 641 0078 40F20003 		movw	r3, #:lower16:Camera
- 642 007c C0F20003 		movt	r3, #:upper16:Camera
- 643 0080 0F4A     		ldr	r2, .L23
- 644 0082 C3F89423 		str	r2, [r3, #916]
- 645 0086 16E0     		b	.L20
- 646              	.L22:
- 379:../Sources/Events.c ****       }
- 380:../Sources/Events.c ****       else if(Camera.writePointerToBuffer == Camera.cameraRawData1) {
- 647              		.loc 1 380 0
- 648 0088 40F20003 		movw	r3, #:lower16:Camera
- 649 008c C0F20003 		movt	r3, #:upper16:Camera
- 650 0090 D3F89023 		ldr	r2, [r3, #912]
- 651 0094 0B4B     		ldr	r3, .L23+4
- 652 0096 9A42     		cmp	r2, r3
- 653 0098 0DD1     		bne	.L20
- 381:../Sources/Events.c ****         Camera.writePointerToBuffer = Camera.cameraRawData0;
- 654              		.loc 1 381 0
- 655 009a 40F20003 		movw	r3, #:lower16:Camera
- 656 009e C0F20003 		movt	r3, #:upper16:Camera
- 657 00a2 074A     		ldr	r2, .L23
- 658 00a4 C3F89023 		str	r2, [r3, #912]
- 382:../Sources/Events.c ****         Camera.readPointerToBuffer = Camera.cameraRawData1;
- 659              		.loc 1 382 0
- 660 00a8 40F20003 		movw	r3, #:lower16:Camera
- 661 00ac C0F20003 		movt	r3, #:upper16:Camera
- 662 00b0 044A     		ldr	r2, .L23+4
- 663 00b2 C3F89423 		str	r2, [r3, #916]
- 664              	.L20:
- 383:../Sources/Events.c ****       }
- 384:../Sources/Events.c ****     }
- 385:../Sources/Events.c ****     
- 386:../Sources/Events.c ****   }
- 387:../Sources/Events.c **** }
- 665              		.loc 1 387 0
- 666 00b6 07F10807 		add	r7, r7, #8
- 667 00ba BD46     		mov	sp, r7
- 668 00bc 80BD     		pop	{r7, pc}
- 669              	.L24:
- 670 00be 00BF     		.align	2
- 671              	.L23:
- 672 00c0 98030000 		.word	Camera+920
- 673 00c4 1C040000 		.word	Camera+1052
- 674              		.cfi_endproc
- 675              	.LFE13:
- 677              		.section	.text.CameraTimer_OnChannel1,"ax",%progbits
- 678              		.align	2
- 679              		.global	CameraTimer_OnChannel1
- 680              		.thumb
- 681              		.thumb_func
- 683              	CameraTimer_OnChannel1:
- 684              	.LFB14:
- 388:../Sources/Events.c **** 
- 389:../Sources/Events.c **** /*
- 390:../Sources/Events.c **** ** ===================================================================
- 391:../Sources/Events.c **** **     Event       :  CameraTimer_OnChannel1 (module Events)
- 392:../Sources/Events.c **** **
- 393:../Sources/Events.c **** **     Component   :  CameraTimer [TimerUnit_LDD]
- 394:../Sources/Events.c **** **     Description :
- 395:../Sources/Events.c **** **         Called if compare register match the counter registers or
- 396:../Sources/Events.c **** **         capture register has a new content. OnChannel1 event and
- 397:../Sources/Events.c **** **         Timer unit must be enabled. See <SetEventMask> and
- 398:../Sources/Events.c **** **         <GetEventMask> methods. This event is available only if a
- 399:../Sources/Events.c **** **         <Interrupt> is enabled.
- 400:../Sources/Events.c **** **     Parameters  :
- 401:../Sources/Events.c **** **         NAME            - DESCRIPTION
- 402:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
- 403:../Sources/Events.c **** **                           RTOS specific data. The pointer passed as
- 404:../Sources/Events.c **** **                           the parameter of Init method.
+ 136:../Sources/Events.c **** 
+ 137:../Sources/Events.c **** }
+ 186              		.loc 1 137 0
+ 187 0008 07F10C07 		add	r7, r7, #12
+ 188 000c BD46     		mov	sp, r7
+ 189 000e 80BC     		pop	{r7}
+ 190 0010 7047     		bx	lr
+ 191              		.cfi_endproc
+ 192              	.LFE3:
+ 194 0012 00BF     		.section	.text.AS1_OnBlockReceived,"ax",%progbits
+ 195              		.align	2
+ 196              		.global	AS1_OnBlockReceived
+ 197              		.thumb
+ 198              		.thumb_func
+ 200              	AS1_OnBlockReceived:
+ 201              	.LFB4:
+ 138:../Sources/Events.c **** 
+ 139:../Sources/Events.c **** 
+ 140:../Sources/Events.c **** /*
+ 141:../Sources/Events.c **** ** ===================================================================
+ 142:../Sources/Events.c **** **     Event       :  AS1_OnBlockReceived (module Events)
+ 143:../Sources/Events.c **** **
+ 144:../Sources/Events.c **** **     Component   :  AS1 [Serial_LDD]
+ 145:../Sources/Events.c **** **     Description :
+ 146:../Sources/Events.c **** **         This event is called when the requested number of data is
+ 147:../Sources/Events.c **** **         moved to the input buffer.
+ 148:../Sources/Events.c **** **     Parameters  :
+ 149:../Sources/Events.c **** **         NAME            - DESCRIPTION
+ 150:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
+ 151:../Sources/Events.c **** **                           RTOS specific data. This pointer is passed
+ 152:../Sources/Events.c **** **                           as the parameter of Init method.
+ 153:../Sources/Events.c **** **     Returns     : Nothing
+ 154:../Sources/Events.c **** ** ===================================================================
+ 155:../Sources/Events.c **** */
+ 156:../Sources/Events.c **** void AS1_OnBlockReceived(LDD_TUserData *UserDataPtr)
+ 157:../Sources/Events.c **** {
+ 202              		.loc 1 157 0
+ 203              		.cfi_startproc
+ 204              		@ args = 0, pretend = 0, frame = 8
+ 205              		@ frame_needed = 1, uses_anonymous_args = 0
+ 206 0000 80B5     		push	{r7, lr}
+ 207              	.LCFI12:
+ 208              		.cfi_def_cfa_offset 8
+ 209              		.cfi_offset 14, -4
+ 210              		.cfi_offset 7, -8
+ 211 0002 82B0     		sub	sp, sp, #8
+ 212              	.LCFI13:
+ 213              		.cfi_def_cfa_offset 16
+ 214 0004 00AF     		add	r7, sp, #0
+ 215              	.LCFI14:
+ 216              		.cfi_def_cfa_register 7
+ 217 0006 7860     		str	r0, [r7, #4]
+ 158:../Sources/Events.c ****   CommunicationHandler(&Communication);
+ 218              		.loc 1 158 0
+ 219 0008 40F20000 		movw	r0, #:lower16:Communication
+ 220 000c C0F20000 		movt	r0, #:upper16:Communication
+ 221 0010 FFF7FEFF 		bl	CommunicationHandler
+ 159:../Sources/Events.c ****   AS1_ReceiveBlock(AS1_DeviceData, &Communication.ReceivedPacket[0], PACKET_LENGTH);
+ 222              		.loc 1 159 0
+ 223 0014 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 224 0018 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 225 001c 5B6A     		ldr	r3, [r3, #36]
+ 226 001e 1846     		mov	r0, r3
+ 227 0020 0449     		ldr	r1, .L6
+ 228 0022 4FF00A02 		mov	r2, #10
+ 229 0026 FFF7FEFF 		bl	AS1_ReceiveBlock
+ 160:../Sources/Events.c **** //  AS1_ReceiveBlock(AS1_DeviceData, &Communication.ReceivedPacket[0], PACKET_LENGTH);
+ 161:../Sources/Events.c **** }
+ 230              		.loc 1 161 0
+ 231 002a 07F10807 		add	r7, r7, #8
+ 232 002e BD46     		mov	sp, r7
+ 233 0030 80BD     		pop	{r7, pc}
+ 234              	.L7:
+ 235 0032 00BF     		.align	2
+ 236              	.L6:
+ 237 0034 04040000 		.word	Communication+1028
+ 238              		.cfi_endproc
+ 239              	.LFE4:
+ 241              		.section	.text.AS1_OnBlockSent,"ax",%progbits
+ 242              		.align	2
+ 243              		.global	AS1_OnBlockSent
+ 244              		.thumb
+ 245              		.thumb_func
+ 247              	AS1_OnBlockSent:
+ 248              	.LFB5:
+ 162:../Sources/Events.c **** 
+ 163:../Sources/Events.c **** /*
+ 164:../Sources/Events.c **** ** ===================================================================
+ 165:../Sources/Events.c **** **     Event       :  AS1_OnBlockSent (module Events)
+ 166:../Sources/Events.c **** **
+ 167:../Sources/Events.c **** **     Component   :  AS1 [Serial_LDD]
+ 168:../Sources/Events.c **** **     Description :
+ 169:../Sources/Events.c **** **         This event is called after the last character from the
+ 170:../Sources/Events.c **** **         output buffer is moved to the transmitter. 
+ 171:../Sources/Events.c **** **     Parameters  :
+ 172:../Sources/Events.c **** **         NAME            - DESCRIPTION
+ 173:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
+ 174:../Sources/Events.c **** **                           RTOS specific data. This pointer is passed
+ 175:../Sources/Events.c **** **                           as the parameter of Init method.
+ 176:../Sources/Events.c **** **     Returns     : Nothing
+ 177:../Sources/Events.c **** ** ===================================================================
+ 178:../Sources/Events.c **** */    
+ 179:../Sources/Events.c **** void AS1_OnBlockSent(LDD_TUserData *UserDataPtr)
+ 180:../Sources/Events.c **** {
+ 249              		.loc 1 180 0
+ 250              		.cfi_startproc
+ 251              		@ args = 0, pretend = 0, frame = 8
+ 252              		@ frame_needed = 1, uses_anonymous_args = 0
+ 253              		@ link register save eliminated.
+ 254 0000 80B4     		push	{r7}
+ 255              	.LCFI15:
+ 256              		.cfi_def_cfa_offset 4
+ 257              		.cfi_offset 7, -4
+ 258 0002 83B0     		sub	sp, sp, #12
+ 259              	.LCFI16:
+ 260              		.cfi_def_cfa_offset 16
+ 261 0004 00AF     		add	r7, sp, #0
+ 262              	.LCFI17:
+ 263              		.cfi_def_cfa_register 7
+ 264 0006 7860     		str	r0, [r7, #4]
+ 181:../Sources/Events.c ****   
+ 182:../Sources/Events.c **** }
+ 265              		.loc 1 182 0
+ 266 0008 07F10C07 		add	r7, r7, #12
+ 267 000c BD46     		mov	sp, r7
+ 268 000e 80BC     		pop	{r7}
+ 269 0010 7047     		bx	lr
+ 270              		.cfi_endproc
+ 271              	.LFE5:
+ 273 0012 00BF     		.section	.text.I2C2_OnMasterBlockSent,"ax",%progbits
+ 274              		.align	2
+ 275              		.global	I2C2_OnMasterBlockSent
+ 276              		.thumb
+ 277              		.thumb_func
+ 279              	I2C2_OnMasterBlockSent:
+ 280              	.LFB6:
+ 183:../Sources/Events.c **** 
+ 184:../Sources/Events.c **** /*
+ 185:../Sources/Events.c **** ** ===================================================================
+ 186:../Sources/Events.c **** **     Event       :  I2C2_OnMasterBlockSent (module Events)
+ 187:../Sources/Events.c **** **
+ 188:../Sources/Events.c **** **     Component   :  I2C2 [I2C_LDD]
+ 189:../Sources/Events.c **** **     Description :
+ 190:../Sources/Events.c **** **         This event is called when I2C in master mode finishes the
+ 191:../Sources/Events.c **** **         transmission of the data successfully. This event is not
+ 192:../Sources/Events.c **** **         available for the SLAVE mode and if MasterSendBlock is
+ 193:../Sources/Events.c **** **         disabled. 
+ 194:../Sources/Events.c **** **     Parameters  :
+ 195:../Sources/Events.c **** **         NAME            - DESCRIPTION
+ 196:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
+ 197:../Sources/Events.c **** **                           RTOS specific data. This pointer is passed
+ 198:../Sources/Events.c **** **                           as the parameter of Init method.
+ 199:../Sources/Events.c **** **     Returns     : Nothing
+ 200:../Sources/Events.c **** ** ===================================================================
+ 201:../Sources/Events.c **** */
+ 202:../Sources/Events.c **** void I2C2_OnMasterBlockSent(LDD_TUserData *UserDataPtr)
+ 203:../Sources/Events.c **** {
+ 281              		.loc 1 203 0
+ 282              		.cfi_startproc
+ 283              		@ args = 0, pretend = 0, frame = 8
+ 284              		@ frame_needed = 1, uses_anonymous_args = 0
+ 285              		@ link register save eliminated.
+ 286 0000 80B4     		push	{r7}
+ 287              	.LCFI18:
+ 288              		.cfi_def_cfa_offset 4
+ 289              		.cfi_offset 7, -4
+ 290 0002 83B0     		sub	sp, sp, #12
+ 291              	.LCFI19:
+ 292              		.cfi_def_cfa_offset 16
+ 293 0004 00AF     		add	r7, sp, #0
+ 294              	.LCFI20:
+ 295              		.cfi_def_cfa_register 7
+ 296 0006 7860     		str	r0, [r7, #4]
+ 204:../Sources/Events.c ****   Accelerometer.Sent = TRUE;
+ 297              		.loc 1 204 0
+ 298 0008 40F20003 		movw	r3, #:lower16:Accelerometer
+ 299 000c C0F20003 		movt	r3, #:upper16:Accelerometer
+ 300 0010 4FF00102 		mov	r2, #1
+ 301 0014 1A76     		strb	r2, [r3, #24]
+ 205:../Sources/Events.c **** }
+ 302              		.loc 1 205 0
+ 303 0016 07F10C07 		add	r7, r7, #12
+ 304 001a BD46     		mov	sp, r7
+ 305 001c 80BC     		pop	{r7}
+ 306 001e 7047     		bx	lr
+ 307              		.cfi_endproc
+ 308              	.LFE6:
+ 310              		.section	.text.I2C2_OnMasterBlockReceived,"ax",%progbits
+ 311              		.align	2
+ 312              		.global	I2C2_OnMasterBlockReceived
+ 313              		.thumb
+ 314              		.thumb_func
+ 316              	I2C2_OnMasterBlockReceived:
+ 317              	.LFB7:
+ 206:../Sources/Events.c **** 
+ 207:../Sources/Events.c **** /*
+ 208:../Sources/Events.c **** ** ===================================================================
+ 209:../Sources/Events.c **** **     Event       :  I2C2_OnMasterBlockReceived (module Events)
+ 210:../Sources/Events.c **** **
+ 211:../Sources/Events.c **** **     Component   :  I2C2 [I2C_LDD]
+ 212:../Sources/Events.c **** **     Description :
+ 213:../Sources/Events.c **** **         This event is called when I2C is in master mode and finishes
+ 214:../Sources/Events.c **** **         the reception of the data successfully. This event is not
+ 215:../Sources/Events.c **** **         available for the SLAVE mode and if MasterReceiveBlock is
+ 216:../Sources/Events.c **** **         disabled.
+ 217:../Sources/Events.c **** **     Parameters  :
+ 218:../Sources/Events.c **** **         NAME            - DESCRIPTION
+ 219:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
+ 220:../Sources/Events.c **** **                           RTOS specific data. This pointer is passed
+ 221:../Sources/Events.c **** **                           as the parameter of Init method.
+ 222:../Sources/Events.c **** **     Returns     : Nothing
+ 223:../Sources/Events.c **** ** ===================================================================
+ 224:../Sources/Events.c **** */
+ 225:../Sources/Events.c **** void I2C2_OnMasterBlockReceived(LDD_TUserData *UserDataPtr)
+ 226:../Sources/Events.c **** {
+ 318              		.loc 1 226 0
+ 319              		.cfi_startproc
+ 320              		@ args = 0, pretend = 0, frame = 8
+ 321              		@ frame_needed = 1, uses_anonymous_args = 0
+ 322              		@ link register save eliminated.
+ 323 0000 80B4     		push	{r7}
+ 324              	.LCFI21:
+ 325              		.cfi_def_cfa_offset 4
+ 326              		.cfi_offset 7, -4
+ 327 0002 83B0     		sub	sp, sp, #12
+ 328              	.LCFI22:
+ 329              		.cfi_def_cfa_offset 16
+ 330 0004 00AF     		add	r7, sp, #0
+ 331              	.LCFI23:
+ 332              		.cfi_def_cfa_register 7
+ 333 0006 7860     		str	r0, [r7, #4]
+ 227:../Sources/Events.c ****   Accelerometer.Received = TRUE;
+ 334              		.loc 1 227 0
+ 335 0008 40F20003 		movw	r3, #:lower16:Accelerometer
+ 336 000c C0F20003 		movt	r3, #:upper16:Accelerometer
+ 337 0010 4FF00102 		mov	r2, #1
+ 338 0014 5A76     		strb	r2, [r3, #25]
+ 228:../Sources/Events.c **** }
+ 339              		.loc 1 228 0
+ 340 0016 07F10C07 		add	r7, r7, #12
+ 341 001a BD46     		mov	sp, r7
+ 342 001c 80BC     		pop	{r7}
+ 343 001e 7047     		bx	lr
+ 344              		.cfi_endproc
+ 345              	.LFE7:
+ 347              		.section	.text.I2C2_OnError,"ax",%progbits
+ 348              		.align	2
+ 349              		.global	I2C2_OnError
+ 350              		.thumb
+ 351              		.thumb_func
+ 353              	I2C2_OnError:
+ 354              	.LFB8:
+ 229:../Sources/Events.c **** 
+ 230:../Sources/Events.c **** /*
+ 231:../Sources/Events.c **** ** ===================================================================
+ 232:../Sources/Events.c **** **     Event       :  I2C2_OnError (module Events)
+ 233:../Sources/Events.c **** **
+ 234:../Sources/Events.c **** **     Component   :  I2C2 [I2C_LDD]
+ 235:../Sources/Events.c **** **     Description :
+ 236:../Sources/Events.c **** **         This event is called when an error (e.g. Arbitration lost)
+ 237:../Sources/Events.c **** **         occurs. The errors can be read with GetError method.
+ 238:../Sources/Events.c **** **     Parameters  :
+ 239:../Sources/Events.c **** **         NAME            - DESCRIPTION
+ 240:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
+ 241:../Sources/Events.c **** **                           RTOS specific data. This pointer is passed
+ 242:../Sources/Events.c **** **                           as the parameter of Init method.
+ 243:../Sources/Events.c **** **     Returns     : Nothing
+ 244:../Sources/Events.c **** ** ===================================================================
+ 245:../Sources/Events.c **** */
+ 246:../Sources/Events.c **** void I2C2_OnError(LDD_TUserData *UserDataPtr)
+ 247:../Sources/Events.c **** {
+ 355              		.loc 1 247 0
+ 356              		.cfi_startproc
+ 357              		@ args = 0, pretend = 0, frame = 8
+ 358              		@ frame_needed = 1, uses_anonymous_args = 0
+ 359              		@ link register save eliminated.
+ 360 0000 80B4     		push	{r7}
+ 361              	.LCFI24:
+ 362              		.cfi_def_cfa_offset 4
+ 363              		.cfi_offset 7, -4
+ 364 0002 83B0     		sub	sp, sp, #12
+ 365              	.LCFI25:
+ 366              		.cfi_def_cfa_offset 16
+ 367 0004 00AF     		add	r7, sp, #0
+ 368              	.LCFI26:
+ 369              		.cfi_def_cfa_register 7
+ 370 0006 7860     		str	r0, [r7, #4]
+ 248:../Sources/Events.c ****   /* Write your code here ... */
+ 249:../Sources/Events.c **** }
+ 371              		.loc 1 249 0
+ 372 0008 07F10C07 		add	r7, r7, #12
+ 373 000c BD46     		mov	sp, r7
+ 374 000e 80BC     		pop	{r7}
+ 375 0010 7047     		bx	lr
+ 376              		.cfi_endproc
+ 377              	.LFE8:
+ 379 0012 00BF     		.section	.text.GPIO3_OnPortEvent,"ax",%progbits
+ 380              		.align	2
+ 381              		.global	GPIO3_OnPortEvent
+ 382              		.thumb
+ 383              		.thumb_func
+ 385              	GPIO3_OnPortEvent:
+ 386              	.LFB9:
+ 250:../Sources/Events.c **** 
+ 251:../Sources/Events.c **** /*
+ 252:../Sources/Events.c **** ** ===================================================================
+ 253:../Sources/Events.c **** **     Event       :  GPIO3_OnPortEvent (module Events)
+ 254:../Sources/Events.c **** **
+ 255:../Sources/Events.c **** **     Component   :  GPIO3 [GPIO_LDD]
+ 256:../Sources/Events.c **** **     Description :
+ 257:../Sources/Events.c **** **         Called if defined event on any pin of the port occured.
+ 258:../Sources/Events.c **** **         OnPortEvent event and GPIO interrupt must be enabled. See
+ 259:../Sources/Events.c **** **         SetPortEventMask() and GetPortEventMask() methods. This
+ 260:../Sources/Events.c **** **         event is enabled if <Interrupt service/event> is Enabled and
+ 261:../Sources/Events.c **** **         disabled if <Interrupt service/event> is Disabled.
+ 262:../Sources/Events.c **** **     Parameters  :
+ 263:../Sources/Events.c **** **         NAME            - DESCRIPTION
+ 264:../Sources/Events.c **** **       * UserDataPtr     - Pointer to RTOS device
+ 265:../Sources/Events.c **** **                           data structure pointer.
+ 266:../Sources/Events.c **** **     Returns     : Nothing
+ 267:../Sources/Events.c **** ** ===================================================================
+ 268:../Sources/Events.c **** */
+ 269:../Sources/Events.c **** void GPIO3_OnPortEvent(LDD_TUserData *UserDataPtr)
+ 270:../Sources/Events.c **** {
+ 387              		.loc 1 270 0
+ 388              		.cfi_startproc
+ 389              		@ args = 0, pretend = 0, frame = 8
+ 390              		@ frame_needed = 1, uses_anonymous_args = 0
+ 391 0000 80B5     		push	{r7, lr}
+ 392              	.LCFI27:
+ 393              		.cfi_def_cfa_offset 8
+ 394              		.cfi_offset 14, -4
+ 395              		.cfi_offset 7, -8
+ 396 0002 82B0     		sub	sp, sp, #8
+ 397              	.LCFI28:
+ 398              		.cfi_def_cfa_offset 16
+ 399 0004 00AF     		add	r7, sp, #0
+ 400              	.LCFI29:
+ 401              		.cfi_def_cfa_register 7
+ 402 0006 7860     		str	r0, [r7, #4]
+ 271:../Sources/Events.c ****   Accelerometer.TransmitBuffer[0] = 0x01;
+ 403              		.loc 1 271 0
+ 404 0008 40F20003 		movw	r3, #:lower16:Accelerometer
+ 405 000c C0F20003 		movt	r3, #:upper16:Accelerometer
+ 406 0010 4FF00102 		mov	r2, #1
+ 407 0014 9A74     		strb	r2, [r3, #18]
+ 272:../Sources/Events.c ****   Accelerometer.Sent = FALSE;
+ 408              		.loc 1 272 0
+ 409 0016 40F20003 		movw	r3, #:lower16:Accelerometer
+ 410 001a C0F20003 		movt	r3, #:upper16:Accelerometer
+ 411 001e 4FF00002 		mov	r2, #0
+ 412 0022 1A76     		strb	r2, [r3, #24]
+ 273:../Sources/Events.c ****   Accelerometer.Error = I2C2_MasterSendBlock(I2C2_DeviceData, &Accelerometer.TransmitBuffer[0], 0x0
+ 413              		.loc 1 273 0
+ 414 0024 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 415 0028 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 416 002c 9B6A     		ldr	r3, [r3, #40]
+ 417 002e 1846     		mov	r0, r3
+ 418 0030 1A49     		ldr	r1, .L14
+ 419 0032 4FF00102 		mov	r2, #1
+ 420 0036 4FF00003 		mov	r3, #0
+ 421 003a FFF7FEFF 		bl	I2C2_MasterSendBlock
+ 422 003e 0346     		mov	r3, r0
+ 423 0040 1A46     		mov	r2, r3
+ 424 0042 40F20003 		movw	r3, #:lower16:Accelerometer
+ 425 0046 C0F20003 		movt	r3, #:upper16:Accelerometer
+ 426 004a 5A83     		strh	r2, [r3, #26]	@ movhi
+ 274:../Sources/Events.c ****   while(!Accelerometer.Sent);
+ 427              		.loc 1 274 0
+ 428 004c 00BF     		nop
+ 429              	.L13:
+ 430              		.loc 1 274 0 is_stmt 0 discriminator 1
+ 431 004e 40F20003 		movw	r3, #:lower16:Accelerometer
+ 432 0052 C0F20003 		movt	r3, #:upper16:Accelerometer
+ 433 0056 1B7E     		ldrb	r3, [r3, #24]
+ 434 0058 DBB2     		uxtb	r3, r3
+ 435 005a 002B     		cmp	r3, #0
+ 436 005c F7D0     		beq	.L13
+ 275:../Sources/Events.c ****   
+ 276:../Sources/Events.c ****   Accelerometer.Received = FALSE;
+ 437              		.loc 1 276 0 is_stmt 1
+ 438 005e 40F20003 		movw	r3, #:lower16:Accelerometer
+ 439 0062 C0F20003 		movt	r3, #:upper16:Accelerometer
+ 440 0066 4FF00002 		mov	r2, #0
+ 441 006a 5A76     		strb	r2, [r3, #25]
+ 277:../Sources/Events.c ****   Accelerometer.Error = I2C2_MasterReceiveBlock(I2C2_DeviceData, &Accelerometer.ReceiveBuffer[0], 0
+ 442              		.loc 1 277 0
+ 443 006c 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 444 0070 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 445 0074 9B6A     		ldr	r3, [r3, #40]
+ 446 0076 1846     		mov	r0, r3
+ 447 0078 0949     		ldr	r1, .L14+4
+ 448 007a 4FF00602 		mov	r2, #6
+ 449 007e 4FF00103 		mov	r3, #1
+ 450 0082 FFF7FEFF 		bl	I2C2_MasterReceiveBlock
+ 451 0086 0346     		mov	r3, r0
+ 452 0088 1A46     		mov	r2, r3
+ 453 008a 40F20003 		movw	r3, #:lower16:Accelerometer
+ 454 008e C0F20003 		movt	r3, #:upper16:Accelerometer
+ 455 0092 5A83     		strh	r2, [r3, #26]	@ movhi
+ 278:../Sources/Events.c **** 
+ 279:../Sources/Events.c **** }
+ 456              		.loc 1 279 0
+ 457 0094 07F10807 		add	r7, r7, #8
+ 458 0098 BD46     		mov	sp, r7
+ 459 009a 80BD     		pop	{r7, pc}
+ 460              	.L15:
+ 461              		.align	2
+ 462              	.L14:
+ 463 009c 12000000 		.word	Accelerometer+18
+ 464 00a0 0C000000 		.word	Accelerometer+12
+ 465              		.cfi_endproc
+ 466              	.LFE9:
+ 468              		.section	.text.CameraTimer_OnCounterRestart,"ax",%progbits
+ 469              		.align	2
+ 470              		.global	CameraTimer_OnCounterRestart
+ 471              		.thumb
+ 472              		.thumb_func
+ 474              	CameraTimer_OnCounterRestart:
+ 475              	.LFB10:
+ 280:../Sources/Events.c **** 
+ 281:../Sources/Events.c **** /*
+ 282:../Sources/Events.c **** ** ===================================================================
+ 283:../Sources/Events.c **** **     Event       :  CameraTimer_OnCounterRestart (module Events)
+ 284:../Sources/Events.c **** **
+ 285:../Sources/Events.c **** **     Component   :  CameraTimer [TimerUnit_LDD]
+ 286:../Sources/Events.c **** **     Description :
+ 287:../Sources/Events.c **** **         Called if counter overflow/underflow or counter is
+ 288:../Sources/Events.c **** **         reinitialized by modulo or compare register matching.
+ 289:../Sources/Events.c **** **         OnCounterRestart event and Timer unit must be enabled. See
+ 290:../Sources/Events.c **** **         <SetEventMask> and <GetEventMask> methods. This event is
+ 291:../Sources/Events.c **** **         available only if a <Interrupt> is enabled.
+ 292:../Sources/Events.c **** **     Parameters  :
+ 293:../Sources/Events.c **** **         NAME            - DESCRIPTION
+ 294:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
+ 295:../Sources/Events.c **** **                           RTOS specific data. The pointer passed as
+ 296:../Sources/Events.c **** **                           the parameter of Init method.
+ 297:../Sources/Events.c **** **     Returns     : Nothing
+ 298:../Sources/Events.c **** ** ===================================================================
+ 299:../Sources/Events.c **** */
+ 300:../Sources/Events.c **** void CameraTimer_OnCounterRestart(LDD_TUserData *UserDataPtr)
+ 301:../Sources/Events.c **** {
+ 476              		.loc 1 301 0
+ 477              		.cfi_startproc
+ 478              		@ args = 0, pretend = 0, frame = 8
+ 479              		@ frame_needed = 1, uses_anonymous_args = 0
+ 480 0000 80B5     		push	{r7, lr}
+ 481              	.LCFI30:
+ 482              		.cfi_def_cfa_offset 8
+ 483              		.cfi_offset 14, -4
+ 484              		.cfi_offset 7, -8
+ 485 0002 82B0     		sub	sp, sp, #8
+ 486              	.LCFI31:
+ 487              		.cfi_def_cfa_offset 16
+ 488 0004 00AF     		add	r7, sp, #0
+ 489              	.LCFI32:
+ 490              		.cfi_def_cfa_register 7
+ 491 0006 7860     		str	r0, [r7, #4]
+ 302:../Sources/Events.c **** 	  if(Camera.pixelClockCounter == ( PIXEL_NUM + Camera.clockExposureOffset-1)) {
+ 492              		.loc 1 302 0
+ 493 0008 40F20003 		movw	r3, #:lower16:Camera
+ 494 000c C0F20003 		movt	r3, #:upper16:Camera
+ 495 0010 D3F89824 		ldr	r2, [r3, #1176]
+ 496 0014 40F20003 		movw	r3, #:lower16:Camera
+ 497 0018 C0F20003 		movt	r3, #:upper16:Camera
+ 498 001c D3F88C33 		ldr	r3, [r3, #908]
+ 499 0020 03F17F03 		add	r3, r3, #127
+ 500 0024 9A42     		cmp	r2, r3
+ 501 0026 0BD1     		bne	.L16
+ 303:../Sources/Events.c **** 	    SiPin_SetFieldBits(SiPin_DeviceData, Si, 0x01U);
+ 502              		.loc 1 303 0
+ 503 0028 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 504 002c C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 505 0030 5B6B     		ldr	r3, [r3, #52]
+ 506 0032 1846     		mov	r0, r3
+ 507 0034 4FF00001 		mov	r1, #0
+ 508 0038 4FF00102 		mov	r2, #1
+ 509 003c FFF7FEFF 		bl	SiPin_SetFieldBits
+ 510              	.L16:
+ 304:../Sources/Events.c **** 	  }
+ 305:../Sources/Events.c **** }
+ 511              		.loc 1 305 0
+ 512 0040 07F10807 		add	r7, r7, #8
+ 513 0044 BD46     		mov	sp, r7
+ 514 0046 80BD     		pop	{r7, pc}
+ 515              		.cfi_endproc
+ 516              	.LFE10:
+ 518              		.section	.text.CameraTimer_OnChannel0,"ax",%progbits
+ 519              		.align	2
+ 520              		.global	CameraTimer_OnChannel0
+ 521              		.thumb
+ 522              		.thumb_func
+ 524              	CameraTimer_OnChannel0:
+ 525              	.LFB11:
+ 306:../Sources/Events.c **** 
+ 307:../Sources/Events.c **** /*
+ 308:../Sources/Events.c **** ** ===================================================================
+ 309:../Sources/Events.c **** **     Event       :  CameraTimer_OnChannel0 (module Events)
+ 310:../Sources/Events.c **** **
+ 311:../Sources/Events.c **** **     Component   :  CameraTimer [TimerUnit_LDD]
+ 312:../Sources/Events.c **** **     Description :
+ 313:../Sources/Events.c **** **         Called if compare register match the counter registers or
+ 314:../Sources/Events.c **** **         capture register has a new content. OnChannel0 event and
+ 315:../Sources/Events.c **** **         Timer unit must be enabled. See <SetEventMask> and
+ 316:../Sources/Events.c **** **         <GetEventMask> methods. This event is available only if a
+ 317:../Sources/Events.c **** **         <Interrupt> is enabled.
+ 318:../Sources/Events.c **** **     Parameters  :
+ 319:../Sources/Events.c **** **         NAME            - DESCRIPTION
+ 320:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
+ 321:../Sources/Events.c **** **                           RTOS specific data. The pointer passed as
+ 322:../Sources/Events.c **** **                           the parameter of Init method.
+ 323:../Sources/Events.c **** **     Returns     : Nothing
+ 324:../Sources/Events.c **** ** ===================================================================
+ 325:../Sources/Events.c **** */
+ 326:../Sources/Events.c **** void CameraTimer_OnChannel0(LDD_TUserData *UserDataPtr)
+ 327:../Sources/Events.c **** {
+ 526              		.loc 1 327 0
+ 527              		.cfi_startproc
+ 528              		@ args = 0, pretend = 0, frame = 8
+ 529              		@ frame_needed = 1, uses_anonymous_args = 0
+ 530              		@ link register save eliminated.
+ 531 0000 80B4     		push	{r7}
+ 532              	.LCFI33:
+ 533              		.cfi_def_cfa_offset 4
+ 534              		.cfi_offset 7, -4
+ 535 0002 83B0     		sub	sp, sp, #12
+ 536              	.LCFI34:
+ 537              		.cfi_def_cfa_offset 16
+ 538 0004 00AF     		add	r7, sp, #0
+ 539              	.LCFI35:
+ 540              		.cfi_def_cfa_register 7
+ 541 0006 7860     		str	r0, [r7, #4]
+ 328:../Sources/Events.c ****   Camera.pixelClockCounter++;
+ 542              		.loc 1 328 0
+ 543 0008 40F20003 		movw	r3, #:lower16:Camera
+ 544 000c C0F20003 		movt	r3, #:upper16:Camera
+ 545 0010 D3F89834 		ldr	r3, [r3, #1176]
+ 546 0014 03F10102 		add	r2, r3, #1
+ 547 0018 40F20003 		movw	r3, #:lower16:Camera
+ 548 001c C0F20003 		movt	r3, #:upper16:Camera
+ 549 0020 C3F89824 		str	r2, [r3, #1176]
+ 329:../Sources/Events.c ****   Camera.pixelClockCounter %= (PIXEL_NUM + Camera.clockExposureOffset);
+ 550              		.loc 1 329 0
+ 551 0024 40F20003 		movw	r3, #:lower16:Camera
+ 552 0028 C0F20003 		movt	r3, #:upper16:Camera
+ 553 002c D3F89824 		ldr	r2, [r3, #1176]
+ 554 0030 40F20003 		movw	r3, #:lower16:Camera
+ 555 0034 C0F20003 		movt	r3, #:upper16:Camera
+ 556 0038 D3F88C33 		ldr	r3, [r3, #908]
+ 557 003c 03F18003 		add	r3, r3, #128
+ 558 0040 B2FBF3F1 		udiv	r1, r2, r3
+ 559 0044 03FB01F3 		mul	r3, r3, r1
+ 560 0048 D21A     		subs	r2, r2, r3
+ 561 004a 40F20003 		movw	r3, #:lower16:Camera
+ 562 004e C0F20003 		movt	r3, #:upper16:Camera
+ 563 0052 C3F89824 		str	r2, [r3, #1176]
+ 330:../Sources/Events.c **** 
+ 331:../Sources/Events.c ****   //AD1_StartSingleMeasurement(AD1_DeviceData);
+ 332:../Sources/Events.c **** }
+ 564              		.loc 1 332 0
+ 565 0056 07F10C07 		add	r7, r7, #12
+ 566 005a BD46     		mov	sp, r7
+ 567 005c 80BC     		pop	{r7}
+ 568 005e 7047     		bx	lr
+ 569              		.cfi_endproc
+ 570              	.LFE11:
+ 572              		.section	.text.AD1_OnMeasurementComplete,"ax",%progbits
+ 573              		.align	2
+ 574              		.global	AD1_OnMeasurementComplete
+ 575              		.thumb
+ 576              		.thumb_func
+ 578              	AD1_OnMeasurementComplete:
+ 579              	.LFB12:
+ 333:../Sources/Events.c **** /*
+ 334:../Sources/Events.c **** ** ===================================================================
+ 335:../Sources/Events.c **** **     Event       :  AD1_OnMeasurementComplete (module Events)
+ 336:../Sources/Events.c **** **
+ 337:../Sources/Events.c **** **     Component   :  AD1 [ADC_LDD]
+ 338:../Sources/Events.c **** **     Description :
+ 339:../Sources/Events.c **** **         Called after measurement is done, <Interrupt service/event>
+ 340:../Sources/Events.c **** **         is enabled, OnMeasurementComplete event is enabled and ADC
+ 341:../Sources/Events.c **** **         device is enabled. See <SetEventMask()> method or <Event
+ 342:../Sources/Events.c **** **         mask> property group to enable this event and <Enable>
+ 343:../Sources/Events.c **** **         method or <Enabled in init. code> property to enable ADC
+ 344:../Sources/Events.c **** **         device.  
+ 345:../Sources/Events.c **** **     Parameters  :
+ 346:../Sources/Events.c **** **         NAME            - DESCRIPTION
+ 347:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
+ 348:../Sources/Events.c **** **                           RTOS specific data. The pointer is passed
+ 349:../Sources/Events.c **** **                           as the parameter of Init method. 
+ 350:../Sources/Events.c **** **     Returns     : Nothing
+ 351:../Sources/Events.c **** ** ===================================================================
+ 352:../Sources/Events.c **** */
+ 353:../Sources/Events.c **** void AD1_OnMeasurementComplete(LDD_TUserData *UserDataPtr)
+ 354:../Sources/Events.c **** {
+ 580              		.loc 1 354 0
+ 581              		.cfi_startproc
+ 582              		@ args = 0, pretend = 0, frame = 8
+ 583              		@ frame_needed = 1, uses_anonymous_args = 0
+ 584 0000 80B5     		push	{r7, lr}
+ 585              	.LCFI36:
+ 586              		.cfi_def_cfa_offset 8
+ 587              		.cfi_offset 14, -4
+ 588              		.cfi_offset 7, -8
+ 589 0002 82B0     		sub	sp, sp, #8
+ 590              	.LCFI37:
+ 591              		.cfi_def_cfa_offset 16
+ 592 0004 00AF     		add	r7, sp, #0
+ 593              	.LCFI38:
+ 594              		.cfi_def_cfa_register 7
+ 595 0006 7860     		str	r0, [r7, #4]
+ 355:../Sources/Events.c ****   if(Camera.pixelClockCounter < PIXEL_NUM) {
+ 596              		.loc 1 355 0
+ 597 0008 40F20003 		movw	r3, #:lower16:Camera
+ 598 000c C0F20003 		movt	r3, #:upper16:Camera
+ 599 0010 D3F89834 		ldr	r3, [r3, #1176]
+ 600 0014 7F2B     		cmp	r3, #127
+ 601 0016 4CD8     		bhi	.L19
+ 356:../Sources/Events.c ****     AD1_GetMeasuredValues(AD1_DeviceData, &Camera.writePointerToBuffer[Camera.pixelClockCounter]);
+ 602              		.loc 1 356 0
+ 603 0018 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 604 001c C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 605 0020 DA69     		ldr	r2, [r3, #28]
+ 606 0022 40F20003 		movw	r3, #:lower16:Camera
+ 607 0026 C0F20003 		movt	r3, #:upper16:Camera
+ 608 002a D3F89013 		ldr	r1, [r3, #912]
+ 609 002e 40F20003 		movw	r3, #:lower16:Camera
+ 610 0032 C0F20003 		movt	r3, #:upper16:Camera
+ 611 0036 D3F89834 		ldr	r3, [r3, #1176]
+ 612 003a CB18     		adds	r3, r1, r3
+ 613 003c 1046     		mov	r0, r2
+ 614 003e 1946     		mov	r1, r3
+ 615 0040 FFF7FEFF 		bl	AD1_GetMeasuredValues
+ 357:../Sources/Events.c ****     if(Camera.pixelClockCounter == 127) {
+ 616              		.loc 1 357 0
+ 617 0044 40F20003 		movw	r3, #:lower16:Camera
+ 618 0048 C0F20003 		movt	r3, #:upper16:Camera
+ 619 004c D3F89834 		ldr	r3, [r3, #1176]
+ 620 0050 7F2B     		cmp	r3, #127
+ 621 0052 2ED1     		bne	.L19
+ 358:../Sources/Events.c ****       if(Camera.writePointerToBuffer == Camera.cameraRawData0) {
+ 622              		.loc 1 358 0
+ 623 0054 40F20003 		movw	r3, #:lower16:Camera
+ 624 0058 C0F20003 		movt	r3, #:upper16:Camera
+ 625 005c D3F89023 		ldr	r2, [r3, #912]
+ 626 0060 164B     		ldr	r3, .L22
+ 627 0062 9A42     		cmp	r2, r3
+ 628 0064 0ED1     		bne	.L21
+ 359:../Sources/Events.c ****         Camera.writePointerToBuffer = Camera.cameraRawData1;
+ 629              		.loc 1 359 0
+ 630 0066 40F20003 		movw	r3, #:lower16:Camera
+ 631 006a C0F20003 		movt	r3, #:upper16:Camera
+ 632 006e 144A     		ldr	r2, .L22+4
+ 633 0070 C3F89023 		str	r2, [r3, #912]
+ 360:../Sources/Events.c ****         Camera.readPointerToBuffer = Camera.cameraRawData0;
+ 634              		.loc 1 360 0
+ 635 0074 40F20003 		movw	r3, #:lower16:Camera
+ 636 0078 C0F20003 		movt	r3, #:upper16:Camera
+ 637 007c 0F4A     		ldr	r2, .L22
+ 638 007e C3F89423 		str	r2, [r3, #916]
+ 639 0082 16E0     		b	.L19
+ 640              	.L21:
+ 361:../Sources/Events.c ****       }
+ 362:../Sources/Events.c ****       else if(Camera.writePointerToBuffer == Camera.cameraRawData1) {
+ 641              		.loc 1 362 0
+ 642 0084 40F20003 		movw	r3, #:lower16:Camera
+ 643 0088 C0F20003 		movt	r3, #:upper16:Camera
+ 644 008c D3F89023 		ldr	r2, [r3, #912]
+ 645 0090 0B4B     		ldr	r3, .L22+4
+ 646 0092 9A42     		cmp	r2, r3
+ 647 0094 0DD1     		bne	.L19
+ 363:../Sources/Events.c ****         Camera.writePointerToBuffer = Camera.cameraRawData0;
+ 648              		.loc 1 363 0
+ 649 0096 40F20003 		movw	r3, #:lower16:Camera
+ 650 009a C0F20003 		movt	r3, #:upper16:Camera
+ 651 009e 074A     		ldr	r2, .L22
+ 652 00a0 C3F89023 		str	r2, [r3, #912]
+ 364:../Sources/Events.c ****         Camera.readPointerToBuffer = Camera.cameraRawData1;
+ 653              		.loc 1 364 0
+ 654 00a4 40F20003 		movw	r3, #:lower16:Camera
+ 655 00a8 C0F20003 		movt	r3, #:upper16:Camera
+ 656 00ac 044A     		ldr	r2, .L22+4
+ 657 00ae C3F89423 		str	r2, [r3, #916]
+ 658              	.L19:
+ 365:../Sources/Events.c ****       }
+ 366:../Sources/Events.c ****     }
+ 367:../Sources/Events.c ****     
+ 368:../Sources/Events.c ****   }
+ 369:../Sources/Events.c **** }
+ 659              		.loc 1 369 0
+ 660 00b2 07F10807 		add	r7, r7, #8
+ 661 00b6 BD46     		mov	sp, r7
+ 662 00b8 80BD     		pop	{r7, pc}
+ 663              	.L23:
+ 664 00ba 00BF     		.align	2
+ 665              	.L22:
+ 666 00bc 98030000 		.word	Camera+920
+ 667 00c0 18040000 		.word	Camera+1048
+ 668              		.cfi_endproc
+ 669              	.LFE12:
+ 671              		.section	.text.CameraTimer_OnChannel1,"ax",%progbits
+ 672              		.align	2
+ 673              		.global	CameraTimer_OnChannel1
+ 674              		.thumb
+ 675              		.thumb_func
+ 677              	CameraTimer_OnChannel1:
+ 678              	.LFB13:
+ 370:../Sources/Events.c **** 
+ 371:../Sources/Events.c **** /*
+ 372:../Sources/Events.c **** ** ===================================================================
+ 373:../Sources/Events.c **** **     Event       :  CameraTimer_OnChannel1 (module Events)
+ 374:../Sources/Events.c **** **
+ 375:../Sources/Events.c **** **     Component   :  CameraTimer [TimerUnit_LDD]
+ 376:../Sources/Events.c **** **     Description :
+ 377:../Sources/Events.c **** **         Called if compare register match the counter registers or
+ 378:../Sources/Events.c **** **         capture register has a new content. OnChannel1 event and
+ 379:../Sources/Events.c **** **         Timer unit must be enabled. See <SetEventMask> and
+ 380:../Sources/Events.c **** **         <GetEventMask> methods. This event is available only if a
+ 381:../Sources/Events.c **** **         <Interrupt> is enabled.
+ 382:../Sources/Events.c **** **     Parameters  :
+ 383:../Sources/Events.c **** **         NAME            - DESCRIPTION
+ 384:../Sources/Events.c **** **       * UserDataPtr     - Pointer to the user or
+ 385:../Sources/Events.c **** **                           RTOS specific data. The pointer passed as
+ 386:../Sources/Events.c **** **                           the parameter of Init method.
+ 387:../Sources/Events.c **** **     Returns     : Nothing
+ 388:../Sources/Events.c **** ** ===================================================================
+ 389:../Sources/Events.c **** */
+ 390:../Sources/Events.c **** void CameraTimer_OnChannel1(LDD_TUserData *UserDataPtr)
+ 391:../Sources/Events.c **** {
+ 679              		.loc 1 391 0
+ 680              		.cfi_startproc
+ 681              		@ args = 0, pretend = 0, frame = 8
+ 682              		@ frame_needed = 1, uses_anonymous_args = 0
+ 683 0000 80B5     		push	{r7, lr}
+ 684              	.LCFI39:
+ 685              		.cfi_def_cfa_offset 8
+ 686              		.cfi_offset 14, -4
+ 687              		.cfi_offset 7, -8
+ 688 0002 82B0     		sub	sp, sp, #8
+ 689              	.LCFI40:
+ 690              		.cfi_def_cfa_offset 16
+ 691 0004 00AF     		add	r7, sp, #0
+ 692              	.LCFI41:
+ 693              		.cfi_def_cfa_register 7
+ 694 0006 7860     		str	r0, [r7, #4]
+ 392:../Sources/Events.c ****   SiPin_ClearFieldBits(SiPin_DeviceData, Si, 0x01U);
+ 695              		.loc 1 392 0
+ 696 0008 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 697 000c C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 698 0010 5B6B     		ldr	r3, [r3, #52]
+ 699 0012 1846     		mov	r0, r3
+ 700 0014 4FF00001 		mov	r1, #0
+ 701 0018 4FF00102 		mov	r2, #1
+ 702 001c FFF7FEFF 		bl	SiPin_ClearFieldBits
+ 393:../Sources/Events.c **** }
+ 703              		.loc 1 393 0
+ 704 0020 07F10807 		add	r7, r7, #8
+ 705 0024 BD46     		mov	sp, r7
+ 706 0026 80BD     		pop	{r7, pc}
+ 707              		.cfi_endproc
+ 708              	.LFE13:
+ 710              		.section	.text.Cpu_OnNMIINT,"ax",%progbits
+ 711              		.align	2
+ 712              		.global	Cpu_OnNMIINT
+ 713              		.thumb
+ 714              		.thumb_func
+ 716              	Cpu_OnNMIINT:
+ 717              	.LFB14:
+ 394:../Sources/Events.c **** 
+ 395:../Sources/Events.c **** /*
+ 396:../Sources/Events.c **** ** ===================================================================
+ 397:../Sources/Events.c **** **     Event       :  Cpu_OnNMIINT (module Events)
+ 398:../Sources/Events.c **** **
+ 399:../Sources/Events.c **** **     Component   :  Cpu [MK40N512LQ100]
+ 400:../Sources/Events.c **** **     Description :
+ 401:../Sources/Events.c **** **         This event is called when the Non maskable interrupt had
+ 402:../Sources/Events.c **** **         occurred. This event is automatically enabled when the <NMI
+ 403:../Sources/Events.c **** **         interrrupt> property is set to 'Enabled'.
+ 404:../Sources/Events.c **** **     Parameters  : None
  405:../Sources/Events.c **** **     Returns     : Nothing
  406:../Sources/Events.c **** ** ===================================================================
  407:../Sources/Events.c **** */
- 408:../Sources/Events.c **** void CameraTimer_OnChannel1(LDD_TUserData *UserDataPtr)
+ 408:../Sources/Events.c **** void Cpu_OnNMIINT(void)
  409:../Sources/Events.c **** {
- 685              		.loc 1 409 0
- 686              		.cfi_startproc
- 687              		@ args = 0, pretend = 0, frame = 8
- 688              		@ frame_needed = 1, uses_anonymous_args = 0
- 689 0000 80B5     		push	{r7, lr}
- 690              	.LCFI42:
- 691              		.cfi_def_cfa_offset 8
- 692              		.cfi_offset 14, -4
- 693              		.cfi_offset 7, -8
- 694 0002 82B0     		sub	sp, sp, #8
- 695              	.LCFI43:
- 696              		.cfi_def_cfa_offset 16
- 697 0004 00AF     		add	r7, sp, #0
- 698              	.LCFI44:
- 699              		.cfi_def_cfa_register 7
- 700 0006 7860     		str	r0, [r7, #4]
- 410:../Sources/Events.c ****   SiPin_ClearFieldBits(SiPin_DeviceData, Si, 0x01U);
- 701              		.loc 1 410 0
- 702 0008 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
- 703 000c C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
- 704 0010 5B6B     		ldr	r3, [r3, #52]
- 705 0012 1846     		mov	r0, r3
- 706 0014 4FF00001 		mov	r1, #0
- 707 0018 4FF00102 		mov	r2, #1
- 708 001c FFF7FEFF 		bl	SiPin_ClearFieldBits
+ 718              		.loc 1 409 0
+ 719              		.cfi_startproc
+ 720              		@ args = 0, pretend = 0, frame = 0
+ 721              		@ frame_needed = 1, uses_anonymous_args = 0
+ 722              		@ link register save eliminated.
+ 723 0000 80B4     		push	{r7}
+ 724              	.LCFI42:
+ 725              		.cfi_def_cfa_offset 4
+ 726              		.cfi_offset 7, -4
+ 727 0002 00AF     		add	r7, sp, #0
+ 728              	.LCFI43:
+ 729              		.cfi_def_cfa_register 7
+ 410:../Sources/Events.c ****   /* Write your code here ... */
  411:../Sources/Events.c **** }
- 709              		.loc 1 411 0
- 710 0020 07F10807 		add	r7, r7, #8
- 711 0024 BD46     		mov	sp, r7
- 712 0026 80BD     		pop	{r7, pc}
- 713              		.cfi_endproc
- 714              	.LFE14:
- 716              		.section	.text.Cpu_OnNMIINT,"ax",%progbits
- 717              		.align	2
- 718              		.global	Cpu_OnNMIINT
- 719              		.thumb
- 720              		.thumb_func
- 722              	Cpu_OnNMIINT:
- 723              	.LFB15:
- 412:../Sources/Events.c **** 
- 413:../Sources/Events.c **** /*
- 414:../Sources/Events.c **** ** ===================================================================
- 415:../Sources/Events.c **** **     Event       :  Cpu_OnNMIINT (module Events)
- 416:../Sources/Events.c **** **
- 417:../Sources/Events.c **** **     Component   :  Cpu [MK40N512LQ100]
- 418:../Sources/Events.c **** **     Description :
- 419:../Sources/Events.c **** **         This event is called when the Non maskable interrupt had
- 420:../Sources/Events.c **** **         occurred. This event is automatically enabled when the <NMI
- 421:../Sources/Events.c **** **         interrrupt> property is set to 'Enabled'.
- 422:../Sources/Events.c **** **     Parameters  : None
- 423:../Sources/Events.c **** **     Returns     : Nothing
- 424:../Sources/Events.c **** ** ===================================================================
- 425:../Sources/Events.c **** */
- 426:../Sources/Events.c **** void Cpu_OnNMIINT(void)
- 427:../Sources/Events.c **** {
- 724              		.loc 1 427 0
- 725              		.cfi_startproc
- 726              		@ args = 0, pretend = 0, frame = 0
- 727              		@ frame_needed = 1, uses_anonymous_args = 0
- 728              		@ link register save eliminated.
- 729 0000 80B4     		push	{r7}
- 730              	.LCFI45:
- 731              		.cfi_def_cfa_offset 4
- 732              		.cfi_offset 7, -4
- 733 0002 00AF     		add	r7, sp, #0
- 734              	.LCFI46:
- 735              		.cfi_def_cfa_register 7
- 428:../Sources/Events.c ****   /* Write your code here ... */
- 429:../Sources/Events.c **** }
- 736              		.loc 1 429 0
- 737 0004 BD46     		mov	sp, r7
- 738 0006 80BC     		pop	{r7}
- 739 0008 7047     		bx	lr
- 740              		.cfi_endproc
- 741              	.LFE15:
- 743 000a 00BF     		.text
- 744              	.Letext0:
- 745              		.file 2 "C:/Freescale/CW MCU v10.3_NOBETA/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
- 746              		.file 3 "C:/workspaceBakalarkaa/Pex/Generated_Code/PE_Types.h"
- 747              		.file 4 "C:/workspaceBakalarkaa/Pex/Generated_Code/PE_LDD.h"
- 748              		.file 5 "../Sources/Odometry.h"
- 749              		.file 6 "../Sources/Accelerometer.h"
- 750              		.file 7 "../Sources/Communication.h"
- 751              		.file 8 "../Sources/Camera.h"
- 752              		.file 9 "../Sources/Map.h"
+ 730              		.loc 1 411 0
+ 731 0004 BD46     		mov	sp, r7
+ 732 0006 80BC     		pop	{r7}
+ 733 0008 7047     		bx	lr
+ 734              		.cfi_endproc
+ 735              	.LFE14:
+ 737 000a 00BF     		.text
+ 738              	.Letext0:
+ 739              		.file 2 "C:/Freescale/CW MCU v10.3_121211/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
+ 740              		.file 3 "C:/temp2/Pex/Generated_Code/PE_Types.h"
+ 741              		.file 4 "C:/temp2/Pex/Generated_Code/PE_LDD.h"
+ 742              		.file 5 "../Sources/Controller.h"
+ 743              		.file 6 "../Sources/Odometry.h"
+ 744              		.file 7 "../Sources/Accelerometer.h"
+ 745              		.file 8 "../Sources/Communication.h"
+ 746              		.file 9 "../Sources/Camera.h"
+ 747              		.file 10 "../Sources/Map.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 Events.c
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:19     .text.OdometryTimer_OnCounterRestart:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:24     .text.OdometryTimer_OnCounterRestart:00000000 OdometryTimer_OnCounterRestart
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:52     .text.PWMMotor_OnCounterRestart:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:57     .text.PWMMotor_OnCounterRestart:00000000 PWMMotor_OnCounterRestart
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:84     .text.OdometryGPIO_OnPortEvent:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:89     .text.OdometryGPIO_OnPortEvent:00000000 OdometryGPIO_OnPortEvent
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:131    .text.Period_OnCounterRestart:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:136    .text.Period_OnCounterRestart:00000000 Period_OnCounterRestart
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:163    .text.OdoTimer_OnCounterRestart:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:168    .text.OdoTimer_OnCounterRestart:00000000 OdoTimer_OnCounterRestart
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:200    .text.AS1_OnBlockReceived:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:205    .text.AS1_OnBlockReceived:00000000 AS1_OnBlockReceived
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:242    .text.AS1_OnBlockReceived:00000034 $d
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:247    .text.AS1_OnBlockSent:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:252    .text.AS1_OnBlockSent:00000000 AS1_OnBlockSent
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:279    .text.I2C2_OnMasterBlockSent:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:284    .text.I2C2_OnMasterBlockSent:00000000 I2C2_OnMasterBlockSent
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:316    .text.I2C2_OnMasterBlockReceived:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:321    .text.I2C2_OnMasterBlockReceived:00000000 I2C2_OnMasterBlockReceived
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:353    .text.I2C2_OnError:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:358    .text.I2C2_OnError:00000000 I2C2_OnError
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:385    .text.GPIO3_OnPortEvent:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:390    .text.GPIO3_OnPortEvent:00000000 GPIO3_OnPortEvent
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:468    .text.GPIO3_OnPortEvent:0000009c $d
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:474    .text.CameraTimer_OnCounterRestart:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:479    .text.CameraTimer_OnCounterRestart:00000000 CameraTimer_OnCounterRestart
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:524    .text.CameraTimer_OnChannel0:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:529    .text.CameraTimer_OnChannel0:00000000 CameraTimer_OnChannel0
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:578    .text.AD1_OnMeasurementComplete:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:583    .text.AD1_OnMeasurementComplete:00000000 AD1_OnMeasurementComplete
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:672    .text.AD1_OnMeasurementComplete:000000c0 $d
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:678    .text.CameraTimer_OnChannel1:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:683    .text.CameraTimer_OnChannel1:00000000 CameraTimer_OnChannel1
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:717    .text.Cpu_OnNMIINT:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccjTXCfJ.s:722    .text.Cpu_OnNMIINT:00000000 Cpu_OnNMIINT
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:19     .text.OdometryTimer_OnCounterRestart:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:24     .text.OdometryTimer_OnCounterRestart:00000000 OdometryTimer_OnCounterRestart
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:76     .text.PWMMotor_OnCounterRestart:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:81     .text.PWMMotor_OnCounterRestart:00000000 PWMMotor_OnCounterRestart
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:108    .text.OdometryGPIO_OnPortEvent:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:113    .text.OdometryGPIO_OnPortEvent:00000000 OdometryGPIO_OnPortEvent
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:163    .text.Period_OnCounterRestart:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:168    .text.Period_OnCounterRestart:00000000 Period_OnCounterRestart
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:195    .text.AS1_OnBlockReceived:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:200    .text.AS1_OnBlockReceived:00000000 AS1_OnBlockReceived
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:237    .text.AS1_OnBlockReceived:00000034 $d
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:242    .text.AS1_OnBlockSent:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:247    .text.AS1_OnBlockSent:00000000 AS1_OnBlockSent
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:274    .text.I2C2_OnMasterBlockSent:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:279    .text.I2C2_OnMasterBlockSent:00000000 I2C2_OnMasterBlockSent
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:311    .text.I2C2_OnMasterBlockReceived:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:316    .text.I2C2_OnMasterBlockReceived:00000000 I2C2_OnMasterBlockReceived
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:348    .text.I2C2_OnError:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:353    .text.I2C2_OnError:00000000 I2C2_OnError
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:380    .text.GPIO3_OnPortEvent:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:385    .text.GPIO3_OnPortEvent:00000000 GPIO3_OnPortEvent
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:463    .text.GPIO3_OnPortEvent:0000009c $d
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:469    .text.CameraTimer_OnCounterRestart:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:474    .text.CameraTimer_OnCounterRestart:00000000 CameraTimer_OnCounterRestart
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:519    .text.CameraTimer_OnChannel0:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:524    .text.CameraTimer_OnChannel0:00000000 CameraTimer_OnChannel0
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:573    .text.AD1_OnMeasurementComplete:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:578    .text.AD1_OnMeasurementComplete:00000000 AD1_OnMeasurementComplete
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:666    .text.AD1_OnMeasurementComplete:000000bc $d
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:672    .text.CameraTimer_OnChannel1:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:677    .text.CameraTimer_OnChannel1:00000000 CameraTimer_OnChannel1
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:711    .text.Cpu_OnNMIINT:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccjG2kZ7.s:716    .text.Cpu_OnNMIINT:00000000 Cpu_OnNMIINT
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS
-Map
 Odometry
+Controller
+ControllerMain
+Map
 Accelerometer
 MapMain
 Communication

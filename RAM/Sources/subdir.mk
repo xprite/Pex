@@ -9,6 +9,7 @@ C_SRCS_QUOTED += \
 "../Sources/Accelerometer.c" \
 "../Sources/Camera.c" \
 "../Sources/Communication.c" \
+"../Sources/Controller.c" \
 "../Sources/Events.c" \
 "../Sources/Map.c" \
 "../Sources/Odometry.c" \
@@ -19,6 +20,7 @@ C_SRCS += \
 ../Sources/Accelerometer.c \
 ../Sources/Camera.c \
 ../Sources/Communication.c \
+../Sources/Controller.c \
 ../Sources/Events.c \
 ../Sources/Map.c \
 ../Sources/Odometry.c \
@@ -29,6 +31,7 @@ OBJS += \
 ./Sources/Accelerometer_c.obj \
 ./Sources/Camera_c.obj \
 ./Sources/Communication_c.obj \
+./Sources/Controller_c.obj \
 ./Sources/Events_c.obj \
 ./Sources/Map_c.obj \
 ./Sources/Odometry_c.obj \
@@ -39,6 +42,7 @@ C_DEPS += \
 ./Sources/Accelerometer.d \
 ./Sources/Camera.d \
 ./Sources/Communication.d \
+./Sources/Controller.d \
 ./Sources/Events.d \
 ./Sources/Map.d \
 ./Sources/Odometry.d \
@@ -49,6 +53,7 @@ OBJS_QUOTED += \
 "./Sources/Accelerometer_c.obj" \
 "./Sources/Camera_c.obj" \
 "./Sources/Communication_c.obj" \
+"./Sources/Controller_c.obj" \
 "./Sources/Events_c.obj" \
 "./Sources/Map_c.obj" \
 "./Sources/Odometry_c.obj" \
@@ -59,6 +64,7 @@ C_DEPS_QUOTED += \
 "./Sources/Accelerometer.d" \
 "./Sources/Camera.d" \
 "./Sources/Communication.d" \
+"./Sources/Controller.d" \
 "./Sources/Events.d" \
 "./Sources/Map.d" \
 "./Sources/Odometry.d" \
@@ -69,6 +75,7 @@ OBJS_OS_FORMAT += \
 ./Sources/Accelerometer_c.obj \
 ./Sources/Camera_c.obj \
 ./Sources/Communication_c.obj \
+./Sources/Controller_c.obj \
 ./Sources/Events_c.obj \
 ./Sources/Map_c.obj \
 ./Sources/Odometry_c.obj \
@@ -101,9 +108,17 @@ Sources/Communication_c.obj: ../Sources/Communication.c
 	@echo 'Finished building: $<'
 	@echo ' '
 
-Sources/Events_c.obj: ../Sources/Events.c
+Sources/Controller_c.obj: ../Sources/Controller.c
 	@echo 'Building file: $<'
 	@echo 'Executing target #4 $<'
+	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
+	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/Controller.args" -Wa,-adhlns="$@.lst" -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -g3 -gdwarf-2 -gstrict-dwarf -o"Sources/Controller_c.obj"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+Sources/Events_c.obj: ../Sources/Events.c
+	@echo 'Building file: $<'
+	@echo 'Executing target #5 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/Events.args" -Wa,-adhlns="$@.lst" -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -g3 -gdwarf-2 -gstrict-dwarf -o"Sources/Events_c.obj"
 	@echo 'Finished building: $<'
@@ -111,7 +126,7 @@ Sources/Events_c.obj: ../Sources/Events.c
 
 Sources/Map_c.obj: ../Sources/Map.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #5 $<'
+	@echo 'Executing target #6 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/Map.args" -Wa,-adhlns="$@.lst" -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -g3 -gdwarf-2 -gstrict-dwarf -o"Sources/Map_c.obj"
 	@echo 'Finished building: $<'
@@ -119,7 +134,7 @@ Sources/Map_c.obj: ../Sources/Map.c
 
 Sources/Odometry_c.obj: ../Sources/Odometry.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #6 $<'
+	@echo 'Executing target #7 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/Odometry.args" -Wa,-adhlns="$@.lst" -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -g3 -gdwarf-2 -gstrict-dwarf -o"Sources/Odometry_c.obj"
 	@echo 'Finished building: $<'
@@ -127,7 +142,7 @@ Sources/Odometry_c.obj: ../Sources/Odometry.c
 
 Sources/ProcessorExpert_c.obj: ../Sources/ProcessorExpert.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #7 $<'
+	@echo 'Executing target #8 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/ProcessorExpert.args" -Wa,-adhlns="$@.lst" -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -g3 -gdwarf-2 -gstrict-dwarf -o"Sources/ProcessorExpert_c.obj"
 	@echo 'Finished building: $<'
@@ -135,7 +150,7 @@ Sources/ProcessorExpert_c.obj: ../Sources/ProcessorExpert.c
 
 Sources/Steering_c.obj: ../Sources/Steering.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #8 $<'
+	@echo 'Executing target #9 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/Steering.args" -Wa,-adhlns="$@.lst" -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -g3 -gdwarf-2 -gstrict-dwarf -o"Sources/Steering_c.obj"
 	@echo 'Finished building: $<'

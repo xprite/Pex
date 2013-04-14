@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 #include <cstring>
+#include <stdlib.h>
 #include "PE_Types.h"
 
 #define PACKET_LENGTH 10
@@ -23,6 +24,12 @@ typedef struct Communication{
   uint8_t ReceivedPacket[PACKET_LENGTH];
 }TCommunication, *TCommunicationPtr;
 
+uint16_t GetNumberFromCommandBuffer(TCommunication* CommunicationStruct, uint8_t StartIndex, uint8_t Length);
+uint8_t GetMatchCharNum(uint8_t* PacketPattern);
+uint8_t GetParameterLength(uint8_t* PacketPattern);
+
+
+
 
 void CommunicationHandler(TCommunication* CommunicationStruct);
 
@@ -31,6 +38,20 @@ void GetOdometryTotalDistancePacketHandler(void);
 void GetCameraDataPacketHandler(void);
 void GetAccelerometerDataPacketHandler(void);
 void GetConvolutionResultPacketHandler(void);
+void SetBothMotorSpeedCommandHandler(uint8_t* PacketPattern);
+
+//Steering
+void SetServoCenterCommandHandler(uint8_t* PacketPattern);
+
+//Controller
+void SetControllerKpCommandHandler(uint8_t* PacketPattern);
+void SetControllerKiCommandHandler(uint8_t* PacketPattern);
+void SetControllerKdCommandHandler(uint8_t* PacketPattern);
+void SetControllerDesiredSpeedCommandHandler(uint8_t* PacketPattern);
+void SetAntiWindupLevelCommandHandler(uint8_t* PacketPattern);
+
+
+
 
 
 #endif /* COMMUNICATION_H_ */

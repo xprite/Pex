@@ -7,7 +7,7 @@
 **     Version     : Component 01.000, Driver 01.04, CPU db: 3.00.001
 **     Datasheet   : K40P144M100SF2RM, Rev. 6, 6 Nov 2011
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2013-04-11, 17:42, # CodeGen: 98
+**     Date/Time   : 2013-04-13, 18:28, # CodeGen: 102
 **     Abstract    :
 **
 **     Settings    :
@@ -36,7 +36,7 @@
 #include "PE_LDD.h"
 
 /* Active configuration define symbol */
-#define PEcfg_FLASH 1U
+#define PEcfg_RAM 1U
 
 /* Methods configuration constants - generated for all enabled component's methods */
 

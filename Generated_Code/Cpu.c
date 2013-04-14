@@ -7,7 +7,7 @@
 **     Version     : Component 01.000, Driver 01.04, CPU db: 3.00.001
 **     Datasheet   : K40P144M100SF2RM, Rev. 6, 6 Nov 2011
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2013-04-11, 17:42, # CodeGen: 98
+**     Date/Time   : 2013-04-13, 18:28, # CodeGen: 102
 **     Abstract    :
 **
 **     Settings    :
@@ -71,7 +71,7 @@ void Cpu_SetBASEPRI(uint32_t Level);
 */
 PE_ISR(Cpu_INT_NMIInterrupt)
 {
-  Cpu_OnNMIINT0();
+  Cpu_OnNMIINT();
 }
 
 /*
@@ -142,8 +142,8 @@ void __init_hardware(void)
   /* Switch to FBE Mode */
   /* MCG_C2: ??=0,??=0,RANGE=1,HGO=0,EREFS=1,LP=0,IRCS=0 */
   MCG_C2 = (MCG_C2_RANGE(0x01) | MCG_C2_EREFS_MASK);                                                   
-  /* OSC_CR: ERCLKEN=1,??=0,EREFSTEN=0,??=0,SC2P=0,SC4P=0,SC8P=0,SC16P=0 */
-  OSC_CR = OSC_CR_ERCLKEN_MASK;                                                   
+  /* OSC_CR: ERCLKEN=1,??=0,EREFSTEN=0,??=0,SC2P=0,SC4P=0,SC8P=0,SC16P=1 */
+  OSC_CR = (OSC_CR_ERCLKEN_MASK | OSC_CR_SC16P_MASK);                                                   
   /* SIM_SOPT2: MCGCLKSEL=0 */
   SIM_SOPT2 &= (uint32_t)~(uint32_t)(SIM_SOPT2_MCGCLKSEL_MASK);                                                   
   /* MCG_C1: CLKS=2,FRDIV=2,IREFS=0,IRCLKEN=1,IREFSTEN=0 */
@@ -161,8 +161,8 @@ void __init_hardware(void)
   while((MCG_S & 0x0CU) != 0x08U) {    /* Wait until external reference clock is selected as MCG output */
   }
   /* Switch to PBE Mode */
-  /* OSC_CR: ERCLKEN=1,??=0,EREFSTEN=0,??=0,SC2P=0,SC4P=0,SC8P=0,SC16P=0 */
-  OSC_CR = OSC_CR_ERCLKEN_MASK;                                                   
+  /* OSC_CR: ERCLKEN=1,??=0,EREFSTEN=0,??=0,SC2P=0,SC4P=0,SC8P=0,SC16P=1 */
+  OSC_CR = (OSC_CR_ERCLKEN_MASK | OSC_CR_SC16P_MASK);                                                   
   /* SIM_SOPT2: MCGCLKSEL=0 */
   SIM_SOPT2 &= (uint32_t)~(uint32_t)(SIM_SOPT2_MCGCLKSEL_MASK);                                                   
   /* MCG_C1: CLKS=2,FRDIV=2,IREFS=0,IRCLKEN=1,IREFSTEN=0 */
@@ -178,8 +178,8 @@ void __init_hardware(void)
   while((MCG_S & MCG_S_LOCK_MASK) == 0x00U) { /* Wait until locked */
   }
   /* Switch to PEE Mode */
-  /* OSC_CR: ERCLKEN=1,??=0,EREFSTEN=0,??=0,SC2P=0,SC4P=0,SC8P=0,SC16P=0 */
-  OSC_CR = OSC_CR_ERCLKEN_MASK;                                                   
+  /* OSC_CR: ERCLKEN=1,??=0,EREFSTEN=0,??=0,SC2P=0,SC4P=0,SC8P=0,SC16P=1 */
+  OSC_CR = (OSC_CR_ERCLKEN_MASK | OSC_CR_SC16P_MASK);                                                   
   /* SIM_SOPT2: MCGCLKSEL=0 */
   SIM_SOPT2 &= (uint32_t)~(uint32_t)(SIM_SOPT2_MCGCLKSEL_MASK);                                                   
   /* MCG_C1: CLKS=0,FRDIV=2,IREFS=0,IRCLKEN=1,IREFSTEN=0 */
@@ -243,7 +243,6 @@ void PE_low_level_init(void)
                ));                                                  
   /* SIM_SOPT6: RSTFLTEN=0,RSTFLTSEL=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0 */
   SIM_SOPT6 = 0x00U;                   /* Set reset pin filter */
-        /* Initialization of the FTFL_FlashConfig module */
   /* SIM_SCGC7: MPU=1 */
   SIM_SCGC7 |= SIM_SCGC7_MPU_MASK;                                                   
         /* Initialization of the MPU module */
@@ -307,41 +306,6 @@ void PE_low_level_init(void)
   /* Enable interrupts of the given priority level */
   Cpu_SetBASEPRI(0U);
 }
-  /* Flash configuration field */
-  __attribute__ ((section (".cfmconfig"))) const uint8_t _cfm[0x10] = {
-   /* NV_BACKKEY3: KEY=0xFF */
-    0xFFU,
-   /* NV_BACKKEY2: KEY=0xFF */
-    0xFFU,
-   /* NV_BACKKEY1: KEY=0xFF */
-    0xFFU,
-   /* NV_BACKKEY0: KEY=0xFF */
-    0xFFU,
-   /* NV_BACKKEY7: KEY=0xFF */
-    0xFFU,
-   /* NV_BACKKEY6: KEY=0xFF */
-    0xFFU,
-   /* NV_BACKKEY5: KEY=0xFF */
-    0xFFU,
-   /* NV_BACKKEY4: KEY=0xFF */
-    0xFFU,
-   /* NV_FPROT3: PROT=0xFF */
-    0xFFU,
-   /* NV_FPROT2: PROT=0xFF */
-    0xFFU,
-   /* NV_FPROT1: PROT=0xFF */
-    0xFFU,
-   /* NV_FPROT0: PROT=0xFF */
-    0xFFU,
-   /* NV_FSEC: KEYEN=1,MEEN=3,FSLACC=3,SEC=2 */
-    0x7EU,
-   /* NV_FOPT: ??=1,??=1,??=1,??=1,??=1,??=1,EZPORT_DIS=1,LPBOOT=1 */
-    0xFFU,
-   /* NV_FEPROT: EPROT=0xFF */
-    0xFFU,
-   /* NV_FDPROT: DPROT=0xFF */
-    0xFFU
-  };
 
 /* END Cpu. */
 

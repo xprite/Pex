@@ -6,7 +6,7 @@
 **     Component   : TimerUnit_LDD
 **     Version     : Component 01.139, Driver 01.09, CPU db: 3.00.001
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2013-04-11, 15:40, # CodeGen: 91
+**     Date/Time   : 2013-04-13, 22:51, # CodeGen: 106
 **     Abstract    :
 **          This TimerUnit component provides a low level API for unified hardware access across
 **          various timer devices using the Prescaler-Counter-Compare-Capture timer structure.
@@ -21,7 +21,7 @@
 **            Counter frequency                            : 48 MHz
 **          Counter restart                                : On-match
 **            Period device                                : PIT_LDVAL0
-**            Period                                       : 89.478485 sec
+**            Period                                       : 30 ms
 **            Interrupt                                    : Enabled
 **              Interrupt                                  : INT_PIT0
 **              Interrupt priority                         : medium priority
@@ -124,8 +124,8 @@ LDD_TDeviceData* OdometryTimer_Init(LDD_TUserData *UserDataPtr)
   PIT_TCTRL0 = 0x00U;                  /* Clear control register */
   /* PIT_TFLG0: ??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,TIF=1 */
   PIT_TFLG0 = PIT_TFLG_TIF_MASK;       /* Clear timer flag register */
-  /* PIT_LDVAL0: TSV=0xFFFFFFEF */
-  PIT_LDVAL0 = PIT_LDVAL_TSV(0xFFFFFFEF); /* Set up load register */
+  /* PIT_LDVAL0: TSV=0x0015F8FF */
+  PIT_LDVAL0 = PIT_LDVAL_TSV(0x0015F8FF); /* Set up load register */
   /* NVICIP68: PRI68=0x80 */
   NVICIP68 = NVIC_IP_PRI68(0x80);                                                   
   /* NVICISER2: SETENA|=0x10 */

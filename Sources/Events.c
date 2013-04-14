@@ -19,6 +19,7 @@
 #include "Cpu.h"
 #include "Events.h"
 
+#include "Controller.h"
 #include "Odometry.h"
 #include "Accelerometer.h"
 #include "Communication.h"
@@ -27,6 +28,8 @@
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
 
+
+extern TController Controller;
 extern TCamera Camera;
 extern TOdometry Odometry;
 extern TCommunication Communication;
@@ -54,9 +57,10 @@ extern TMap Map;
 */
 void OdometryTimer_OnCounterRestart(LDD_TUserData *UserDataPtr)
 {
-  //Odometry.MeasuredSpeed++;
-  //if(Odometry.MeasuredSpeed > MAX_SPEED)
-  //  Odometry.MeasuredSpeed = MAX_SPEED;
+  Odometry.Speed = Odometry.SpeedCounter;
+  Controller.RealValue = Odometry.Speed;
+  ControllerMain(&Controller);
+  Odometry.SpeedCounter = 0;  
 }
 
 /*
@@ -104,6 +108,7 @@ void PWMMotor_OnCounterRestart(LDD_TUserData *UserDataPtr)
 void OdometryGPIO_OnPortEvent(LDD_TUserData *UserDataPtr)
 {
   MapMain(&Map, &Odometry, &Accelerometer);
+  Odometry.SpeedCounter++;
   Odometry.TotalDistance++;
 }
 
@@ -131,29 +136,6 @@ void Period_OnCounterRestart(LDD_TUserData *UserDataPtr)
 
 }
 
-/*
-** ===================================================================
-**     Event       :  OdoTimer_OnCounterRestart (module Events)
-**
-**     Component   :  OdoTimer [TimerUnit_LDD]
-**     Description :
-**         Called if counter overflow/underflow or counter is
-**         reinitialized by modulo or compare register matching.
-**         OnCounterRestart event and Timer unit must be enabled. See
-**         <SetEventMask> and <GetEventMask> methods. This event is
-**         available only if a <Interrupt> is enabled.
-**     Parameters  :
-**         NAME            - DESCRIPTION
-**       * UserDataPtr     - Pointer to the user or
-**                           RTOS specific data. The pointer passed as
-**                           the parameter of Init method.
-**     Returns     : Nothing
-** ===================================================================
-*/
-void OdoTimer_OnCounterRestart(LDD_TUserData *UserDataPtr)
-{
-  Odometry.RealSpeed = 12000;
-}
 
 /*
 ** ===================================================================
@@ -371,7 +353,7 @@ void CameraTimer_OnChannel0(LDD_TUserData *UserDataPtr)
 void AD1_OnMeasurementComplete(LDD_TUserData *UserDataPtr)
 {
   if(Camera.pixelClockCounter < PIXEL_NUM) {
-    AD1_GetMeasuredValues(AD1_DeviceData, &Camera.writePointerToBuffer[Camera.pixelClockCounter + KERNEL_LENGTH - 1]);
+    AD1_GetMeasuredValues(AD1_DeviceData, &Camera.writePointerToBuffer[Camera.pixelClockCounter]);
     if(Camera.pixelClockCounter == 127) {
       if(Camera.writePointerToBuffer == Camera.cameraRawData0) {
         Camera.writePointerToBuffer = Camera.cameraRawData1;
@@ -412,7 +394,7 @@ void CameraTimer_OnChannel1(LDD_TUserData *UserDataPtr)
 
 /*
 ** ===================================================================
-**     Event       :  Cpu_OnNMIINT0 (module Events)
+**     Event       :  Cpu_OnNMIINT (module Events)
 **
 **     Component   :  Cpu [MK40N512LQ100]
 **     Description :
@@ -423,7 +405,7 @@ void CameraTimer_OnChannel1(LDD_TUserData *UserDataPtr)
 **     Returns     : Nothing
 ** ===================================================================
 */
-void Cpu_OnNMIINT0(void)
+void Cpu_OnNMIINT(void)
 {
   /* Write your code here ... */
 }

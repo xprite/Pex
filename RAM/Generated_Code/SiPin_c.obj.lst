@@ -1048,34 +1048,34 @@
  598              	.LFE9:
  600              		.text
  601              	.Letext0:
- 602              		.file 2 "C:/Freescale/CW MCU v10.3_NOBETA/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
+ 602              		.file 2 "C:/Freescale/CW MCU v10.3_121211/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
  603              		.file 3 "../Generated_Code/IO_Map.h"
  604              		.file 4 "../Generated_Code/PE_LDD.h"
  605              		.file 5 "../Generated_Code/SiPin.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 SiPin.c
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:19     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 $d
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:22     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 DeviceDataPrv__DEFAULT_RTOS_ALLOC
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:25     .text.SiPin_Init:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:30     .text.SiPin_Init:00000000 SiPin_Init
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:102    .text.SiPin_Deinit:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:107    .text.SiPin_Deinit:00000000 SiPin_Deinit
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:155    .text.SiPin_SetFieldValue:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:160    .text.SiPin_SetFieldValue:00000000 SiPin_SetFieldValue
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:212    .text.SiPin_GetFieldValue:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:217    .text.SiPin_GetFieldValue:00000000 SiPin_GetFieldValue
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:266    .text.SiPin_ClearFieldBits:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:271    .text.SiPin_ClearFieldBits:00000000 SiPin_ClearFieldBits
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:318    .text.SiPin_SetFieldBits:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:323    .text.SiPin_SetFieldBits:00000000 SiPin_SetFieldBits
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:370    .text.SiPin_ToggleFieldBits:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:375    .text.SiPin_ToggleFieldBits:00000000 SiPin_ToggleFieldBits
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:422    .text.SiPin_SetFieldInputDirection:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:427    .text.SiPin_SetFieldInputDirection:00000000 SiPin_SetFieldInputDirection
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:474    .text.SiPin_SetFieldOutputDirection:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:479    .text.SiPin_SetFieldOutputDirection:00000000 SiPin_SetFieldOutputDirection
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:539    .text.SiPin_ConnectPin:00000000 $t
-C:\Users\x\AppData\Local\Temp\ccQd7WwS.s:544    .text.SiPin_ConnectPin:00000000 SiPin_ConnectPin
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:19     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:22     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 DeviceDataPrv__DEFAULT_RTOS_ALLOC
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:25     .text.SiPin_Init:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:30     .text.SiPin_Init:00000000 SiPin_Init
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:102    .text.SiPin_Deinit:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:107    .text.SiPin_Deinit:00000000 SiPin_Deinit
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:155    .text.SiPin_SetFieldValue:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:160    .text.SiPin_SetFieldValue:00000000 SiPin_SetFieldValue
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:212    .text.SiPin_GetFieldValue:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:217    .text.SiPin_GetFieldValue:00000000 SiPin_GetFieldValue
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:266    .text.SiPin_ClearFieldBits:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:271    .text.SiPin_ClearFieldBits:00000000 SiPin_ClearFieldBits
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:318    .text.SiPin_SetFieldBits:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:323    .text.SiPin_SetFieldBits:00000000 SiPin_SetFieldBits
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:370    .text.SiPin_ToggleFieldBits:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:375    .text.SiPin_ToggleFieldBits:00000000 SiPin_ToggleFieldBits
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:422    .text.SiPin_SetFieldInputDirection:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:427    .text.SiPin_SetFieldInputDirection:00000000 SiPin_SetFieldInputDirection
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:474    .text.SiPin_SetFieldOutputDirection:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:479    .text.SiPin_SetFieldOutputDirection:00000000 SiPin_SetFieldOutputDirection
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:539    .text.SiPin_ConnectPin:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccnBebe3.s:544    .text.SiPin_ConnectPin:00000000 SiPin_ConnectPin
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

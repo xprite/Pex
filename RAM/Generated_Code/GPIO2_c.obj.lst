@@ -1048,34 +1048,34 @@
  598              	.LFE9:
  600              		.text
  601              	.Letext0:
- 602              		.file 2 "C:/Freescale/CW MCU v10.3_NOBETA/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
+ 602              		.file 2 "C:/Freescale/CW MCU v10.3_121211/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
  603              		.file 3 "../Generated_Code/IO_Map.h"
  604              		.file 4 "../Generated_Code/PE_LDD.h"
  605              		.file 5 "../Generated_Code/GPIO2.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 GPIO2.c
-C:\Users\x\AppData\Local\Temp\cctakaap.s:19     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 $d
-C:\Users\x\AppData\Local\Temp\cctakaap.s:22     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 DeviceDataPrv__DEFAULT_RTOS_ALLOC
-C:\Users\x\AppData\Local\Temp\cctakaap.s:25     .text.GPIO2_Init:00000000 $t
-C:\Users\x\AppData\Local\Temp\cctakaap.s:30     .text.GPIO2_Init:00000000 GPIO2_Init
-C:\Users\x\AppData\Local\Temp\cctakaap.s:102    .text.GPIO2_Deinit:00000000 $t
-C:\Users\x\AppData\Local\Temp\cctakaap.s:107    .text.GPIO2_Deinit:00000000 GPIO2_Deinit
-C:\Users\x\AppData\Local\Temp\cctakaap.s:155    .text.GPIO2_SetFieldValue:00000000 $t
-C:\Users\x\AppData\Local\Temp\cctakaap.s:160    .text.GPIO2_SetFieldValue:00000000 GPIO2_SetFieldValue
-C:\Users\x\AppData\Local\Temp\cctakaap.s:212    .text.GPIO2_GetFieldValue:00000000 $t
-C:\Users\x\AppData\Local\Temp\cctakaap.s:217    .text.GPIO2_GetFieldValue:00000000 GPIO2_GetFieldValue
-C:\Users\x\AppData\Local\Temp\cctakaap.s:266    .text.GPIO2_ClearFieldBits:00000000 $t
-C:\Users\x\AppData\Local\Temp\cctakaap.s:271    .text.GPIO2_ClearFieldBits:00000000 GPIO2_ClearFieldBits
-C:\Users\x\AppData\Local\Temp\cctakaap.s:318    .text.GPIO2_SetFieldBits:00000000 $t
-C:\Users\x\AppData\Local\Temp\cctakaap.s:323    .text.GPIO2_SetFieldBits:00000000 GPIO2_SetFieldBits
-C:\Users\x\AppData\Local\Temp\cctakaap.s:370    .text.GPIO2_ToggleFieldBits:00000000 $t
-C:\Users\x\AppData\Local\Temp\cctakaap.s:375    .text.GPIO2_ToggleFieldBits:00000000 GPIO2_ToggleFieldBits
-C:\Users\x\AppData\Local\Temp\cctakaap.s:422    .text.GPIO2_SetFieldInputDirection:00000000 $t
-C:\Users\x\AppData\Local\Temp\cctakaap.s:427    .text.GPIO2_SetFieldInputDirection:00000000 GPIO2_SetFieldInputDirection
-C:\Users\x\AppData\Local\Temp\cctakaap.s:474    .text.GPIO2_SetFieldOutputDirection:00000000 $t
-C:\Users\x\AppData\Local\Temp\cctakaap.s:479    .text.GPIO2_SetFieldOutputDirection:00000000 GPIO2_SetFieldOutputDirection
-C:\Users\x\AppData\Local\Temp\cctakaap.s:539    .text.GPIO2_ConnectPin:00000000 $t
-C:\Users\x\AppData\Local\Temp\cctakaap.s:544    .text.GPIO2_ConnectPin:00000000 GPIO2_ConnectPin
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:19     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:22     .bss.DeviceDataPrv__DEFAULT_RTOS_ALLOC:00000000 DeviceDataPrv__DEFAULT_RTOS_ALLOC
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:25     .text.GPIO2_Init:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:30     .text.GPIO2_Init:00000000 GPIO2_Init
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:102    .text.GPIO2_Deinit:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:107    .text.GPIO2_Deinit:00000000 GPIO2_Deinit
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:155    .text.GPIO2_SetFieldValue:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:160    .text.GPIO2_SetFieldValue:00000000 GPIO2_SetFieldValue
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:212    .text.GPIO2_GetFieldValue:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:217    .text.GPIO2_GetFieldValue:00000000 GPIO2_GetFieldValue
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:266    .text.GPIO2_ClearFieldBits:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:271    .text.GPIO2_ClearFieldBits:00000000 GPIO2_ClearFieldBits
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:318    .text.GPIO2_SetFieldBits:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:323    .text.GPIO2_SetFieldBits:00000000 GPIO2_SetFieldBits
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:370    .text.GPIO2_ToggleFieldBits:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:375    .text.GPIO2_ToggleFieldBits:00000000 GPIO2_ToggleFieldBits
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:422    .text.GPIO2_SetFieldInputDirection:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:427    .text.GPIO2_SetFieldInputDirection:00000000 GPIO2_SetFieldInputDirection
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:474    .text.GPIO2_SetFieldOutputDirection:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:479    .text.GPIO2_SetFieldOutputDirection:00000000 GPIO2_SetFieldOutputDirection
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:539    .text.GPIO2_ConnectPin:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccMC5H3z.s:544    .text.GPIO2_ConnectPin:00000000 GPIO2_ConnectPin
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS
