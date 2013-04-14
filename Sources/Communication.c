@@ -50,6 +50,29 @@ uint8_t SetControllerKdPacket[] = "!SETKDXXXX";
 uint8_t SetControllerDesiredSpeedPacket[] = "!SSPEEDXXX";
 uint8_t SetAntiWindupLevelPacket[] = "!SAWINXXXX";
 
+/*
+ *
+ *Steering 
+ * 
+ * */
+uint8_t GetSteeringControllerConstantsPacket[] = "GSCONSTANT";
+
+uint8_t IncrementSteeringKpPacket[] = "INCKPSTEER";
+uint8_t IncrementSteeringKiPacket[] = "INCKISTEER";
+uint8_t IncrementSteeringKdPacket[] = "INCKDSTEER";
+uint8_t IncrementSteeringWindupPacket[] = "INCWUSTEER";
+
+uint8_t DecrementSteeringKpPacket[] = "DECKPSTEER";
+uint8_t DecrementSteeringKiPacket[] = "DECKISTEER";
+uint8_t DecrementSteeringKdPacket[] = "DECKDSTEER";
+uint8_t DecrementSteeringWindupPacket[] = "DECWUSTEER";
+/*
+ *
+ *END Steering 
+ * 
+ * */
+
+
 
 uint8_t SetServoSensitivityPacket[] = "!SSSXX0000";
 uint8_t SetServoPositionPacket[]  = "!SSXXXX000"; // Set Servo to Position.
@@ -184,7 +207,116 @@ void CommunicationHandler(TCommunication* CommunicationStruct)
   {
     SetAntiWindupLevelCommandHandler(SetAntiWindupLevelPacket);
   }
+  
+  // Steering
+  compare = memcmp(CommunicationStruct->ReceivedPacket, GetSteeringControllerConstantsPacket, GetMatchCharNum(GetSteeringControllerConstantsPacket));
+  if(compare == 0)
+  {
+    GetSteeringControllerConstantsCommandHandler(GetSteeringControllerConstantsPacket);
+  }
+  
+  compare = memcmp(CommunicationStruct->ReceivedPacket, IncrementSteeringKpPacket, GetMatchCharNum(IncrementSteeringKpPacket));
+  if(compare == 0)
+  {
+    IncrementSteeringKpCommandHandler(IncrementSteeringKpPacket);
+  }
+  
+  compare = memcmp(CommunicationStruct->ReceivedPacket, IncrementSteeringKiPacket, GetMatchCharNum(IncrementSteeringKiPacket));
+  if(compare == 0)
+  {
+    IncrementSteeringKiCommandHandler(IncrementSteeringKiPacket);
+  }
+
+  compare = memcmp(CommunicationStruct->ReceivedPacket, IncrementSteeringKdPacket, GetMatchCharNum(IncrementSteeringKdPacket));
+  if(compare == 0)
+  {
+    IncrementSteeringKdCommandHandler(IncrementSteeringKdPacket);
+  }
+  
+  compare = memcmp(CommunicationStruct->ReceivedPacket, IncrementSteeringWindupPacket, GetMatchCharNum(IncrementSteeringWindupPacket));
+  if(compare == 0)
+  {
+    IncrementSteeringWindupCommandHandler(IncrementSteeringWindupPacket);
+  }
+  
+  compare = memcmp(CommunicationStruct->ReceivedPacket, DecrementSteeringKpPacket, GetMatchCharNum(DecrementSteeringKpPacket));
+  if(compare == 0)
+  {
+    DecrementSteeringKpCommandHandler(DecrementSteeringKpPacket);
+  }
+  
+  compare = memcmp(CommunicationStruct->ReceivedPacket, DecrementSteeringKiPacket, GetMatchCharNum(DecrementSteeringKiPacket));
+  if(compare == 0)
+  {
+    DecrementSteeringKiCommandHandler(DecrementSteeringKiPacket);
+  }
+
+  compare = memcmp(CommunicationStruct->ReceivedPacket, DecrementSteeringKdPacket, GetMatchCharNum(DecrementSteeringKdPacket));
+  if(compare == 0)
+  {
+    DecrementSteeringKdCommandHandler(DecrementSteeringKdPacket);
+  }
+  
+  compare = memcmp(CommunicationStruct->ReceivedPacket, DecrementSteeringWindupPacket, GetMatchCharNum(DecrementSteeringWindupPacket));
+  if(compare == 0)
+  {
+    DecrementSteeringWindupCommandHandler(DecrementSteeringWindupPacket);
+  }
+  
+  
 }
+
+
+// Steering
+void GetSteeringControllerConstantsCommandHandler(uint8_t* PacketPattern)
+{
+  sprintf(&Communication.CommunicationString[0], "Kp: %ld  Ki: %ld  Kd: %ld  Aw: %ld\n",Steering.Kp, Steering.Ki, Steering.Kd, Steering.AntiWindUp);
+  Communication.Error = AS1_SendBlock(AS1_DeviceData, &Communication.CommunicationString[0], strlen(Communication.CommunicationString));
+}
+
+void IncrementSteeringKpCommandHandler(uint8_t* PacketPattern)
+{
+  Steering.Kp++;
+}
+
+void IncrementSteeringKiCommandHandler(uint8_t* PacketPattern)
+{
+  Steering.Ki++;
+}
+
+void IncrementSteeringKdCommandHandler(uint8_t* PacketPattern)
+{
+  Steering.Kd++;
+}
+
+void IncrementSteeringWindupCommandHandler(uint8_t* PacketPattern)
+{
+  Steering.AntiWindUp++;
+}
+
+void DecrementSteeringKpCommandHandler(uint8_t* PacketPattern)
+{
+  Steering.Kp--;
+}
+
+void DecrementSteeringKiCommandHandler(uint8_t* PacketPattern)
+{
+  Steering.Ki--;
+}
+
+void DecrementSteeringKdCommandHandler(uint8_t* PacketPattern)
+{
+  Steering.Kd--;
+}
+
+void DecrementSteeringWindupCommandHandler(uint8_t* PacketPattern)
+{
+  Steering.AntiWindUp--;
+}
+
+
+
+//Camera
 
 void GetCameraDataPacketHandler(void)
 {

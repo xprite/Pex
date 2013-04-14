@@ -27,11 +27,11 @@ void SteeringInit(TSteering* aSteering) // Init constants after reset
 {
   aSteering->ServoCenter = SERVO_CENTER;  // servo center
   aSteering->ServoSensitivity = SERVO_SENSITIVITY;
-  aSteering->Kp = 3;
-  aSteering->Ki = 5;
-  aSteering->Kd = 3;
+  aSteering->Kp = 20;
+  aSteering->Ki = 1;
+  aSteering->Kd = 10;
   aSteering->DesiredValue = 0;
-  aSteering->AntiWindUp = 300;
+  aSteering->AntiWindUp = 50;
 }
 
 void SteeringControll(TSteering* aSteering)

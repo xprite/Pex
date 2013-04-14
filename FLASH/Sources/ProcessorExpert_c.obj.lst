@@ -1,0 +1,548 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"ProcessorExpert.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.comm	Controller,40,4
+  19              		.comm	Communication,1038,4
+  20              		.comm	Odometry,40,4
+  21              		.comm	Accelerometer,30,4
+  22              		.comm	Camera,1712,4
+  23              		.comm	Map,10000,4
+  24              		.comm	Steering,52,4
+  25              		.global	AbsoluteServoPosition
+  26              		.section	.bss.AbsoluteServoPosition,"aw",%nobits
+  27              		.align	2
+  30              	AbsoluteServoPosition:
+  31 0000 00000000 		.space	4
+  32              		.section	.rodata
+  33              		.align	2
+  34              	.LC0:
+  35 0000 210A00   		.ascii	"!\012\000"
+  36 0003 00       		.section	.text.main,"ax",%progbits
+  37              		.align	2
+  38              		.global	main
+  39              		.thumb
+  40              		.thumb_func
+  42              	main:
+  43              	.LFB0:
+  44              		.file 1 "../Sources/ProcessorExpert.c"
+   1:../Sources/ProcessorExpert.c **** /** ###################################################################
+   2:../Sources/ProcessorExpert.c **** **     Filename    : ProcessorExpert.c
+   3:../Sources/ProcessorExpert.c **** **     Project     : ProcessorExpert
+   4:../Sources/ProcessorExpert.c **** **     Processor   : MK40DX256ZVLQ10
+   5:../Sources/ProcessorExpert.c **** **     Version     : Driver 01.01
+   6:../Sources/ProcessorExpert.c **** **     Compiler    : GNU C Compiler
+   7:../Sources/ProcessorExpert.c **** **     Date/Time   : 2013-04-03, 22:08, # CodeGen: 0
+   8:../Sources/ProcessorExpert.c **** **     Abstract    :
+   9:../Sources/ProcessorExpert.c **** **         Main module.
+  10:../Sources/ProcessorExpert.c **** **         This module contains user's application code.
+  11:../Sources/ProcessorExpert.c **** **     Settings    :
+  12:../Sources/ProcessorExpert.c **** **     Contents    :
+  13:../Sources/ProcessorExpert.c **** **         No public methods
+  14:../Sources/ProcessorExpert.c **** **
+  15:../Sources/ProcessorExpert.c **** ** ###################################################################*/
+  16:../Sources/ProcessorExpert.c **** /* MODULE ProcessorExpert */
+  17:../Sources/ProcessorExpert.c **** 
+  18:../Sources/ProcessorExpert.c **** 
+  19:../Sources/ProcessorExpert.c **** /* Including needed modules to compile this module/procedure */
+  20:../Sources/ProcessorExpert.c **** #include "Cpu.h"
+  21:../Sources/ProcessorExpert.c **** #include "Events.h"
+  22:../Sources/ProcessorExpert.c **** #include "PWMMotor.h"
+  23:../Sources/ProcessorExpert.c **** #include "GPIO1.h"
+  24:../Sources/ProcessorExpert.c **** #include "OdometryTimer.h"
+  25:../Sources/ProcessorExpert.c **** #include "OdometryGPIO.h"
+  26:../Sources/ProcessorExpert.c **** #include "CsIO1.h"
+  27:../Sources/ProcessorExpert.c **** #include "IO1.h"
+  28:../Sources/ProcessorExpert.c **** #include "Period.h"
+  29:../Sources/ProcessorExpert.c **** #include "AD1.h"
+  30:../Sources/ProcessorExpert.c **** #include "AD2.h"
+  31:../Sources/ProcessorExpert.c **** #include "AS1.h"
+  32:../Sources/ProcessorExpert.c **** #include "I2C2.h"
+  33:../Sources/ProcessorExpert.c **** #include "GPIO2.h"
+  34:../Sources/ProcessorExpert.c **** #include "GPIO3.h"
+  35:../Sources/ProcessorExpert.c **** #include "CameraTimer.h"
+  36:../Sources/ProcessorExpert.c **** #include "SiPin.h"
+  37:../Sources/ProcessorExpert.c **** #include "ServoTimer.h"
+  38:../Sources/ProcessorExpert.c **** /* Including shared modules, which are used for whole project */
+  39:../Sources/ProcessorExpert.c **** #include "PE_Types.h"
+  40:../Sources/ProcessorExpert.c **** #include "PE_Error.h"
+  41:../Sources/ProcessorExpert.c **** #include "PE_Const.h"
+  42:../Sources/ProcessorExpert.c **** #include "IO_Map.h"
+  43:../Sources/ProcessorExpert.c **** 
+  44:../Sources/ProcessorExpert.c **** /* User includes (#include below this line is not maintained by Processor Expert) */
+  45:../Sources/ProcessorExpert.c **** #include "Controller.h"
+  46:../Sources/ProcessorExpert.c **** #include "Odometry.h"
+  47:../Sources/ProcessorExpert.c **** #include "Communication.h"
+  48:../Sources/ProcessorExpert.c **** #include "Accelerometer.h"
+  49:../Sources/ProcessorExpert.c **** #include "Camera.h"
+  50:../Sources/ProcessorExpert.c **** #include "Map.h"
+  51:../Sources/ProcessorExpert.c **** #include "Steering.h"
+  52:../Sources/ProcessorExpert.c **** 
+  53:../Sources/ProcessorExpert.c **** /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
+  54:../Sources/ProcessorExpert.c **** #include <cstdio>
+  55:../Sources/ProcessorExpert.c **** 
+  56:../Sources/ProcessorExpert.c **** /*********************************/
+  57:../Sources/ProcessorExpert.c **** TController Controller;
+  58:../Sources/ProcessorExpert.c **** TCommunication Communication;
+  59:../Sources/ProcessorExpert.c **** TOdometry Odometry;
+  60:../Sources/ProcessorExpert.c **** TAccelerometer Accelerometer;
+  61:../Sources/ProcessorExpert.c **** TCamera Camera;
+  62:../Sources/ProcessorExpert.c **** TMap Map;
+  63:../Sources/ProcessorExpert.c **** TSteering Steering;
+  64:../Sources/ProcessorExpert.c **** /********************************/
+  65:../Sources/ProcessorExpert.c **** 
+  66:../Sources/ProcessorExpert.c **** 
+  67:../Sources/ProcessorExpert.c **** int32_t AbsoluteServoPosition = 0; //TODO DELETE
+  68:../Sources/ProcessorExpert.c **** 
+  69:../Sources/ProcessorExpert.c **** 
+  70:../Sources/ProcessorExpert.c **** int main(void)
+  71:../Sources/ProcessorExpert.c **** /*lint -restore Enable MISRA rule (6.3) checking. */
+  72:../Sources/ProcessorExpert.c **** {
+  45              		.loc 1 72 0
+  46              		.cfi_startproc
+  47              		@ args = 0, pretend = 0, frame = 16
+  48              		@ frame_needed = 1, uses_anonymous_args = 0
+  49 0000 90B5     		push	{r4, r7, lr}
+  50              	.LCFI0:
+  51              		.cfi_def_cfa_offset 12
+  52              		.cfi_offset 14, -4
+  53              		.cfi_offset 7, -8
+  54              		.cfi_offset 4, -12
+  55 0002 87B0     		sub	sp, sp, #28
+  56              	.LCFI1:
+  57              		.cfi_def_cfa_offset 40
+  58 0004 02AF     		add	r7, sp, #8
+  59              	.LCFI2:
+  60              		.cfi_def_cfa 7, 32
+  73:../Sources/ProcessorExpert.c ****   /* Write your local variable definition here */
+  74:../Sources/ProcessorExpert.c ****   
+  75:../Sources/ProcessorExpert.c ****   /*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
+  76:../Sources/ProcessorExpert.c ****   PE_low_level_init();
+  61              		.loc 1 76 0
+  62 0006 FFF7FEFF 		bl	PE_low_level_init
+  77:../Sources/ProcessorExpert.c ****   /*** End of Processor Expert internal initialization.                    ***/
+  78:../Sources/ProcessorExpert.c ****   
+  79:../Sources/ProcessorExpert.c ****   /*Workarounds*/
+  80:../Sources/ProcessorExpert.c ****   FTM0_POL |= (1<<0) | (1<<3); // New polarity 0 minimum 300 maximum
+  63              		.loc 1 80 0
+  64 000a 4FF40043 		mov	r3, #32768
+  65 000e C4F20303 		movt	r3, 16387
+  66 0012 4FF40042 		mov	r2, #32768
+  67 0016 C4F20302 		movt	r2, 16387
+  68 001a 126F     		ldr	r2, [r2, #112]
+  69 001c 42F00902 		orr	r2, r2, #9
+  70 0020 1A67     		str	r2, [r3, #112]
+  81:../Sources/ProcessorExpert.c ****   FTM1_EXTTRIG |= FTM_EXTTRIG_CH1TRIG_MASK;
+  71              		.loc 1 81 0
+  72 0022 4FF41043 		mov	r3, #36864
+  73 0026 C4F20303 		movt	r3, 16387
+  74 002a 4FF41042 		mov	r2, #36864
+  75 002e C4F20302 		movt	r2, 16387
+  76 0032 D26E     		ldr	r2, [r2, #108]
+  77 0034 42F02002 		orr	r2, r2, #32
+  78 0038 DA66     		str	r2, [r3, #108]
+  82:../Sources/ProcessorExpert.c ****   ADC0_SC2 |= ADC_SC2_ADTRG_MASK ;
+  79              		.loc 1 82 0
+  80 003a 4FF43043 		mov	r3, #45056
+  81 003e C4F20303 		movt	r3, 16387
+  82 0042 4FF43042 		mov	r2, #45056
+  83 0046 C4F20302 		movt	r2, 16387
+  84 004a 126A     		ldr	r2, [r2, #32]
+  85 004c 42F04002 		orr	r2, r2, #64
+  86 0050 1A62     		str	r2, [r3, #32]
+  83:../Sources/ProcessorExpert.c ****   
+  84:../Sources/ProcessorExpert.c ****   ADC0_SC1A |= ADC_SC1_ADCH(0x0D); /* corresponding ADC0_RA */
+  87              		.loc 1 84 0
+  88 0052 4FF43043 		mov	r3, #45056
+  89 0056 C4F20303 		movt	r3, 16387
+  90 005a 4FF43042 		mov	r2, #45056
+  91 005e C4F20302 		movt	r2, 16387
+  92 0062 1268     		ldr	r2, [r2, #0]
+  93 0064 42F00D02 		orr	r2, r2, #13
+  94 0068 1A60     		str	r2, [r3, #0]
+  85:../Sources/ProcessorExpert.c **** 
+  86:../Sources/ProcessorExpert.c ****   /*END workarounds*/
+  87:../Sources/ProcessorExpert.c ****   
+  88:../Sources/ProcessorExpert.c ****   
+  89:../Sources/ProcessorExpert.c ****   /* Write your code here */
+  90:../Sources/ProcessorExpert.c ****   /* For example: for(;;) { } */
+  91:../Sources/ProcessorExpert.c **** 
+  92:../Sources/ProcessorExpert.c ****   GPIO1_SetFieldBits(GPIO1_DeviceData, EnableLeftMotor, 0x01);
+  95              		.loc 1 92 0
+  96 006a 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+  97 006e C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+  98 0072 5B68     		ldr	r3, [r3, #4]
+  99 0074 1846     		mov	r0, r3
+ 100 0076 4FF00101 		mov	r1, #1
+ 101 007a 4FF00102 		mov	r2, #1
+ 102 007e FFF7FEFF 		bl	GPIO1_SetFieldBits
+  93:../Sources/ProcessorExpert.c ****   GPIO1_SetFieldBits(GPIO1_DeviceData, EnableRightMotor, 0x01);
+ 103              		.loc 1 93 0
+ 104 0082 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 105 0086 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 106 008a 5B68     		ldr	r3, [r3, #4]
+ 107 008c 1846     		mov	r0, r3
+ 108 008e 4FF00001 		mov	r1, #0
+ 109 0092 4FF00102 		mov	r2, #1
+ 110 0096 FFF7FEFF 		bl	GPIO1_SetFieldBits
+  94:../Sources/ProcessorExpert.c ****   
+  95:../Sources/ProcessorExpert.c ****   PWMMotor_SetOffsetTicks(PWMMotor_DeviceData, 0, 1000);
+ 111              		.loc 1 95 0
+ 112 009a 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 113 009e C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 114 00a2 1B68     		ldr	r3, [r3, #0]
+ 115 00a4 1846     		mov	r0, r3
+ 116 00a6 4FF00001 		mov	r1, #0
+ 117 00aa 4FF47A72 		mov	r2, #1000
+ 118 00ae FFF7FEFF 		bl	PWMMotor_SetOffsetTicks
+  96:../Sources/ProcessorExpert.c ****   PWMMotor_SetOffsetTicks(PWMMotor_DeviceData, 1, 1000);
+ 119              		.loc 1 96 0
+ 120 00b2 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 121 00b6 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 122 00ba 1B68     		ldr	r3, [r3, #0]
+ 123 00bc 1846     		mov	r0, r3
+ 124 00be 4FF00101 		mov	r1, #1
+ 125 00c2 4FF47A72 		mov	r2, #1000
+ 126 00c6 FFF7FEFF 		bl	PWMMotor_SetOffsetTicks
+  97:../Sources/ProcessorExpert.c ****   
+  98:../Sources/ProcessorExpert.c ****   ControllerInit(&Controller);
+ 127              		.loc 1 98 0
+ 128 00ca 40F20000 		movw	r0, #:lower16:Controller
+ 129 00ce C0F20000 		movt	r0, #:upper16:Controller
+ 130 00d2 FFF7FEFF 		bl	ControllerInit
+  99:../Sources/ProcessorExpert.c ****   SteeringInit(&Steering);
+ 131              		.loc 1 99 0
+ 132 00d6 40F20000 		movw	r0, #:lower16:Steering
+ 133 00da C0F20000 		movt	r0, #:upper16:Steering
+ 134 00de FFF7FEFF 		bl	SteeringInit
+ 100:../Sources/ProcessorExpert.c ****   MapInit(&Map);
+ 135              		.loc 1 100 0
+ 136 00e2 40F20000 		movw	r0, #:lower16:Map
+ 137 00e6 C0F20000 		movt	r0, #:upper16:Map
+ 138 00ea FFF7FEFF 		bl	MapInit
+ 101:../Sources/ProcessorExpert.c ****   OdometryInit(&Odometry);
+ 139              		.loc 1 101 0
+ 140 00ee 40F20000 		movw	r0, #:lower16:Odometry
+ 141 00f2 C0F20000 		movt	r0, #:upper16:Odometry
+ 142 00f6 FFF7FEFF 		bl	OdometryInit
+ 102:../Sources/ProcessorExpert.c ****   CameraInit(&Camera);
+ 143              		.loc 1 102 0
+ 144 00fa 40F20000 		movw	r0, #:lower16:Camera
+ 145 00fe C0F20000 		movt	r0, #:upper16:Camera
+ 146 0102 FFF7FEFF 		bl	CameraInit
+ 103:../Sources/ProcessorExpert.c ****   AccelerometerInit(&Accelerometer);
+ 147              		.loc 1 103 0
+ 148 0106 40F20000 		movw	r0, #:lower16:Accelerometer
+ 149 010a C0F20000 		movt	r0, #:upper16:Accelerometer
+ 150 010e FFF7FEFF 		bl	AccelerometerInit
+ 104:../Sources/ProcessorExpert.c ****   AD1_SelectSampleGroup(AD1_DeviceData, 0);
+ 151              		.loc 1 104 0
+ 152 0112 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 153 0116 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 154 011a DB69     		ldr	r3, [r3, #28]
+ 155 011c 1846     		mov	r0, r3
+ 156 011e 4FF00001 		mov	r1, #0
+ 157 0122 FFF7FEFF 		bl	AD1_SelectSampleGroup
+ 105:../Sources/ProcessorExpert.c ****   AD1_StartLoopTriggeredMeasurement(AD1_DeviceData);
+ 158              		.loc 1 105 0
+ 159 0126 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 160 012a C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 161 012e DB69     		ldr	r3, [r3, #28]
+ 162 0130 1846     		mov	r0, r3
+ 163 0132 FFF7FEFF 		bl	AD1_StartLoopTriggeredMeasurement
+ 106:../Sources/ProcessorExpert.c ****  
+ 107:../Sources/ProcessorExpert.c ****   AS1_ReceiveBlock(AS1_DeviceData, &Communication.ReceivedPacket[0], PACKET_LENGTH);
+ 164              		.loc 1 107 0
+ 165 0136 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 166 013a C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 167 013e 5B6A     		ldr	r3, [r3, #36]
+ 168 0140 1846     		mov	r0, r3
+ 169 0142 6749     		ldr	r1, .L6
+ 170 0144 4FF00A02 		mov	r2, #10
+ 171 0148 FFF7FEFF 		bl	AS1_ReceiveBlock
+ 108:../Sources/ProcessorExpert.c ****   
+ 109:../Sources/ProcessorExpert.c ****   //int8_t Kernel[] = {-1,0,1};
+ 110:../Sources/ProcessorExpert.c ****   uint8_t minimum=0;  //TODO delete
+ 172              		.loc 1 110 0
+ 173 014c 4FF00003 		mov	r3, #0
+ 174 0150 FB73     		strb	r3, [r7, #15]
+ 111:../Sources/ProcessorExpert.c ****   uint8_t maximum=0;  //TODO delete
+ 175              		.loc 1 111 0
+ 176 0152 4FF00003 		mov	r3, #0
+ 177 0156 BB73     		strb	r3, [r7, #14]
+ 112:../Sources/ProcessorExpert.c ****   int32_t MaxValue = 0; //TODO delete
+ 178              		.loc 1 112 0
+ 179 0158 4FF00003 		mov	r3, #0
+ 180 015c BB60     		str	r3, [r7, #8]
+ 113:../Sources/ProcessorExpert.c ****   uint8_t text[] = "!\n";
+ 181              		.loc 1 113 0
+ 182 015e 40F20002 		movw	r2, #:lower16:.LC0
+ 183 0162 C0F20002 		movt	r2, #:upper16:.LC0
+ 184 0166 07F10403 		add	r3, r7, #4
+ 185 016a 1268     		ldr	r2, [r2, #0]
+ 186 016c 1146     		mov	r1, r2	@ movhi
+ 187 016e 1980     		strh	r1, [r3, #0]	@ movhi
+ 188 0170 03F10203 		add	r3, r3, #2
+ 189 0174 4FEA1242 		lsr	r2, r2, #16
+ 190 0178 1A70     		strb	r2, [r3, #0]
+ 191 017a 00E0     		b	.L4
+ 192              	.L5:
+ 114:../Sources/ProcessorExpert.c ****   
+ 115:../Sources/ProcessorExpert.c ****   for(;;)
+ 116:../Sources/ProcessorExpert.c ****   {
+ 117:../Sources/ProcessorExpert.c ****     
+ 118:../Sources/ProcessorExpert.c ****     Convolution(&Camera.ConvolutionResult[0], &Camera.readPointerToBuffer[0], PIXEL_NUM,  &Camera.K
+ 119:../Sources/ProcessorExpert.c ****     
+ 120:../Sources/ProcessorExpert.c ****     Convolution(&Camera.ConvolutionPatternResult[0], &Camera.readPointerToBuffer[0], PIXEL_NUM,  &C
+ 121:../Sources/ProcessorExpert.c ****     
+ 122:../Sources/ProcessorExpert.c ****     MaxValue = GetMaximumValue(&Camera.ConvolutionPatternResult[49], 78);
+ 123:../Sources/ProcessorExpert.c ****     if(MaxValue > 3800) {
+ 124:../Sources/ProcessorExpert.c ****       AS1_SendBlock(AS1_DeviceData, &text[0], strlen(text));
+ 125:../Sources/ProcessorExpert.c ****     }
+ 126:../Sources/ProcessorExpert.c ****     
+ 127:../Sources/ProcessorExpert.c ****     minimum = GetMinimumIndex(&Camera.ConvolutionResult[KERNEL_LENGTH-1], CONVOLUTIN_RESULT_LENGTH 
+ 128:../Sources/ProcessorExpert.c ****     maximum = GetMaximumIndex(&Camera.ConvolutionResult[KERNEL_LENGTH-1], CONVOLUTIN_RESULT_LENGTH 
+ 129:../Sources/ProcessorExpert.c ****     
+ 130:../Sources/ProcessorExpert.c ****     //AbsoluteServoPosition = ((minimum+maximum)/2);
+ 131:../Sources/ProcessorExpert.c ****     
+ 132:../Sources/ProcessorExpert.c ****     //SetServoPosition(AbsoluteServoPosition);
+ 133:../Sources/ProcessorExpert.c ****     
+ 134:../Sources/ProcessorExpert.c ****     Steering.LinePosition = 65 - ((minimum+maximum)/2);
+ 135:../Sources/ProcessorExpert.c ****     
+ 136:../Sources/ProcessorExpert.c ****     SteeringControll(&Steering);
+ 137:../Sources/ProcessorExpert.c ****     
+ 138:../Sources/ProcessorExpert.c ****     //SetServoPosition( (minimum+maximum)/2 );
+ 139:../Sources/ProcessorExpert.c ****    
+ 140:../Sources/ProcessorExpert.c ****     
+ 141:../Sources/ProcessorExpert.c **** 	  if(Accelerometer.Received) {
+ 142:../Sources/ProcessorExpert.c **** 	    Accelerometer.Received = FALSE;
+ 143:../Sources/ProcessorExpert.c ****       Accelerometer.X = (Accelerometer.ReceiveBuffer[0] << 8) | (Accelerometer.ReceiveBuffer[1]); 
+ 144:../Sources/ProcessorExpert.c ****       Accelerometer.Y = (Accelerometer.ReceiveBuffer[2] << 8) | (Accelerometer.ReceiveBuffer[3]);  
+ 145:../Sources/ProcessorExpert.c ****       Accelerometer.Z = (Accelerometer.ReceiveBuffer[4] << 8) | (Accelerometer.ReceiveBuffer[5]);
+ 146:../Sources/ProcessorExpert.c **** 	  }
+ 147:../Sources/ProcessorExpert.c ****   }
+ 193              		.loc 1 147 0
+ 194 017c 00BF     		nop
+ 195              	.L4:
+ 118:../Sources/ProcessorExpert.c ****     Convolution(&Camera.ConvolutionResult[0], &Camera.readPointerToBuffer[0], PIXEL_NUM,  &Camera.K
+ 196              		.loc 1 118 0
+ 197 017e 40F20003 		movw	r3, #:lower16:Camera
+ 198 0182 C0F20003 		movt	r3, #:upper16:Camera
+ 199 0186 D3F89433 		ldr	r3, [r3, #916]
+ 200 018a 4FF00302 		mov	r2, #3
+ 201 018e 0092     		str	r2, [sp, #0]
+ 202 0190 5448     		ldr	r0, .L6+4
+ 203 0192 1946     		mov	r1, r3
+ 204 0194 4FF08002 		mov	r2, #128
+ 205 0198 534B     		ldr	r3, .L6+8
+ 206 019a FFF7FEFF 		bl	Convolution
+ 120:../Sources/ProcessorExpert.c ****     Convolution(&Camera.ConvolutionPatternResult[0], &Camera.readPointerToBuffer[0], PIXEL_NUM,  &C
+ 207              		.loc 1 120 0
+ 208 019e 40F20003 		movw	r3, #:lower16:Camera
+ 209 01a2 C0F20003 		movt	r3, #:upper16:Camera
+ 210 01a6 D3F89433 		ldr	r3, [r3, #916]
+ 211 01aa 4FF03202 		mov	r2, #50
+ 212 01ae 0092     		str	r2, [sp, #0]
+ 213 01b0 4E48     		ldr	r0, .L6+12
+ 214 01b2 1946     		mov	r1, r3
+ 215 01b4 4FF08002 		mov	r2, #128
+ 216 01b8 40F20003 		movw	r3, #:lower16:Camera
+ 217 01bc C0F20003 		movt	r3, #:upper16:Camera
+ 218 01c0 FFF7FEFF 		bl	Convolution
+ 122:../Sources/ProcessorExpert.c ****     MaxValue = GetMaximumValue(&Camera.ConvolutionPatternResult[49], 78);
+ 219              		.loc 1 122 0
+ 220 01c4 4A48     		ldr	r0, .L6+16
+ 221 01c6 4FF04E01 		mov	r1, #78
+ 222 01ca FFF7FEFF 		bl	GetMaximumValue
+ 223 01ce 0346     		mov	r3, r0
+ 224 01d0 BB60     		str	r3, [r7, #8]
+ 123:../Sources/ProcessorExpert.c ****     if(MaxValue > 3800) {
+ 225              		.loc 1 123 0
+ 226 01d2 BA68     		ldr	r2, [r7, #8]
+ 227 01d4 40F6D863 		movw	r3, #3800
+ 228 01d8 9A42     		cmp	r2, r3
+ 229 01da 12DD     		ble	.L2
+ 124:../Sources/ProcessorExpert.c ****       AS1_SendBlock(AS1_DeviceData, &text[0], strlen(text));
+ 230              		.loc 1 124 0
+ 231 01dc 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 232 01e0 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 233 01e4 5C6A     		ldr	r4, [r3, #36]
+ 234 01e6 07F10403 		add	r3, r7, #4
+ 235 01ea 1846     		mov	r0, r3
+ 236 01ec FFF7FEFF 		bl	strlen
+ 237 01f0 0346     		mov	r3, r0
+ 238 01f2 9BB2     		uxth	r3, r3
+ 239 01f4 07F10402 		add	r2, r7, #4
+ 240 01f8 2046     		mov	r0, r4
+ 241 01fa 1146     		mov	r1, r2
+ 242 01fc 1A46     		mov	r2, r3
+ 243 01fe FFF7FEFF 		bl	AS1_SendBlock
+ 244              	.L2:
+ 127:../Sources/ProcessorExpert.c ****     minimum = GetMinimumIndex(&Camera.ConvolutionResult[KERNEL_LENGTH-1], CONVOLUTIN_RESULT_LENGTH 
+ 245              		.loc 1 127 0
+ 246 0202 3C48     		ldr	r0, .L6+20
+ 247 0204 4FF07E01 		mov	r1, #126
+ 248 0208 FFF7FEFF 		bl	GetMinimumIndex
+ 249 020c 0346     		mov	r3, r0
+ 250 020e FB73     		strb	r3, [r7, #15]
+ 128:../Sources/ProcessorExpert.c ****     maximum = GetMaximumIndex(&Camera.ConvolutionResult[KERNEL_LENGTH-1], CONVOLUTIN_RESULT_LENGTH 
+ 251              		.loc 1 128 0
+ 252 0210 3848     		ldr	r0, .L6+20
+ 253 0212 4FF07E01 		mov	r1, #126
+ 254 0216 FFF7FEFF 		bl	GetMaximumIndex
+ 255 021a 0346     		mov	r3, r0
+ 256 021c BB73     		strb	r3, [r7, #14]
+ 134:../Sources/ProcessorExpert.c ****     Steering.LinePosition = 65 - ((minimum+maximum)/2);
+ 257              		.loc 1 134 0
+ 258 021e FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 259 0220 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 260 0222 D318     		adds	r3, r2, r3
+ 261 0224 4FEAD372 		lsr	r2, r3, #31
+ 262 0228 D318     		adds	r3, r2, r3
+ 263 022a 4FEA6303 		asr	r3, r3, #1
+ 264 022e C3F14102 		rsb	r2, r3, #65
+ 265 0232 40F20003 		movw	r3, #:lower16:Steering
+ 266 0236 C0F20003 		movt	r3, #:upper16:Steering
+ 267 023a DA60     		str	r2, [r3, #12]
+ 136:../Sources/ProcessorExpert.c ****     SteeringControll(&Steering);
+ 268              		.loc 1 136 0
+ 269 023c 40F20000 		movw	r0, #:lower16:Steering
+ 270 0240 C0F20000 		movt	r0, #:upper16:Steering
+ 271 0244 FFF7FEFF 		bl	SteeringControll
+ 141:../Sources/ProcessorExpert.c **** 	  if(Accelerometer.Received) {
+ 272              		.loc 1 141 0
+ 273 0248 40F20003 		movw	r3, #:lower16:Accelerometer
+ 274 024c C0F20003 		movt	r3, #:upper16:Accelerometer
+ 275 0250 5B7E     		ldrb	r3, [r3, #25]
+ 276 0252 DBB2     		uxtb	r3, r3
+ 277 0254 002B     		cmp	r3, #0
+ 278 0256 91D0     		beq	.L5
+ 142:../Sources/ProcessorExpert.c **** 	    Accelerometer.Received = FALSE;
+ 279              		.loc 1 142 0
+ 280 0258 40F20003 		movw	r3, #:lower16:Accelerometer
+ 281 025c C0F20003 		movt	r3, #:upper16:Accelerometer
+ 282 0260 4FF00002 		mov	r2, #0
+ 283 0264 5A76     		strb	r2, [r3, #25]
+ 143:../Sources/ProcessorExpert.c ****       Accelerometer.X = (Accelerometer.ReceiveBuffer[0] << 8) | (Accelerometer.ReceiveBuffer[1]); 
+ 284              		.loc 1 143 0
+ 285 0266 40F20003 		movw	r3, #:lower16:Accelerometer
+ 286 026a C0F20003 		movt	r3, #:upper16:Accelerometer
+ 287 026e 1B7B     		ldrb	r3, [r3, #12]	@ zero_extendqisi2
+ 288 0270 4FEA0323 		lsl	r3, r3, #8
+ 289 0274 9AB2     		uxth	r2, r3
+ 290 0276 40F20003 		movw	r3, #:lower16:Accelerometer
+ 291 027a C0F20003 		movt	r3, #:upper16:Accelerometer
+ 292 027e 5B7B     		ldrb	r3, [r3, #13]	@ zero_extendqisi2
+ 293 0280 1343     		orrs	r3, r3, r2
+ 294 0282 9AB2     		uxth	r2, r3
+ 295 0284 40F20003 		movw	r3, #:lower16:Accelerometer
+ 296 0288 C0F20003 		movt	r3, #:upper16:Accelerometer
+ 297 028c 1A80     		strh	r2, [r3, #0]	@ movhi
+ 144:../Sources/ProcessorExpert.c ****       Accelerometer.Y = (Accelerometer.ReceiveBuffer[2] << 8) | (Accelerometer.ReceiveBuffer[3]);  
+ 298              		.loc 1 144 0
+ 299 028e 40F20003 		movw	r3, #:lower16:Accelerometer
+ 300 0292 C0F20003 		movt	r3, #:upper16:Accelerometer
+ 301 0296 9B7B     		ldrb	r3, [r3, #14]	@ zero_extendqisi2
+ 302 0298 4FEA0323 		lsl	r3, r3, #8
+ 303 029c 9AB2     		uxth	r2, r3
+ 304 029e 40F20003 		movw	r3, #:lower16:Accelerometer
+ 305 02a2 C0F20003 		movt	r3, #:upper16:Accelerometer
+ 306 02a6 DB7B     		ldrb	r3, [r3, #15]	@ zero_extendqisi2
+ 307 02a8 1343     		orrs	r3, r3, r2
+ 308 02aa 9AB2     		uxth	r2, r3
+ 309 02ac 40F20003 		movw	r3, #:lower16:Accelerometer
+ 310 02b0 C0F20003 		movt	r3, #:upper16:Accelerometer
+ 311 02b4 5A80     		strh	r2, [r3, #2]	@ movhi
+ 145:../Sources/ProcessorExpert.c ****       Accelerometer.Z = (Accelerometer.ReceiveBuffer[4] << 8) | (Accelerometer.ReceiveBuffer[5]);
+ 312              		.loc 1 145 0
+ 313 02b6 40F20003 		movw	r3, #:lower16:Accelerometer
+ 314 02ba C0F20003 		movt	r3, #:upper16:Accelerometer
+ 315 02be 1B7C     		ldrb	r3, [r3, #16]	@ zero_extendqisi2
+ 316 02c0 4FEA0323 		lsl	r3, r3, #8
+ 317 02c4 9AB2     		uxth	r2, r3
+ 318 02c6 40F20003 		movw	r3, #:lower16:Accelerometer
+ 319 02ca C0F20003 		movt	r3, #:upper16:Accelerometer
+ 320 02ce 5B7C     		ldrb	r3, [r3, #17]	@ zero_extendqisi2
+ 321 02d0 1343     		orrs	r3, r3, r2
+ 322 02d2 9AB2     		uxth	r2, r3
+ 323 02d4 40F20003 		movw	r3, #:lower16:Accelerometer
+ 324 02d8 C0F20003 		movt	r3, #:upper16:Accelerometer
+ 325 02dc 9A80     		strh	r2, [r3, #4]	@ movhi
+ 326              		.loc 1 147 0
+ 327 02de 4DE7     		b	.L5
+ 328              	.L7:
+ 329              		.align	2
+ 330              	.L6:
+ 331 02e0 04040000 		.word	Communication+1028
+ 332 02e4 9C040000 		.word	Camera+1180
+ 333 02e8 A4060000 		.word	Camera+1700
+ 334 02ec C8000000 		.word	Camera+200
+ 335 02f0 8C010000 		.word	Camera+396
+ 336 02f4 A4040000 		.word	Camera+1188
+ 337              		.cfi_endproc
+ 338              	.LFE0:
+ 340              		.text
+ 341              	.Letext0:
+ 342              		.file 2 "C:/Freescale/CW MCU v10.3_121211/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
+ 343              		.file 3 "C:/temp2/Pex/Generated_Code/PE_Types.h"
+ 344              		.file 4 "C:/temp2/Pex/Generated_Code/IO_Map.h"
+ 345              		.file 5 "C:/temp2/Pex/Generated_Code/PE_LDD.h"
+ 346              		.file 6 "../Sources/Controller.h"
+ 347              		.file 7 "../Sources/Odometry.h"
+ 348              		.file 8 "../Sources/Communication.h"
+ 349              		.file 9 "../Sources/Accelerometer.h"
+ 350              		.file 10 "../Sources/Camera.h"
+ 351              		.file 11 "../Sources/Map.h"
+ 352              		.file 12 "../Sources/Steering.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 ProcessorExpert.c
+                            *COM*:00000028 Controller
+                            *COM*:0000040e Communication
+                            *COM*:00000028 Odometry
+                            *COM*:0000001e Accelerometer
+                            *COM*:000006b0 Camera
+                            *COM*:00002710 Map
+                            *COM*:00000034 Steering
+C:\Users\z\AppData\Local\Temp\ccT5jmJc.s:30     .bss.AbsoluteServoPosition:00000000 AbsoluteServoPosition
+C:\Users\z\AppData\Local\Temp\ccT5jmJc.s:27     .bss.AbsoluteServoPosition:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccT5jmJc.s:33     .rodata:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccT5jmJc.s:34     .rodata:00000000 .LC0
+C:\Users\z\AppData\Local\Temp\ccT5jmJc.s:37     .text.main:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccT5jmJc.s:42     .text.main:00000000 main
+C:\Users\z\AppData\Local\Temp\ccT5jmJc.s:331    .text.main:000002e0 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+PE_low_level_init
+PE_LDD_DeviceDataList
+GPIO1_SetFieldBits
+PWMMotor_SetOffsetTicks
+ControllerInit
+SteeringInit
+MapInit
+OdometryInit
+CameraInit
+AccelerometerInit
+AD1_SelectSampleGroup
+AD1_StartLoopTriggeredMeasurement
+AS1_ReceiveBlock
+Convolution
+GetMaximumValue
+strlen
+AS1_SendBlock
+GetMinimumIndex
+GetMaximumIndex
+SteeringControll

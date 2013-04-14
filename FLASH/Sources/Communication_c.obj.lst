@@ -1,0 +1,2585 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"Communication.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.global	GetLinePositionPacket
+  19              		.section	.data.GetLinePositionPacket,"aw",%progbits
+  20              		.align	2
+  23              	GetLinePositionPacket:
+  24 0000 3F4C3030 		.ascii	"?L00000000\000"
+  24      30303030 
+  24      303000
+  25              		.global	GetCamera1ImagePacket
+  26 000b 00       		.section	.data.GetCamera1ImagePacket,"aw",%progbits
+  27              		.align	2
+  30              	GetCamera1ImagePacket:
+  31 0000 3F433130 		.ascii	"?C10000000\000"
+  31      30303030 
+  31      303000
+  32              		.global	GetCamera2ImagePacket
+  33 000b 00       		.section	.data.GetCamera2ImagePacket,"aw",%progbits
+  34              		.align	2
+  37              	GetCamera2ImagePacket:
+  38 0000 3F433230 		.ascii	"?C20000000\000"
+  38      30303030 
+  38      303000
+  39              		.global	GetCamerasImagePacket
+  40 000b 00       		.section	.data.GetCamerasImagePacket,"aw",%progbits
+  41              		.align	2
+  44              	GetCamerasImagePacket:
+  45 0000 3F434130 		.ascii	"?CA0000000\000"
+  45      30303030 
+  45      303000
+  46              		.global	GetServoPositionPacket
+  47 000b 00       		.section	.data.GetServoPositionPacket,"aw",%progbits
+  48              		.align	2
+  51              	GetServoPositionPacket:
+  52 0000 3F535030 		.ascii	"?SP0000000\000"
+  52      30303030 
+  52      303000
+  53              		.global	GetAllDataPacket
+  54 000b 00       		.section	.data.GetAllDataPacket,"aw",%progbits
+  55              		.align	2
+  58              	GetAllDataPacket:
+  59 0000 3F414C4C 		.ascii	"?ALLDATA00\000"
+  59      44415441 
+  59      303000
+  60              		.global	GetAccelerationPacket
+  61 000b 00       		.section	.data.GetAccelerationPacket,"aw",%progbits
+  62              		.align	2
+  65              	GetAccelerationPacket:
+  66 0000 3F414343 		.ascii	"?ACCDATA00\000"
+  66      44415441 
+  66      303000
+  67              		.global	SetRightMotorSpeedPacket
+  68 000b 00       		.section	.data.SetRightMotorSpeedPacket,"aw",%progbits
+  69              		.align	2
+  72              	SetRightMotorSpeedPacket:
+  73 0000 214D5258 		.ascii	"!MRXXX0000\000"
+  73      58583030 
+  73      303000
+  74              		.global	SetLeftMotorSpeedPacket
+  75 000b 00       		.section	.data.SetLeftMotorSpeedPacket,"aw",%progbits
+  76              		.align	2
+  79              	SetLeftMotorSpeedPacket:
+  80 0000 214D4C58 		.ascii	"!MLXXX0000\000"
+  80      58583030 
+  80      303000
+  81              		.global	SetBothMotorSpeedPacket
+  82 000b 00       		.section	.data.SetBothMotorSpeedPacket,"aw",%progbits
+  83              		.align	2
+  86              	SetBothMotorSpeedPacket:
+  87 0000 21444353 		.ascii	"!DCSSXXXXX\000"
+  87      53585858 
+  87      585800
+  88              		.global	SetDesiredSpeedPacket
+  89 000b 00       		.section	.data.SetDesiredSpeedPacket,"aw",%progbits
+  90              		.align	2
+  93              	SetDesiredSpeedPacket:
+  94 0000 21524443 		.ascii	"!RDCVXXX00\000"
+  94      56585858 
+  94      303000
+  95              		.global	SetRegulatorRecoverPacket
+  96 000b 00       		.section	.data.SetRegulatorRecoverPacket,"aw",%progbits
+  97              		.align	2
+ 100              	SetRegulatorRecoverPacket:
+ 101 0000 21524356 		.ascii	"!RCVR00000\000"
+ 101      52303030 
+ 101      303000
+ 102              		.global	DecrementServoCenterPacket
+ 103 000b 00       		.section	.data.DecrementServoCenterPacket,"aw",%progbits
+ 104              		.align	2
+ 107              	DecrementServoCenterPacket:
+ 108 0000 21444543 		.ascii	"!DECSERVOC\000"
+ 108      53455256 
+ 108      4F4300
+ 109              		.global	IncrementServoCenterPacket
+ 110 000b 00       		.section	.data.IncrementServoCenterPacket,"aw",%progbits
+ 111              		.align	2
+ 114              	IncrementServoCenterPacket:
+ 115 0000 21494E43 		.ascii	"!INCSERVOC\000"
+ 115      53455256 
+ 115      4F4300
+ 116              		.global	SetControllerKpPacket
+ 117 000b 00       		.section	.data.SetControllerKpPacket,"aw",%progbits
+ 118              		.align	2
+ 121              	SetControllerKpPacket:
+ 122 0000 21534554 		.ascii	"!SETKPXXXX\000"
+ 122      4B505858 
+ 122      585800
+ 123              		.global	SetControllerKiPacket
+ 124 000b 00       		.section	.data.SetControllerKiPacket,"aw",%progbits
+ 125              		.align	2
+ 128              	SetControllerKiPacket:
+ 129 0000 21534554 		.ascii	"!SETKIXXXX\000"
+ 129      4B495858 
+ 129      585800
+ 130              		.global	SetControllerKdPacket
+ 131 000b 00       		.section	.data.SetControllerKdPacket,"aw",%progbits
+ 132              		.align	2
+ 135              	SetControllerKdPacket:
+ 136 0000 21534554 		.ascii	"!SETKDXXXX\000"
+ 136      4B445858 
+ 136      585800
+ 137              		.global	SetControllerDesiredSpeedPacket
+ 138 000b 00       		.section	.data.SetControllerDesiredSpeedPacket,"aw",%progbits
+ 139              		.align	2
+ 142              	SetControllerDesiredSpeedPacket:
+ 143 0000 21535350 		.ascii	"!SSPEEDXXX\000"
+ 143      45454458 
+ 143      585800
+ 144              		.global	SetAntiWindupLevelPacket
+ 145 000b 00       		.section	.data.SetAntiWindupLevelPacket,"aw",%progbits
+ 146              		.align	2
+ 149              	SetAntiWindupLevelPacket:
+ 150 0000 21534157 		.ascii	"!SAWINXXXX\000"
+ 150      494E5858 
+ 150      585800
+ 151              		.global	GetSteeringControllerConstantsPacket
+ 152 000b 00       		.section	.data.GetSteeringControllerConstantsPacket,"aw",%progbits
+ 153              		.align	2
+ 156              	GetSteeringControllerConstantsPacket:
+ 157 0000 4753434F 		.ascii	"GSCONSTANT\000"
+ 157      4E535441 
+ 157      4E5400
+ 158              		.global	IncrementSteeringKpPacket
+ 159 000b 00       		.section	.data.IncrementSteeringKpPacket,"aw",%progbits
+ 160              		.align	2
+ 163              	IncrementSteeringKpPacket:
+ 164 0000 494E434B 		.ascii	"INCKPSTEER\000"
+ 164      50535445 
+ 164      455200
+ 165              		.global	IncrementSteeringKiPacket
+ 166 000b 00       		.section	.data.IncrementSteeringKiPacket,"aw",%progbits
+ 167              		.align	2
+ 170              	IncrementSteeringKiPacket:
+ 171 0000 494E434B 		.ascii	"INCKISTEER\000"
+ 171      49535445 
+ 171      455200
+ 172              		.global	IncrementSteeringKdPacket
+ 173 000b 00       		.section	.data.IncrementSteeringKdPacket,"aw",%progbits
+ 174              		.align	2
+ 177              	IncrementSteeringKdPacket:
+ 178 0000 494E434B 		.ascii	"INCKDSTEER\000"
+ 178      44535445 
+ 178      455200
+ 179              		.global	IncrementSteeringWindupPacket
+ 180 000b 00       		.section	.data.IncrementSteeringWindupPacket,"aw",%progbits
+ 181              		.align	2
+ 184              	IncrementSteeringWindupPacket:
+ 185 0000 494E4357 		.ascii	"INCWUSTEER\000"
+ 185      55535445 
+ 185      455200
+ 186              		.global	DecrementSteeringKpPacket
+ 187 000b 00       		.section	.data.DecrementSteeringKpPacket,"aw",%progbits
+ 188              		.align	2
+ 191              	DecrementSteeringKpPacket:
+ 192 0000 4445434B 		.ascii	"DECKPSTEER\000"
+ 192      50535445 
+ 192      455200
+ 193              		.global	DecrementSteeringKiPacket
+ 194 000b 00       		.section	.data.DecrementSteeringKiPacket,"aw",%progbits
+ 195              		.align	2
+ 198              	DecrementSteeringKiPacket:
+ 199 0000 4445434B 		.ascii	"DECKISTEER\000"
+ 199      49535445 
+ 199      455200
+ 200              		.global	DecrementSteeringKdPacket
+ 201 000b 00       		.section	.data.DecrementSteeringKdPacket,"aw",%progbits
+ 202              		.align	2
+ 205              	DecrementSteeringKdPacket:
+ 206 0000 4445434B 		.ascii	"DECKDSTEER\000"
+ 206      44535445 
+ 206      455200
+ 207              		.global	DecrementSteeringWindupPacket
+ 208 000b 00       		.section	.data.DecrementSteeringWindupPacket,"aw",%progbits
+ 209              		.align	2
+ 212              	DecrementSteeringWindupPacket:
+ 213 0000 44454357 		.ascii	"DECWUSTEER\000"
+ 213      55535445 
+ 213      455200
+ 214              		.global	SetServoSensitivityPacket
+ 215 000b 00       		.section	.data.SetServoSensitivityPacket,"aw",%progbits
+ 216              		.align	2
+ 219              	SetServoSensitivityPacket:
+ 220 0000 21535353 		.ascii	"!SSSXX0000\000"
+ 220      58583030 
+ 220      303000
+ 221              		.global	SetServoPositionPacket
+ 222 000b 00       		.section	.data.SetServoPositionPacket,"aw",%progbits
+ 223              		.align	2
+ 226              	SetServoPositionPacket:
+ 227 0000 21535358 		.ascii	"!SSXXXX000\000"
+ 227      58585830 
+ 227      303000
+ 228              		.global	EnableRightDCMotorPacket
+ 229 000b 00       		.section	.data.EnableRightDCMotorPacket,"aw",%progbits
+ 230              		.align	2
+ 233              	EnableRightDCMotorPacket:
+ 234 0000 21454443 		.ascii	"!EDCMOTORR\000"
+ 234      4D4F544F 
+ 234      525200
+ 235              		.global	DisableRightDCMotorPacket
+ 236 000b 00       		.section	.data.DisableRightDCMotorPacket,"aw",%progbits
+ 237              		.align	2
+ 240              	DisableRightDCMotorPacket:
+ 241 0000 21444443 		.ascii	"!DDCMOTORR\000"
+ 241      4D4F544F 
+ 241      525200
+ 242              		.global	EnableLeftDCMotorPacket
+ 243 000b 00       		.section	.data.EnableLeftDCMotorPacket,"aw",%progbits
+ 244              		.align	2
+ 247              	EnableLeftDCMotorPacket:
+ 248 0000 21454443 		.ascii	"!EDCMOTORL\000"
+ 248      4D4F544F 
+ 248      524C00
+ 249              		.global	DisableLeftDCMotorPacket
+ 250 000b 00       		.section	.data.DisableLeftDCMotorPacket,"aw",%progbits
+ 251              		.align	2
+ 254              	DisableLeftDCMotorPacket:
+ 255 0000 21444443 		.ascii	"!DDCMOTORL\000"
+ 255      4D4F544F 
+ 255      524C00
+ 256              		.global	DisableBothDCMotorsPacket
+ 257 000b 00       		.section	.data.DisableBothDCMotorsPacket,"aw",%progbits
+ 258              		.align	2
+ 261              	DisableBothDCMotorsPacket:
+ 262 0000 21444244 		.ascii	"!DBDCM0000\000"
+ 262      434D3030 
+ 262      303000
+ 263              		.global	ClearDistanceCounterPacket
+ 264 000b 00       		.section	.data.ClearDistanceCounterPacket,"aw",%progbits
+ 265              		.align	2
+ 268              	ClearDistanceCounterPacket:
+ 269 0000 21434C52 		.ascii	"!CLRDST000\000"
+ 269      44535430 
+ 269      303000
+ 270              		.global	SetServoCenterPacket
+ 271 000b 00       		.section	.data.SetServoCenterPacket,"aw",%progbits
+ 272              		.align	2
+ 275              	SetServoCenterPacket:
+ 276 0000 21535343 		.ascii	"!SSCXXXX00\000"
+ 276      58585858 
+ 276      303000
+ 277              		.global	SetServoMaxLeftPacket
+ 278 000b 00       		.section	.data.SetServoMaxLeftPacket,"aw",%progbits
+ 279              		.align	2
+ 282              	SetServoMaxLeftPacket:
+ 283 0000 2153534D 		.ascii	"!SSMLXXXX0\000"
+ 283      4C585858 
+ 283      583000
+ 284              		.global	SetServoMaxRightPacket
+ 285 000b 00       		.section	.data.SetServoMaxRightPacket,"aw",%progbits
+ 286              		.align	2
+ 289              	SetServoMaxRightPacket:
+ 290 0000 2153534D 		.ascii	"!SSMRXXXX0\000"
+ 290      52585858 
+ 290      583000
+ 291              		.global	GetMinMaxLine
+ 292 000b 00       		.section	.data.GetMinMaxLine,"aw",%progbits
+ 293              		.align	2
+ 296              	GetMinMaxLine:
+ 297 0000 21474D4D 		.ascii	"!GMML00000\000"
+ 297      4C303030 
+ 297      303000
+ 298              		.global	GetCameraDataPacket
+ 299 000b 00       		.section	.data.GetCameraDataPacket,"aw",%progbits
+ 300              		.align	2
+ 303              	GetCameraDataPacket:
+ 304 0000 6763616D 		.ascii	"gcameraimg"
+ 304      65726169 
+ 304      6D67
+ 305              		.global	GetAccelerometerDataPacket
+ 306 000a 0000     		.section	.data.GetAccelerometerDataPacket,"aw",%progbits
+ 307              		.align	2
+ 310              	GetAccelerometerDataPacket:
+ 311 0000 67616363 		.ascii	"gacceldata"
+ 311      656C6461 
+ 311      7461
+ 312              		.global	GetOdometryTotalDistancePacket
+ 313 000a 0000     		.section	.data.GetOdometryTotalDistancePacket,"aw",%progbits
+ 314              		.align	2
+ 317              	GetOdometryTotalDistancePacket:
+ 318 0000 67746469 		.ascii	"gtdistance"
+ 318      7374616E 
+ 318      6365
+ 319              		.global	GetConvolutionResultPacket
+ 320 000a 0000     		.section	.data.GetConvolutionResultPacket,"aw",%progbits
+ 321              		.align	2
+ 324              	GetConvolutionResultPacket:
+ 325 0000 67636F6E 		.ascii	"gconvolres"
+ 325      766F6C72 
+ 325      6573
+ 326 000a 0000     		.section	.text.GetNumberFromCommandBuffer,"ax",%progbits
+ 327              		.align	2
+ 328              		.global	GetNumberFromCommandBuffer
+ 329              		.thumb
+ 330              		.thumb_func
+ 332              	GetNumberFromCommandBuffer:
+ 333              	.LFB0:
+ 334              		.file 1 "../Sources/Communication.c"
+   1:../Sources/Communication.c **** /*
+   2:../Sources/Communication.c ****  * Communication.c
+   3:../Sources/Communication.c ****  *
+   4:../Sources/Communication.c ****  *  Created on: Mar 16, 2013
+   5:../Sources/Communication.c ****  *      Author: z
+   6:../Sources/Communication.c ****  */
+   7:../Sources/Communication.c **** 
+   8:../Sources/Communication.c **** #include "Controller.h"
+   9:../Sources/Communication.c **** #include "Communication.h"
+  10:../Sources/Communication.c **** #include "AS1.h"
+  11:../Sources/Communication.c **** #include "Accelerometer.h"
+  12:../Sources/Communication.c **** #include "Camera.h"
+  13:../Sources/Communication.c **** #include "Odometry.h"
+  14:../Sources/Communication.c **** #include "Steering.h"
+  15:../Sources/Communication.c **** #include "PE_Types.h"
+  16:../Sources/Communication.c **** 
+  17:../Sources/Communication.c **** extern TController Controller;
+  18:../Sources/Communication.c **** extern TOdometry Odometry;
+  19:../Sources/Communication.c **** extern TCamera Camera;
+  20:../Sources/Communication.c **** extern TAccelerometer Accelerometer;
+  21:../Sources/Communication.c **** extern TCommunication Communication;
+  22:../Sources/Communication.c **** extern TSteering Steering;
+  23:../Sources/Communication.c **** 
+  24:../Sources/Communication.c **** /*
+  25:../Sources/Communication.c ****  * Commands from old project
+  26:../Sources/Communication.c ****  * */
+  27:../Sources/Communication.c **** 
+  28:../Sources/Communication.c **** /* Read Requests */
+  29:../Sources/Communication.c **** uint8_t GetLinePositionPacket[]   = "?L00000000";   // Request the vehicle for Line Position.
+  30:../Sources/Communication.c **** uint8_t GetCamera1ImagePacket[]   = "?C10000000";   // Request camera1 Live Image.
+  31:../Sources/Communication.c **** uint8_t GetCamera2ImagePacket[]   = "?C20000000";   // Request Camera2 Live Image.
+  32:../Sources/Communication.c **** uint8_t GetCamerasImagePacket[]   = "?CA0000000";   // Request Both Camera Images.
+  33:../Sources/Communication.c **** uint8_t GetServoPositionPacket[]  = "?SP0000000";   // Request Servo Position.
+  34:../Sources/Communication.c **** uint8_t GetAllDataPacket[]      = "?ALLDATA00";
+  35:../Sources/Communication.c **** uint8_t GetAccelerationPacket[] = "?ACCDATA00";
+  36:../Sources/Communication.c **** 
+  37:../Sources/Communication.c **** /* Write Requests */
+  38:../Sources/Communication.c **** uint8_t SetRightMotorSpeedPacket[]  = "!MRXXX0000"; // Set the Left Motor speed to 3 digit value fo
+  39:../Sources/Communication.c **** uint8_t SetLeftMotorSpeedPacket[] = "!MLXXX0000"; // Set the Left Motor speed to 3 digit value foll
+  40:../Sources/Communication.c **** uint8_t SetBothMotorSpeedPacket[]   = "!DCSSXXXXX";
+  41:../Sources/Communication.c **** uint8_t SetDesiredSpeedPacket[]   = "!RDCVXXX00"; //set regulator desired value
+  42:../Sources/Communication.c **** uint8_t SetRegulatorRecoverPacket[] = "!RCVR00000"; //recover suspended regulator and re-enable mot
+  43:../Sources/Communication.c **** uint8_t DecrementServoCenterPacket[] = "!DECSERVOC";
+  44:../Sources/Communication.c **** uint8_t IncrementServoCenterPacket[] = "!INCSERVOC";
+  45:../Sources/Communication.c **** 
+  46:../Sources/Communication.c **** // Speed Controller Packets
+  47:../Sources/Communication.c **** uint8_t SetControllerKpPacket[] = "!SETKPXXXX";
+  48:../Sources/Communication.c **** uint8_t SetControllerKiPacket[] = "!SETKIXXXX";
+  49:../Sources/Communication.c **** uint8_t SetControllerKdPacket[] = "!SETKDXXXX";
+  50:../Sources/Communication.c **** uint8_t SetControllerDesiredSpeedPacket[] = "!SSPEEDXXX";
+  51:../Sources/Communication.c **** uint8_t SetAntiWindupLevelPacket[] = "!SAWINXXXX";
+  52:../Sources/Communication.c **** 
+  53:../Sources/Communication.c **** /*
+  54:../Sources/Communication.c ****  *
+  55:../Sources/Communication.c ****  *Steering 
+  56:../Sources/Communication.c ****  * 
+  57:../Sources/Communication.c ****  * */
+  58:../Sources/Communication.c **** uint8_t GetSteeringControllerConstantsPacket[] = "GSCONSTANT";
+  59:../Sources/Communication.c **** 
+  60:../Sources/Communication.c **** uint8_t IncrementSteeringKpPacket[] = "INCKPSTEER";
+  61:../Sources/Communication.c **** uint8_t IncrementSteeringKiPacket[] = "INCKISTEER";
+  62:../Sources/Communication.c **** uint8_t IncrementSteeringKdPacket[] = "INCKDSTEER";
+  63:../Sources/Communication.c **** uint8_t IncrementSteeringWindupPacket[] = "INCWUSTEER";
+  64:../Sources/Communication.c **** 
+  65:../Sources/Communication.c **** uint8_t DecrementSteeringKpPacket[] = "DECKPSTEER";
+  66:../Sources/Communication.c **** uint8_t DecrementSteeringKiPacket[] = "DECKISTEER";
+  67:../Sources/Communication.c **** uint8_t DecrementSteeringKdPacket[] = "DECKDSTEER";
+  68:../Sources/Communication.c **** uint8_t DecrementSteeringWindupPacket[] = "DECWUSTEER";
+  69:../Sources/Communication.c **** /*
+  70:../Sources/Communication.c ****  *
+  71:../Sources/Communication.c ****  *END Steering 
+  72:../Sources/Communication.c ****  * 
+  73:../Sources/Communication.c ****  * */
+  74:../Sources/Communication.c **** 
+  75:../Sources/Communication.c **** 
+  76:../Sources/Communication.c **** 
+  77:../Sources/Communication.c **** uint8_t SetServoSensitivityPacket[] = "!SSSXX0000";
+  78:../Sources/Communication.c **** uint8_t SetServoPositionPacket[]  = "!SSXXXX000"; // Set Servo to Position.
+  79:../Sources/Communication.c **** uint8_t EnableRightDCMotorPacket[]  = "!EDCMOTORR"; // Enable Right DC Motor.
+  80:../Sources/Communication.c **** uint8_t DisableRightDCMotorPacket[] = "!DDCMOTORR"; // Enable Right DC Motor.
+  81:../Sources/Communication.c **** uint8_t EnableLeftDCMotorPacket[] = "!EDCMOTORL"; // Enable Left DC Motor.
+  82:../Sources/Communication.c **** uint8_t DisableLeftDCMotorPacket[]  = "!DDCMOTORL"; // Enable Left DC Motor.
+  83:../Sources/Communication.c **** uint8_t DisableBothDCMotorsPacket[] = "!DBDCM0000"; // Disable Both DC Motors.
+  84:../Sources/Communication.c **** uint8_t ClearDistanceCounterPacket[]= "!CLRDST000"; // Clear Distance
+  85:../Sources/Communication.c **** uint8_t SetServoCenterPacket[]    = "!SSCXXXX00"; // Set Servo Center.
+  86:../Sources/Communication.c **** uint8_t SetServoMaxLeftPacket[]   = "!SSMLXXXX0"; // Set Servo Max Left Value.
+  87:../Sources/Communication.c **** uint8_t SetServoMaxRightPacket[]  = "!SSMRXXXX0"; // Set Servo Max Right Value.
+  88:../Sources/Communication.c **** uint8_t GetMinMaxLine[]       = "!GMML00000"; // Get line Min and Max Value.
+  89:../Sources/Communication.c **** 
+  90:../Sources/Communication.c **** uint8_t GetCameraDataPacket[PACKET_LENGTH] = "gcameraimg";
+  91:../Sources/Communication.c **** uint8_t GetAccelerometerDataPacket[PACKET_LENGTH] = "gacceldata";
+  92:../Sources/Communication.c **** uint8_t GetOdometryTotalDistancePacket[PACKET_LENGTH] = "gtdistance";
+  93:../Sources/Communication.c **** uint8_t GetConvolutionResultPacket[PACKET_LENGTH] = "gconvolres";
+  94:../Sources/Communication.c **** 
+  95:../Sources/Communication.c **** 
+  96:../Sources/Communication.c **** 
+  97:../Sources/Communication.c **** uint16_t GetNumberFromCommandBuffer(TCommunication* CommunicationStruct, uint8_t StartIndex, uint8_
+  98:../Sources/Communication.c **** {
+ 335              		.loc 1 98 0
+ 336              		.cfi_startproc
+ 337              		@ args = 0, pretend = 0, frame = 24
+ 338              		@ frame_needed = 1, uses_anonymous_args = 0
+ 339 0000 80B5     		push	{r7, lr}
+ 340              	.LCFI0:
+ 341              		.cfi_def_cfa_offset 8
+ 342              		.cfi_offset 14, -4
+ 343              		.cfi_offset 7, -8
+ 344 0002 86B0     		sub	sp, sp, #24
+ 345              	.LCFI1:
+ 346              		.cfi_def_cfa_offset 32
+ 347 0004 00AF     		add	r7, sp, #0
+ 348              	.LCFI2:
+ 349              		.cfi_def_cfa_register 7
+ 350 0006 7860     		str	r0, [r7, #4]
+ 351 0008 1346     		mov	r3, r2
+ 352 000a 0A46     		mov	r2, r1
+ 353 000c FA70     		strb	r2, [r7, #3]
+ 354 000e BB70     		strb	r3, [r7, #2]
+  99:../Sources/Communication.c ****   int i;
+ 100:../Sources/Communication.c ****   char DynamicArray[10];
+ 101:../Sources/Communication.c ****   for(i=0 ; i<Length ; i++)
+ 355              		.loc 1 101 0
+ 356 0010 4FF00003 		mov	r3, #0
+ 357 0014 7B61     		str	r3, [r7, #20]
+ 358 0016 0FE0     		b	.L2
+ 359              	.L3:
+ 102:../Sources/Communication.c ****   {
+ 103:../Sources/Communication.c ****     DynamicArray[i] = CommunicationStruct->ReceivedPacket[i+StartIndex];
+ 360              		.loc 1 103 0 discriminator 2
+ 361 0018 FA78     		ldrb	r2, [r7, #3]	@ zero_extendqisi2
+ 362 001a 7B69     		ldr	r3, [r7, #20]
+ 363 001c D318     		adds	r3, r2, r3
+ 364 001e 7A68     		ldr	r2, [r7, #4]
+ 365 0020 D318     		adds	r3, r2, r3
+ 366 0022 93F80424 		ldrb	r2, [r3, #1028]	@ zero_extendqisi2
+ 367 0026 07F10801 		add	r1, r7, #8
+ 368 002a 7B69     		ldr	r3, [r7, #20]
+ 369 002c CB18     		adds	r3, r1, r3
+ 370 002e 1A70     		strb	r2, [r3, #0]
+ 101:../Sources/Communication.c ****   for(i=0 ; i<Length ; i++)
+ 371              		.loc 1 101 0 discriminator 2
+ 372 0030 7B69     		ldr	r3, [r7, #20]
+ 373 0032 03F10103 		add	r3, r3, #1
+ 374 0036 7B61     		str	r3, [r7, #20]
+ 375              	.L2:
+ 101:../Sources/Communication.c ****   for(i=0 ; i<Length ; i++)
+ 376              		.loc 1 101 0 is_stmt 0 discriminator 1
+ 377 0038 BA78     		ldrb	r2, [r7, #2]	@ zero_extendqisi2
+ 378 003a 7B69     		ldr	r3, [r7, #20]
+ 379 003c 9A42     		cmp	r2, r3
+ 380 003e EBDC     		bgt	.L3
+ 104:../Sources/Communication.c ****   }
+ 105:../Sources/Communication.c ****   DynamicArray[Length] = '\0';
+ 381              		.loc 1 105 0 is_stmt 1
+ 382 0040 BB78     		ldrb	r3, [r7, #2]	@ zero_extendqisi2
+ 383 0042 07F11802 		add	r2, r7, #24
+ 384 0046 D318     		adds	r3, r2, r3
+ 385 0048 4FF00002 		mov	r2, #0
+ 386 004c 03F8102C 		strb	r2, [r3, #-16]
+ 106:../Sources/Communication.c ****   
+ 107:../Sources/Communication.c ****   return atoi(DynamicArray);
+ 387              		.loc 1 107 0
+ 388 0050 07F10803 		add	r3, r7, #8
+ 389 0054 1846     		mov	r0, r3
+ 390 0056 FFF7FEFF 		bl	atoi
+ 391 005a 0346     		mov	r3, r0
+ 392 005c 9BB2     		uxth	r3, r3
+ 108:../Sources/Communication.c **** }
+ 393              		.loc 1 108 0
+ 394 005e 1846     		mov	r0, r3
+ 395 0060 07F11807 		add	r7, r7, #24
+ 396 0064 BD46     		mov	sp, r7
+ 397 0066 80BD     		pop	{r7, pc}
+ 398              		.cfi_endproc
+ 399              	.LFE0:
+ 401              		.section	.text.GetMatchCharNum,"ax",%progbits
+ 402              		.align	2
+ 403              		.global	GetMatchCharNum
+ 404              		.thumb
+ 405              		.thumb_func
+ 407              	GetMatchCharNum:
+ 408              	.LFB1:
+ 109:../Sources/Communication.c **** 
+ 110:../Sources/Communication.c **** uint8_t GetMatchCharNum(uint8_t* PacketPattern)
+ 111:../Sources/Communication.c **** {
+ 409              		.loc 1 111 0
+ 410              		.cfi_startproc
+ 411              		@ args = 0, pretend = 0, frame = 16
+ 412              		@ frame_needed = 1, uses_anonymous_args = 0
+ 413              		@ link register save eliminated.
+ 414 0000 80B4     		push	{r7}
+ 415              	.LCFI3:
+ 416              		.cfi_def_cfa_offset 4
+ 417              		.cfi_offset 7, -4
+ 418 0002 85B0     		sub	sp, sp, #20
+ 419              	.LCFI4:
+ 420              		.cfi_def_cfa_offset 24
+ 421 0004 00AF     		add	r7, sp, #0
+ 422              	.LCFI5:
+ 423              		.cfi_def_cfa_register 7
+ 424 0006 7860     		str	r0, [r7, #4]
+ 112:../Sources/Communication.c ****   uint8_t i;
+ 113:../Sources/Communication.c ****   for(i=0 ; i<PACKET_LENGTH ; i++)
+ 425              		.loc 1 113 0
+ 426 0008 4FF00003 		mov	r3, #0
+ 427 000c FB73     		strb	r3, [r7, #15]
+ 428 000e 0CE0     		b	.L5
+ 429              	.L7:
+ 114:../Sources/Communication.c ****   {
+ 115:../Sources/Communication.c ****     if((PacketPattern[i] == 'X')  || (i>=9))
+ 430              		.loc 1 115 0
+ 431 0010 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 432 0012 7A68     		ldr	r2, [r7, #4]
+ 433 0014 D318     		adds	r3, r2, r3
+ 434 0016 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 435 0018 582B     		cmp	r3, #88
+ 436 001a 09D0     		beq	.L6
+ 437              		.loc 1 115 0 is_stmt 0 discriminator 1
+ 438 001c FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 439 001e 082B     		cmp	r3, #8
+ 440 0020 06D8     		bhi	.L6
+ 113:../Sources/Communication.c ****   for(i=0 ; i<PACKET_LENGTH ; i++)
+ 441              		.loc 1 113 0 is_stmt 1
+ 442 0022 FB7B     		ldrb	r3, [r7, #15]
+ 443 0024 03F10103 		add	r3, r3, #1
+ 444 0028 FB73     		strb	r3, [r7, #15]
+ 445              	.L5:
+ 113:../Sources/Communication.c ****   for(i=0 ; i<PACKET_LENGTH ; i++)
+ 446              		.loc 1 113 0 is_stmt 0 discriminator 1
+ 447 002a FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 448 002c 092B     		cmp	r3, #9
+ 449 002e EFD9     		bls	.L7
+ 450              	.L6:
+ 116:../Sources/Communication.c ****       break;
+ 117:../Sources/Communication.c ****   }
+ 118:../Sources/Communication.c ****   return i;
+ 451              		.loc 1 118 0 is_stmt 1
+ 452 0030 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 119:../Sources/Communication.c **** }
+ 453              		.loc 1 119 0
+ 454 0032 1846     		mov	r0, r3
+ 455 0034 07F11407 		add	r7, r7, #20
+ 456 0038 BD46     		mov	sp, r7
+ 457 003a 80BC     		pop	{r7}
+ 458 003c 7047     		bx	lr
+ 459              		.cfi_endproc
+ 460              	.LFE1:
+ 462 003e 00BF     		.section	.text.GetParameterLength,"ax",%progbits
+ 463              		.align	2
+ 464              		.global	GetParameterLength
+ 465              		.thumb
+ 466              		.thumb_func
+ 468              	GetParameterLength:
+ 469              	.LFB2:
+ 120:../Sources/Communication.c **** 
+ 121:../Sources/Communication.c **** uint8_t GetParameterLength(uint8_t* PacketPattern)
+ 122:../Sources/Communication.c **** {
+ 470              		.loc 1 122 0
+ 471              		.cfi_startproc
+ 472              		@ args = 0, pretend = 0, frame = 16
+ 473              		@ frame_needed = 1, uses_anonymous_args = 0
+ 474              		@ link register save eliminated.
+ 475 0000 80B4     		push	{r7}
+ 476              	.LCFI6:
+ 477              		.cfi_def_cfa_offset 4
+ 478              		.cfi_offset 7, -4
+ 479 0002 85B0     		sub	sp, sp, #20
+ 480              	.LCFI7:
+ 481              		.cfi_def_cfa_offset 24
+ 482 0004 00AF     		add	r7, sp, #0
+ 483              	.LCFI8:
+ 484              		.cfi_def_cfa_register 7
+ 485 0006 7860     		str	r0, [r7, #4]
+ 123:../Sources/Communication.c ****   uint8_t i;
+ 124:../Sources/Communication.c ****   uint8_t ParameterLength = 0;
+ 486              		.loc 1 124 0
+ 487 0008 4FF00003 		mov	r3, #0
+ 488 000c BB73     		strb	r3, [r7, #14]
+ 125:../Sources/Communication.c ****   for(i=0 ; i<PACKET_LENGTH ; i++)
+ 489              		.loc 1 125 0
+ 490 000e 4FF00003 		mov	r3, #0
+ 491 0012 FB73     		strb	r3, [r7, #15]
+ 492 0014 0DE0     		b	.L9
+ 493              	.L11:
+ 126:../Sources/Communication.c ****   {
+ 127:../Sources/Communication.c ****     if(PacketPattern[i] == 'X') ParameterLength++;
+ 494              		.loc 1 127 0
+ 495 0016 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 496 0018 7A68     		ldr	r2, [r7, #4]
+ 497 001a D318     		adds	r3, r2, r3
+ 498 001c 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 499 001e 582B     		cmp	r3, #88
+ 500 0020 03D1     		bne	.L10
+ 501              		.loc 1 127 0 is_stmt 0 discriminator 1
+ 502 0022 BB7B     		ldrb	r3, [r7, #14]
+ 503 0024 03F10103 		add	r3, r3, #1
+ 504 0028 BB73     		strb	r3, [r7, #14]
+ 505              	.L10:
+ 125:../Sources/Communication.c ****   for(i=0 ; i<PACKET_LENGTH ; i++)
+ 506              		.loc 1 125 0 is_stmt 1
+ 507 002a FB7B     		ldrb	r3, [r7, #15]
+ 508 002c 03F10103 		add	r3, r3, #1
+ 509 0030 FB73     		strb	r3, [r7, #15]
+ 510              	.L9:
+ 125:../Sources/Communication.c ****   for(i=0 ; i<PACKET_LENGTH ; i++)
+ 511              		.loc 1 125 0 is_stmt 0 discriminator 1
+ 512 0032 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 513 0034 092B     		cmp	r3, #9
+ 514 0036 EED9     		bls	.L11
+ 128:../Sources/Communication.c ****   }
+ 129:../Sources/Communication.c ****   return ParameterLength;
+ 515              		.loc 1 129 0 is_stmt 1
+ 516 0038 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 130:../Sources/Communication.c **** }
+ 517              		.loc 1 130 0
+ 518 003a 1846     		mov	r0, r3
+ 519 003c 07F11407 		add	r7, r7, #20
+ 520 0040 BD46     		mov	sp, r7
+ 521 0042 80BC     		pop	{r7}
+ 522 0044 7047     		bx	lr
+ 523              		.cfi_endproc
+ 524              	.LFE2:
+ 526 0046 00BF     		.section	.text.CommunicationHandler,"ax",%progbits
+ 527              		.align	2
+ 528              		.global	CommunicationHandler
+ 529              		.thumb
+ 530              		.thumb_func
+ 532              	CommunicationHandler:
+ 533              	.LFB3:
+ 131:../Sources/Communication.c **** 
+ 132:../Sources/Communication.c **** 
+ 133:../Sources/Communication.c **** void CommunicationHandler(TCommunication* CommunicationStruct)
+ 134:../Sources/Communication.c **** {
+ 534              		.loc 1 134 0
+ 535              		.cfi_startproc
+ 536              		@ args = 0, pretend = 0, frame = 16
+ 537              		@ frame_needed = 1, uses_anonymous_args = 0
+ 538 0000 90B5     		push	{r4, r7, lr}
+ 539              	.LCFI9:
+ 540              		.cfi_def_cfa_offset 12
+ 541              		.cfi_offset 14, -4
+ 542              		.cfi_offset 7, -8
+ 543              		.cfi_offset 4, -12
+ 544 0002 85B0     		sub	sp, sp, #20
+ 545              	.LCFI10:
+ 546              		.cfi_def_cfa_offset 32
+ 547 0004 00AF     		add	r7, sp, #0
+ 548              	.LCFI11:
+ 549              		.cfi_def_cfa_register 7
+ 550 0006 7860     		str	r0, [r7, #4]
+ 135:../Sources/Communication.c ****   int compare;
+ 136:../Sources/Communication.c ****   // Camera
+ 137:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, GetCameraDataPacket, PACKET_LENGTH);
+ 551              		.loc 1 137 0
+ 552 0008 7B68     		ldr	r3, [r7, #4]
+ 553 000a 03F58063 		add	r3, r3, #1024
+ 554 000e 03F10403 		add	r3, r3, #4
+ 555 0012 1846     		mov	r0, r3
+ 556 0014 40F20001 		movw	r1, #:lower16:GetCameraDataPacket
+ 557 0018 C0F20001 		movt	r1, #:upper16:GetCameraDataPacket
+ 558 001c 4FF00A02 		mov	r2, #10
+ 559 0020 FFF7FEFF 		bl	memcmp
+ 560 0024 0346     		mov	r3, r0
+ 561 0026 FB60     		str	r3, [r7, #12]
+ 138:../Sources/Communication.c ****   if(compare == 0)
+ 562              		.loc 1 138 0
+ 563 0028 FB68     		ldr	r3, [r7, #12]
+ 564 002a 002B     		cmp	r3, #0
+ 565 002c 01D1     		bne	.L13
+ 139:../Sources/Communication.c ****   {
+ 140:../Sources/Communication.c ****     GetCameraDataPacketHandler();
+ 566              		.loc 1 140 0
+ 567 002e FFF7FEFF 		bl	GetCameraDataPacketHandler
+ 568              	.L13:
+ 141:../Sources/Communication.c ****   }
+ 142:../Sources/Communication.c ****   
+ 143:../Sources/Communication.c ****   //Convolution Result
+ 144:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, GetConvolutionResultPacket, PACKET_LENGTH);
+ 569              		.loc 1 144 0
+ 570 0032 7B68     		ldr	r3, [r7, #4]
+ 571 0034 03F58063 		add	r3, r3, #1024
+ 572 0038 03F10403 		add	r3, r3, #4
+ 573 003c 1846     		mov	r0, r3
+ 574 003e 40F20001 		movw	r1, #:lower16:GetConvolutionResultPacket
+ 575 0042 C0F20001 		movt	r1, #:upper16:GetConvolutionResultPacket
+ 576 0046 4FF00A02 		mov	r2, #10
+ 577 004a FFF7FEFF 		bl	memcmp
+ 578 004e 0346     		mov	r3, r0
+ 579 0050 FB60     		str	r3, [r7, #12]
+ 145:../Sources/Communication.c ****     if(compare == 0)
+ 580              		.loc 1 145 0
+ 581 0052 FB68     		ldr	r3, [r7, #12]
+ 582 0054 002B     		cmp	r3, #0
+ 583 0056 01D1     		bne	.L14
+ 146:../Sources/Communication.c ****     {
+ 147:../Sources/Communication.c ****       GetConvolutionResultPacketHandler();
+ 584              		.loc 1 147 0
+ 585 0058 FFF7FEFF 		bl	GetConvolutionResultPacketHandler
+ 586              	.L14:
+ 148:../Sources/Communication.c ****     }
+ 149:../Sources/Communication.c ****   
+ 150:../Sources/Communication.c ****   // Accelerometer
+ 151:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, GetAccelerometerDataPacket, PACKET_LENGTH);
+ 587              		.loc 1 151 0
+ 588 005c 7B68     		ldr	r3, [r7, #4]
+ 589 005e 03F58063 		add	r3, r3, #1024
+ 590 0062 03F10403 		add	r3, r3, #4
+ 591 0066 1846     		mov	r0, r3
+ 592 0068 40F20001 		movw	r1, #:lower16:GetAccelerometerDataPacket
+ 593 006c C0F20001 		movt	r1, #:upper16:GetAccelerometerDataPacket
+ 594 0070 4FF00A02 		mov	r2, #10
+ 595 0074 FFF7FEFF 		bl	memcmp
+ 596 0078 0346     		mov	r3, r0
+ 597 007a FB60     		str	r3, [r7, #12]
+ 152:../Sources/Communication.c ****   if(compare == 0)
+ 598              		.loc 1 152 0
+ 599 007c FB68     		ldr	r3, [r7, #12]
+ 600 007e 002B     		cmp	r3, #0
+ 601 0080 01D1     		bne	.L15
+ 153:../Sources/Communication.c ****   {
+ 154:../Sources/Communication.c ****     GetAccelerometerDataPacketHandler();
+ 602              		.loc 1 154 0
+ 603 0082 FFF7FEFF 		bl	GetAccelerometerDataPacketHandler
+ 604              	.L15:
+ 155:../Sources/Communication.c ****   }
+ 156:../Sources/Communication.c ****   
+ 157:../Sources/Communication.c ****   // Odometry
+ 158:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, GetOdometryTotalDistancePacket, PACKET_LENG
+ 605              		.loc 1 158 0
+ 606 0086 7B68     		ldr	r3, [r7, #4]
+ 607 0088 03F58063 		add	r3, r3, #1024
+ 608 008c 03F10403 		add	r3, r3, #4
+ 609 0090 1846     		mov	r0, r3
+ 610 0092 40F20001 		movw	r1, #:lower16:GetOdometryTotalDistancePacket
+ 611 0096 C0F20001 		movt	r1, #:upper16:GetOdometryTotalDistancePacket
+ 612 009a 4FF00A02 		mov	r2, #10
+ 613 009e FFF7FEFF 		bl	memcmp
+ 614 00a2 0346     		mov	r3, r0
+ 615 00a4 FB60     		str	r3, [r7, #12]
+ 159:../Sources/Communication.c ****   if(compare == 0)
+ 616              		.loc 1 159 0
+ 617 00a6 FB68     		ldr	r3, [r7, #12]
+ 618 00a8 002B     		cmp	r3, #0
+ 619 00aa 01D1     		bne	.L16
+ 160:../Sources/Communication.c ****   {
+ 161:../Sources/Communication.c ****     GetOdometryTotalDistancePacketHandler();
+ 620              		.loc 1 161 0
+ 621 00ac FFF7FEFF 		bl	GetOdometryTotalDistancePacketHandler
+ 622              	.L16:
+ 162:../Sources/Communication.c ****   }
+ 163:../Sources/Communication.c ****   
+ 164:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, SetBothMotorSpeedPacket, GetMatchCharNum(Se
+ 623              		.loc 1 164 0
+ 624 00b0 7B68     		ldr	r3, [r7, #4]
+ 625 00b2 03F58064 		add	r4, r3, #1024
+ 626 00b6 04F10404 		add	r4, r4, #4
+ 627 00ba 40F20000 		movw	r0, #:lower16:SetBothMotorSpeedPacket
+ 628 00be C0F20000 		movt	r0, #:upper16:SetBothMotorSpeedPacket
+ 629 00c2 FFF7FEFF 		bl	GetMatchCharNum
+ 630 00c6 0346     		mov	r3, r0
+ 631 00c8 2046     		mov	r0, r4
+ 632 00ca 40F20001 		movw	r1, #:lower16:SetBothMotorSpeedPacket
+ 633 00ce C0F20001 		movt	r1, #:upper16:SetBothMotorSpeedPacket
+ 634 00d2 1A46     		mov	r2, r3
+ 635 00d4 FFF7FEFF 		bl	memcmp
+ 636 00d8 0346     		mov	r3, r0
+ 637 00da FB60     		str	r3, [r7, #12]
+ 165:../Sources/Communication.c ****   if(compare == 0)
+ 638              		.loc 1 165 0
+ 639 00dc FB68     		ldr	r3, [r7, #12]
+ 640 00de 002B     		cmp	r3, #0
+ 641 00e0 05D1     		bne	.L17
+ 166:../Sources/Communication.c ****   {
+ 167:../Sources/Communication.c ****     SetBothMotorSpeedCommandHandler(SetBothMotorSpeedPacket);
+ 642              		.loc 1 167 0
+ 643 00e2 40F20000 		movw	r0, #:lower16:SetBothMotorSpeedPacket
+ 644 00e6 C0F20000 		movt	r0, #:upper16:SetBothMotorSpeedPacket
+ 645 00ea FFF7FEFF 		bl	SetBothMotorSpeedCommandHandler
+ 646              	.L17:
+ 168:../Sources/Communication.c ****   }
+ 169:../Sources/Communication.c ****   
+ 170:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, SetServoCenterPacket, GetMatchCharNum(SetSe
+ 647              		.loc 1 170 0
+ 648 00ee 7B68     		ldr	r3, [r7, #4]
+ 649 00f0 03F58064 		add	r4, r3, #1024
+ 650 00f4 04F10404 		add	r4, r4, #4
+ 651 00f8 40F20000 		movw	r0, #:lower16:SetServoCenterPacket
+ 652 00fc C0F20000 		movt	r0, #:upper16:SetServoCenterPacket
+ 653 0100 FFF7FEFF 		bl	GetMatchCharNum
+ 654 0104 0346     		mov	r3, r0
+ 655 0106 2046     		mov	r0, r4
+ 656 0108 40F20001 		movw	r1, #:lower16:SetServoCenterPacket
+ 657 010c C0F20001 		movt	r1, #:upper16:SetServoCenterPacket
+ 658 0110 1A46     		mov	r2, r3
+ 659 0112 FFF7FEFF 		bl	memcmp
+ 660 0116 0346     		mov	r3, r0
+ 661 0118 FB60     		str	r3, [r7, #12]
+ 171:../Sources/Communication.c ****   if(compare == 0)
+ 662              		.loc 1 171 0
+ 663 011a FB68     		ldr	r3, [r7, #12]
+ 664 011c 002B     		cmp	r3, #0
+ 665 011e 05D1     		bne	.L18
+ 172:../Sources/Communication.c ****   {
+ 173:../Sources/Communication.c ****     SetServoCenterCommandHandler(SetServoCenterPacket);
+ 666              		.loc 1 173 0
+ 667 0120 40F20000 		movw	r0, #:lower16:SetServoCenterPacket
+ 668 0124 C0F20000 		movt	r0, #:upper16:SetServoCenterPacket
+ 669 0128 FFF7FEFF 		bl	SetServoCenterCommandHandler
+ 670              	.L18:
+ 174:../Sources/Communication.c ****   }
+ 175:../Sources/Communication.c **** 
+ 176:../Sources/Communication.c ****   // Controller Kp
+ 177:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, SetControllerKpPacket, GetMatchCharNum(SetC
+ 671              		.loc 1 177 0
+ 672 012c 7B68     		ldr	r3, [r7, #4]
+ 673 012e 03F58064 		add	r4, r3, #1024
+ 674 0132 04F10404 		add	r4, r4, #4
+ 675 0136 40F20000 		movw	r0, #:lower16:SetControllerKpPacket
+ 676 013a C0F20000 		movt	r0, #:upper16:SetControllerKpPacket
+ 677 013e FFF7FEFF 		bl	GetMatchCharNum
+ 678 0142 0346     		mov	r3, r0
+ 679 0144 2046     		mov	r0, r4
+ 680 0146 40F20001 		movw	r1, #:lower16:SetControllerKpPacket
+ 681 014a C0F20001 		movt	r1, #:upper16:SetControllerKpPacket
+ 682 014e 1A46     		mov	r2, r3
+ 683 0150 FFF7FEFF 		bl	memcmp
+ 684 0154 0346     		mov	r3, r0
+ 685 0156 FB60     		str	r3, [r7, #12]
+ 178:../Sources/Communication.c ****   if(compare == 0)
+ 686              		.loc 1 178 0
+ 687 0158 FB68     		ldr	r3, [r7, #12]
+ 688 015a 002B     		cmp	r3, #0
+ 689 015c 05D1     		bne	.L19
+ 179:../Sources/Communication.c ****   {
+ 180:../Sources/Communication.c ****     SetControllerKpCommandHandler(SetControllerKpPacket);
+ 690              		.loc 1 180 0
+ 691 015e 40F20000 		movw	r0, #:lower16:SetControllerKpPacket
+ 692 0162 C0F20000 		movt	r0, #:upper16:SetControllerKpPacket
+ 693 0166 FFF7FEFF 		bl	SetControllerKpCommandHandler
+ 694              	.L19:
+ 181:../Sources/Communication.c ****   }
+ 182:../Sources/Communication.c ****   
+ 183:../Sources/Communication.c ****   //Controller Ki
+ 184:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, SetControllerKiPacket, GetMatchCharNum(SetC
+ 695              		.loc 1 184 0
+ 696 016a 7B68     		ldr	r3, [r7, #4]
+ 697 016c 03F58064 		add	r4, r3, #1024
+ 698 0170 04F10404 		add	r4, r4, #4
+ 699 0174 40F20000 		movw	r0, #:lower16:SetControllerKiPacket
+ 700 0178 C0F20000 		movt	r0, #:upper16:SetControllerKiPacket
+ 701 017c FFF7FEFF 		bl	GetMatchCharNum
+ 702 0180 0346     		mov	r3, r0
+ 703 0182 2046     		mov	r0, r4
+ 704 0184 40F20001 		movw	r1, #:lower16:SetControllerKiPacket
+ 705 0188 C0F20001 		movt	r1, #:upper16:SetControllerKiPacket
+ 706 018c 1A46     		mov	r2, r3
+ 707 018e FFF7FEFF 		bl	memcmp
+ 708 0192 0346     		mov	r3, r0
+ 709 0194 FB60     		str	r3, [r7, #12]
+ 185:../Sources/Communication.c ****   if(compare == 0)
+ 710              		.loc 1 185 0
+ 711 0196 FB68     		ldr	r3, [r7, #12]
+ 712 0198 002B     		cmp	r3, #0
+ 713 019a 05D1     		bne	.L20
+ 186:../Sources/Communication.c ****   {
+ 187:../Sources/Communication.c ****     SetControllerKiCommandHandler(SetControllerKiPacket);
+ 714              		.loc 1 187 0
+ 715 019c 40F20000 		movw	r0, #:lower16:SetControllerKiPacket
+ 716 01a0 C0F20000 		movt	r0, #:upper16:SetControllerKiPacket
+ 717 01a4 FFF7FEFF 		bl	SetControllerKiCommandHandler
+ 718              	.L20:
+ 188:../Sources/Communication.c ****   }
+ 189:../Sources/Communication.c ****   
+ 190:../Sources/Communication.c ****   //Controller Kd
+ 191:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, SetControllerKdPacket, GetMatchCharNum(SetC
+ 719              		.loc 1 191 0
+ 720 01a8 7B68     		ldr	r3, [r7, #4]
+ 721 01aa 03F58064 		add	r4, r3, #1024
+ 722 01ae 04F10404 		add	r4, r4, #4
+ 723 01b2 40F20000 		movw	r0, #:lower16:SetControllerKdPacket
+ 724 01b6 C0F20000 		movt	r0, #:upper16:SetControllerKdPacket
+ 725 01ba FFF7FEFF 		bl	GetMatchCharNum
+ 726 01be 0346     		mov	r3, r0
+ 727 01c0 2046     		mov	r0, r4
+ 728 01c2 40F20001 		movw	r1, #:lower16:SetControllerKdPacket
+ 729 01c6 C0F20001 		movt	r1, #:upper16:SetControllerKdPacket
+ 730 01ca 1A46     		mov	r2, r3
+ 731 01cc FFF7FEFF 		bl	memcmp
+ 732 01d0 0346     		mov	r3, r0
+ 733 01d2 FB60     		str	r3, [r7, #12]
+ 192:../Sources/Communication.c ****   if(compare == 0)
+ 734              		.loc 1 192 0
+ 735 01d4 FB68     		ldr	r3, [r7, #12]
+ 736 01d6 002B     		cmp	r3, #0
+ 737 01d8 05D1     		bne	.L21
+ 193:../Sources/Communication.c ****   {
+ 194:../Sources/Communication.c ****     SetControllerKdCommandHandler(SetControllerKdPacket);
+ 738              		.loc 1 194 0
+ 739 01da 40F20000 		movw	r0, #:lower16:SetControllerKdPacket
+ 740 01de C0F20000 		movt	r0, #:upper16:SetControllerKdPacket
+ 741 01e2 FFF7FEFF 		bl	SetControllerKdCommandHandler
+ 742              	.L21:
+ 195:../Sources/Communication.c ****   }
+ 196:../Sources/Communication.c ****   
+ 197:../Sources/Communication.c ****   //Controller   
+ 198:../Sources/Communication.c ****   
+ 199:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, SetControllerDesiredSpeedPacket, GetMatchCh
+ 743              		.loc 1 199 0
+ 744 01e6 7B68     		ldr	r3, [r7, #4]
+ 745 01e8 03F58064 		add	r4, r3, #1024
+ 746 01ec 04F10404 		add	r4, r4, #4
+ 747 01f0 40F20000 		movw	r0, #:lower16:SetControllerDesiredSpeedPacket
+ 748 01f4 C0F20000 		movt	r0, #:upper16:SetControllerDesiredSpeedPacket
+ 749 01f8 FFF7FEFF 		bl	GetMatchCharNum
+ 750 01fc 0346     		mov	r3, r0
+ 751 01fe 2046     		mov	r0, r4
+ 752 0200 40F20001 		movw	r1, #:lower16:SetControllerDesiredSpeedPacket
+ 753 0204 C0F20001 		movt	r1, #:upper16:SetControllerDesiredSpeedPacket
+ 754 0208 1A46     		mov	r2, r3
+ 755 020a FFF7FEFF 		bl	memcmp
+ 756 020e 0346     		mov	r3, r0
+ 757 0210 FB60     		str	r3, [r7, #12]
+ 200:../Sources/Communication.c ****   if(compare == 0)
+ 758              		.loc 1 200 0
+ 759 0212 FB68     		ldr	r3, [r7, #12]
+ 760 0214 002B     		cmp	r3, #0
+ 761 0216 05D1     		bne	.L22
+ 201:../Sources/Communication.c ****   {
+ 202:../Sources/Communication.c ****     SetControllerDesiredSpeedCommandHandler(SetControllerDesiredSpeedPacket);
+ 762              		.loc 1 202 0
+ 763 0218 40F20000 		movw	r0, #:lower16:SetControllerDesiredSpeedPacket
+ 764 021c C0F20000 		movt	r0, #:upper16:SetControllerDesiredSpeedPacket
+ 765 0220 FFF7FEFF 		bl	SetControllerDesiredSpeedCommandHandler
+ 766              	.L22:
+ 203:../Sources/Communication.c ****   }
+ 204:../Sources/Communication.c ****   
+ 205:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, SetAntiWindupLevelPacket, GetMatchCharNum(S
+ 767              		.loc 1 205 0
+ 768 0224 7B68     		ldr	r3, [r7, #4]
+ 769 0226 03F58064 		add	r4, r3, #1024
+ 770 022a 04F10404 		add	r4, r4, #4
+ 771 022e 40F20000 		movw	r0, #:lower16:SetAntiWindupLevelPacket
+ 772 0232 C0F20000 		movt	r0, #:upper16:SetAntiWindupLevelPacket
+ 773 0236 FFF7FEFF 		bl	GetMatchCharNum
+ 774 023a 0346     		mov	r3, r0
+ 775 023c 2046     		mov	r0, r4
+ 776 023e 40F20001 		movw	r1, #:lower16:SetAntiWindupLevelPacket
+ 777 0242 C0F20001 		movt	r1, #:upper16:SetAntiWindupLevelPacket
+ 778 0246 1A46     		mov	r2, r3
+ 779 0248 FFF7FEFF 		bl	memcmp
+ 780 024c 0346     		mov	r3, r0
+ 781 024e FB60     		str	r3, [r7, #12]
+ 206:../Sources/Communication.c ****   if(compare == 0)
+ 782              		.loc 1 206 0
+ 783 0250 FB68     		ldr	r3, [r7, #12]
+ 784 0252 002B     		cmp	r3, #0
+ 785 0254 05D1     		bne	.L23
+ 207:../Sources/Communication.c ****   {
+ 208:../Sources/Communication.c ****     SetAntiWindupLevelCommandHandler(SetAntiWindupLevelPacket);
+ 786              		.loc 1 208 0
+ 787 0256 40F20000 		movw	r0, #:lower16:SetAntiWindupLevelPacket
+ 788 025a C0F20000 		movt	r0, #:upper16:SetAntiWindupLevelPacket
+ 789 025e FFF7FEFF 		bl	SetAntiWindupLevelCommandHandler
+ 790              	.L23:
+ 209:../Sources/Communication.c ****   }
+ 210:../Sources/Communication.c ****   
+ 211:../Sources/Communication.c ****   // Steering
+ 212:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, GetSteeringControllerConstantsPacket, GetMa
+ 791              		.loc 1 212 0
+ 792 0262 7B68     		ldr	r3, [r7, #4]
+ 793 0264 03F58064 		add	r4, r3, #1024
+ 794 0268 04F10404 		add	r4, r4, #4
+ 795 026c 40F20000 		movw	r0, #:lower16:GetSteeringControllerConstantsPacket
+ 796 0270 C0F20000 		movt	r0, #:upper16:GetSteeringControllerConstantsPacket
+ 797 0274 FFF7FEFF 		bl	GetMatchCharNum
+ 798 0278 0346     		mov	r3, r0
+ 799 027a 2046     		mov	r0, r4
+ 800 027c 40F20001 		movw	r1, #:lower16:GetSteeringControllerConstantsPacket
+ 801 0280 C0F20001 		movt	r1, #:upper16:GetSteeringControllerConstantsPacket
+ 802 0284 1A46     		mov	r2, r3
+ 803 0286 FFF7FEFF 		bl	memcmp
+ 804 028a 0346     		mov	r3, r0
+ 805 028c FB60     		str	r3, [r7, #12]
+ 213:../Sources/Communication.c ****   if(compare == 0)
+ 806              		.loc 1 213 0
+ 807 028e FB68     		ldr	r3, [r7, #12]
+ 808 0290 002B     		cmp	r3, #0
+ 809 0292 05D1     		bne	.L24
+ 214:../Sources/Communication.c ****   {
+ 215:../Sources/Communication.c ****     GetSteeringControllerConstantsCommandHandler(GetSteeringControllerConstantsPacket);
+ 810              		.loc 1 215 0
+ 811 0294 40F20000 		movw	r0, #:lower16:GetSteeringControllerConstantsPacket
+ 812 0298 C0F20000 		movt	r0, #:upper16:GetSteeringControllerConstantsPacket
+ 813 029c FFF7FEFF 		bl	GetSteeringControllerConstantsCommandHandler
+ 814              	.L24:
+ 216:../Sources/Communication.c ****   }
+ 217:../Sources/Communication.c ****   
+ 218:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, IncrementSteeringKpPacket, GetMatchCharNum(
+ 815              		.loc 1 218 0
+ 816 02a0 7B68     		ldr	r3, [r7, #4]
+ 817 02a2 03F58064 		add	r4, r3, #1024
+ 818 02a6 04F10404 		add	r4, r4, #4
+ 819 02aa 40F20000 		movw	r0, #:lower16:IncrementSteeringKpPacket
+ 820 02ae C0F20000 		movt	r0, #:upper16:IncrementSteeringKpPacket
+ 821 02b2 FFF7FEFF 		bl	GetMatchCharNum
+ 822 02b6 0346     		mov	r3, r0
+ 823 02b8 2046     		mov	r0, r4
+ 824 02ba 40F20001 		movw	r1, #:lower16:IncrementSteeringKpPacket
+ 825 02be C0F20001 		movt	r1, #:upper16:IncrementSteeringKpPacket
+ 826 02c2 1A46     		mov	r2, r3
+ 827 02c4 FFF7FEFF 		bl	memcmp
+ 828 02c8 0346     		mov	r3, r0
+ 829 02ca FB60     		str	r3, [r7, #12]
+ 219:../Sources/Communication.c ****   if(compare == 0)
+ 830              		.loc 1 219 0
+ 831 02cc FB68     		ldr	r3, [r7, #12]
+ 832 02ce 002B     		cmp	r3, #0
+ 833 02d0 05D1     		bne	.L25
+ 220:../Sources/Communication.c ****   {
+ 221:../Sources/Communication.c ****     IncrementSteeringKpCommandHandler(IncrementSteeringKpPacket);
+ 834              		.loc 1 221 0
+ 835 02d2 40F20000 		movw	r0, #:lower16:IncrementSteeringKpPacket
+ 836 02d6 C0F20000 		movt	r0, #:upper16:IncrementSteeringKpPacket
+ 837 02da FFF7FEFF 		bl	IncrementSteeringKpCommandHandler
+ 838              	.L25:
+ 222:../Sources/Communication.c ****   }
+ 223:../Sources/Communication.c ****   
+ 224:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, IncrementSteeringKiPacket, GetMatchCharNum(
+ 839              		.loc 1 224 0
+ 840 02de 7B68     		ldr	r3, [r7, #4]
+ 841 02e0 03F58064 		add	r4, r3, #1024
+ 842 02e4 04F10404 		add	r4, r4, #4
+ 843 02e8 40F20000 		movw	r0, #:lower16:IncrementSteeringKiPacket
+ 844 02ec C0F20000 		movt	r0, #:upper16:IncrementSteeringKiPacket
+ 845 02f0 FFF7FEFF 		bl	GetMatchCharNum
+ 846 02f4 0346     		mov	r3, r0
+ 847 02f6 2046     		mov	r0, r4
+ 848 02f8 40F20001 		movw	r1, #:lower16:IncrementSteeringKiPacket
+ 849 02fc C0F20001 		movt	r1, #:upper16:IncrementSteeringKiPacket
+ 850 0300 1A46     		mov	r2, r3
+ 851 0302 FFF7FEFF 		bl	memcmp
+ 852 0306 0346     		mov	r3, r0
+ 853 0308 FB60     		str	r3, [r7, #12]
+ 225:../Sources/Communication.c ****   if(compare == 0)
+ 854              		.loc 1 225 0
+ 855 030a FB68     		ldr	r3, [r7, #12]
+ 856 030c 002B     		cmp	r3, #0
+ 857 030e 05D1     		bne	.L26
+ 226:../Sources/Communication.c ****   {
+ 227:../Sources/Communication.c ****     IncrementSteeringKiCommandHandler(IncrementSteeringKiPacket);
+ 858              		.loc 1 227 0
+ 859 0310 40F20000 		movw	r0, #:lower16:IncrementSteeringKiPacket
+ 860 0314 C0F20000 		movt	r0, #:upper16:IncrementSteeringKiPacket
+ 861 0318 FFF7FEFF 		bl	IncrementSteeringKiCommandHandler
+ 862              	.L26:
+ 228:../Sources/Communication.c ****   }
+ 229:../Sources/Communication.c **** 
+ 230:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, IncrementSteeringKdPacket, GetMatchCharNum(
+ 863              		.loc 1 230 0
+ 864 031c 7B68     		ldr	r3, [r7, #4]
+ 865 031e 03F58064 		add	r4, r3, #1024
+ 866 0322 04F10404 		add	r4, r4, #4
+ 867 0326 40F20000 		movw	r0, #:lower16:IncrementSteeringKdPacket
+ 868 032a C0F20000 		movt	r0, #:upper16:IncrementSteeringKdPacket
+ 869 032e FFF7FEFF 		bl	GetMatchCharNum
+ 870 0332 0346     		mov	r3, r0
+ 871 0334 2046     		mov	r0, r4
+ 872 0336 40F20001 		movw	r1, #:lower16:IncrementSteeringKdPacket
+ 873 033a C0F20001 		movt	r1, #:upper16:IncrementSteeringKdPacket
+ 874 033e 1A46     		mov	r2, r3
+ 875 0340 FFF7FEFF 		bl	memcmp
+ 876 0344 0346     		mov	r3, r0
+ 877 0346 FB60     		str	r3, [r7, #12]
+ 231:../Sources/Communication.c ****   if(compare == 0)
+ 878              		.loc 1 231 0
+ 879 0348 FB68     		ldr	r3, [r7, #12]
+ 880 034a 002B     		cmp	r3, #0
+ 881 034c 05D1     		bne	.L27
+ 232:../Sources/Communication.c ****   {
+ 233:../Sources/Communication.c ****     IncrementSteeringKdCommandHandler(IncrementSteeringKdPacket);
+ 882              		.loc 1 233 0
+ 883 034e 40F20000 		movw	r0, #:lower16:IncrementSteeringKdPacket
+ 884 0352 C0F20000 		movt	r0, #:upper16:IncrementSteeringKdPacket
+ 885 0356 FFF7FEFF 		bl	IncrementSteeringKdCommandHandler
+ 886              	.L27:
+ 234:../Sources/Communication.c ****   }
+ 235:../Sources/Communication.c ****   
+ 236:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, IncrementSteeringWindupPacket, GetMatchChar
+ 887              		.loc 1 236 0
+ 888 035a 7B68     		ldr	r3, [r7, #4]
+ 889 035c 03F58064 		add	r4, r3, #1024
+ 890 0360 04F10404 		add	r4, r4, #4
+ 891 0364 40F20000 		movw	r0, #:lower16:IncrementSteeringWindupPacket
+ 892 0368 C0F20000 		movt	r0, #:upper16:IncrementSteeringWindupPacket
+ 893 036c FFF7FEFF 		bl	GetMatchCharNum
+ 894 0370 0346     		mov	r3, r0
+ 895 0372 2046     		mov	r0, r4
+ 896 0374 40F20001 		movw	r1, #:lower16:IncrementSteeringWindupPacket
+ 897 0378 C0F20001 		movt	r1, #:upper16:IncrementSteeringWindupPacket
+ 898 037c 1A46     		mov	r2, r3
+ 899 037e FFF7FEFF 		bl	memcmp
+ 900 0382 0346     		mov	r3, r0
+ 901 0384 FB60     		str	r3, [r7, #12]
+ 237:../Sources/Communication.c ****   if(compare == 0)
+ 902              		.loc 1 237 0
+ 903 0386 FB68     		ldr	r3, [r7, #12]
+ 904 0388 002B     		cmp	r3, #0
+ 905 038a 05D1     		bne	.L28
+ 238:../Sources/Communication.c ****   {
+ 239:../Sources/Communication.c ****     IncrementSteeringWindupCommandHandler(IncrementSteeringWindupPacket);
+ 906              		.loc 1 239 0
+ 907 038c 40F20000 		movw	r0, #:lower16:IncrementSteeringWindupPacket
+ 908 0390 C0F20000 		movt	r0, #:upper16:IncrementSteeringWindupPacket
+ 909 0394 FFF7FEFF 		bl	IncrementSteeringWindupCommandHandler
+ 910              	.L28:
+ 240:../Sources/Communication.c ****   }
+ 241:../Sources/Communication.c ****   
+ 242:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, DecrementSteeringKpPacket, GetMatchCharNum(
+ 911              		.loc 1 242 0
+ 912 0398 7B68     		ldr	r3, [r7, #4]
+ 913 039a 03F58064 		add	r4, r3, #1024
+ 914 039e 04F10404 		add	r4, r4, #4
+ 915 03a2 40F20000 		movw	r0, #:lower16:DecrementSteeringKpPacket
+ 916 03a6 C0F20000 		movt	r0, #:upper16:DecrementSteeringKpPacket
+ 917 03aa FFF7FEFF 		bl	GetMatchCharNum
+ 918 03ae 0346     		mov	r3, r0
+ 919 03b0 2046     		mov	r0, r4
+ 920 03b2 40F20001 		movw	r1, #:lower16:DecrementSteeringKpPacket
+ 921 03b6 C0F20001 		movt	r1, #:upper16:DecrementSteeringKpPacket
+ 922 03ba 1A46     		mov	r2, r3
+ 923 03bc FFF7FEFF 		bl	memcmp
+ 924 03c0 0346     		mov	r3, r0
+ 925 03c2 FB60     		str	r3, [r7, #12]
+ 243:../Sources/Communication.c ****   if(compare == 0)
+ 926              		.loc 1 243 0
+ 927 03c4 FB68     		ldr	r3, [r7, #12]
+ 928 03c6 002B     		cmp	r3, #0
+ 929 03c8 05D1     		bne	.L29
+ 244:../Sources/Communication.c ****   {
+ 245:../Sources/Communication.c ****     DecrementSteeringKpCommandHandler(DecrementSteeringKpPacket);
+ 930              		.loc 1 245 0
+ 931 03ca 40F20000 		movw	r0, #:lower16:DecrementSteeringKpPacket
+ 932 03ce C0F20000 		movt	r0, #:upper16:DecrementSteeringKpPacket
+ 933 03d2 FFF7FEFF 		bl	DecrementSteeringKpCommandHandler
+ 934              	.L29:
+ 246:../Sources/Communication.c ****   }
+ 247:../Sources/Communication.c ****   
+ 248:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, DecrementSteeringKiPacket, GetMatchCharNum(
+ 935              		.loc 1 248 0
+ 936 03d6 7B68     		ldr	r3, [r7, #4]
+ 937 03d8 03F58064 		add	r4, r3, #1024
+ 938 03dc 04F10404 		add	r4, r4, #4
+ 939 03e0 40F20000 		movw	r0, #:lower16:DecrementSteeringKiPacket
+ 940 03e4 C0F20000 		movt	r0, #:upper16:DecrementSteeringKiPacket
+ 941 03e8 FFF7FEFF 		bl	GetMatchCharNum
+ 942 03ec 0346     		mov	r3, r0
+ 943 03ee 2046     		mov	r0, r4
+ 944 03f0 40F20001 		movw	r1, #:lower16:DecrementSteeringKiPacket
+ 945 03f4 C0F20001 		movt	r1, #:upper16:DecrementSteeringKiPacket
+ 946 03f8 1A46     		mov	r2, r3
+ 947 03fa FFF7FEFF 		bl	memcmp
+ 948 03fe 0346     		mov	r3, r0
+ 949 0400 FB60     		str	r3, [r7, #12]
+ 249:../Sources/Communication.c ****   if(compare == 0)
+ 950              		.loc 1 249 0
+ 951 0402 FB68     		ldr	r3, [r7, #12]
+ 952 0404 002B     		cmp	r3, #0
+ 953 0406 05D1     		bne	.L30
+ 250:../Sources/Communication.c ****   {
+ 251:../Sources/Communication.c ****     DecrementSteeringKiCommandHandler(DecrementSteeringKiPacket);
+ 954              		.loc 1 251 0
+ 955 0408 40F20000 		movw	r0, #:lower16:DecrementSteeringKiPacket
+ 956 040c C0F20000 		movt	r0, #:upper16:DecrementSteeringKiPacket
+ 957 0410 FFF7FEFF 		bl	DecrementSteeringKiCommandHandler
+ 958              	.L30:
+ 252:../Sources/Communication.c ****   }
+ 253:../Sources/Communication.c **** 
+ 254:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, DecrementSteeringKdPacket, GetMatchCharNum(
+ 959              		.loc 1 254 0
+ 960 0414 7B68     		ldr	r3, [r7, #4]
+ 961 0416 03F58064 		add	r4, r3, #1024
+ 962 041a 04F10404 		add	r4, r4, #4
+ 963 041e 40F20000 		movw	r0, #:lower16:DecrementSteeringKdPacket
+ 964 0422 C0F20000 		movt	r0, #:upper16:DecrementSteeringKdPacket
+ 965 0426 FFF7FEFF 		bl	GetMatchCharNum
+ 966 042a 0346     		mov	r3, r0
+ 967 042c 2046     		mov	r0, r4
+ 968 042e 40F20001 		movw	r1, #:lower16:DecrementSteeringKdPacket
+ 969 0432 C0F20001 		movt	r1, #:upper16:DecrementSteeringKdPacket
+ 970 0436 1A46     		mov	r2, r3
+ 971 0438 FFF7FEFF 		bl	memcmp
+ 972 043c 0346     		mov	r3, r0
+ 973 043e FB60     		str	r3, [r7, #12]
+ 255:../Sources/Communication.c ****   if(compare == 0)
+ 974              		.loc 1 255 0
+ 975 0440 FB68     		ldr	r3, [r7, #12]
+ 976 0442 002B     		cmp	r3, #0
+ 977 0444 05D1     		bne	.L31
+ 256:../Sources/Communication.c ****   {
+ 257:../Sources/Communication.c ****     DecrementSteeringKdCommandHandler(DecrementSteeringKdPacket);
+ 978              		.loc 1 257 0
+ 979 0446 40F20000 		movw	r0, #:lower16:DecrementSteeringKdPacket
+ 980 044a C0F20000 		movt	r0, #:upper16:DecrementSteeringKdPacket
+ 981 044e FFF7FEFF 		bl	DecrementSteeringKdCommandHandler
+ 982              	.L31:
+ 258:../Sources/Communication.c ****   }
+ 259:../Sources/Communication.c ****   
+ 260:../Sources/Communication.c ****   compare = memcmp(CommunicationStruct->ReceivedPacket, DecrementSteeringWindupPacket, GetMatchChar
+ 983              		.loc 1 260 0
+ 984 0452 7B68     		ldr	r3, [r7, #4]
+ 985 0454 03F58064 		add	r4, r3, #1024
+ 986 0458 04F10404 		add	r4, r4, #4
+ 987 045c 40F20000 		movw	r0, #:lower16:DecrementSteeringWindupPacket
+ 988 0460 C0F20000 		movt	r0, #:upper16:DecrementSteeringWindupPacket
+ 989 0464 FFF7FEFF 		bl	GetMatchCharNum
+ 990 0468 0346     		mov	r3, r0
+ 991 046a 2046     		mov	r0, r4
+ 992 046c 40F20001 		movw	r1, #:lower16:DecrementSteeringWindupPacket
+ 993 0470 C0F20001 		movt	r1, #:upper16:DecrementSteeringWindupPacket
+ 994 0474 1A46     		mov	r2, r3
+ 995 0476 FFF7FEFF 		bl	memcmp
+ 996 047a 0346     		mov	r3, r0
+ 997 047c FB60     		str	r3, [r7, #12]
+ 261:../Sources/Communication.c ****   if(compare == 0)
+ 998              		.loc 1 261 0
+ 999 047e FB68     		ldr	r3, [r7, #12]
+ 1000 0480 002B     		cmp	r3, #0
+ 1001 0482 05D1     		bne	.L12
+ 262:../Sources/Communication.c ****   {
+ 263:../Sources/Communication.c ****     DecrementSteeringWindupCommandHandler(DecrementSteeringWindupPacket);
+ 1002              		.loc 1 263 0
+ 1003 0484 40F20000 		movw	r0, #:lower16:DecrementSteeringWindupPacket
+ 1004 0488 C0F20000 		movt	r0, #:upper16:DecrementSteeringWindupPacket
+ 1005 048c FFF7FEFF 		bl	DecrementSteeringWindupCommandHandler
+ 1006              	.L12:
+ 264:../Sources/Communication.c ****   }
+ 265:../Sources/Communication.c ****   
+ 266:../Sources/Communication.c ****   
+ 267:../Sources/Communication.c **** }
+ 1007              		.loc 1 267 0
+ 1008 0490 07F11407 		add	r7, r7, #20
+ 1009 0494 BD46     		mov	sp, r7
+ 1010 0496 90BD     		pop	{r4, r7, pc}
+ 1011              		.cfi_endproc
+ 1012              	.LFE3:
+ 1014              		.section	.rodata
+ 1015              		.align	2
+ 1016              	.LC0:
+ 1017 0000 4B703A20 		.ascii	"Kp: %ld  Ki: %ld  Kd: %ld  Aw: %ld\012\000"
+ 1017      256C6420 
+ 1017      204B693A 
+ 1017      20256C64 
+ 1017      20204B64 
+ 1018              		.section	.text.GetSteeringControllerConstantsCommandHandler,"ax",%progbits
+ 1019              		.align	2
+ 1020              		.global	GetSteeringControllerConstantsCommandHandler
+ 1021              		.thumb
+ 1022              		.thumb_func
+ 1024              	GetSteeringControllerConstantsCommandHandler:
+ 1025              	.LFB4:
+ 268:../Sources/Communication.c **** 
+ 269:../Sources/Communication.c **** 
+ 270:../Sources/Communication.c **** // Steering
+ 271:../Sources/Communication.c **** void GetSteeringControllerConstantsCommandHandler(uint8_t* PacketPattern)
+ 272:../Sources/Communication.c **** {
+ 1026              		.loc 1 272 0
+ 1027              		.cfi_startproc
+ 1028              		@ args = 0, pretend = 0, frame = 8
+ 1029              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1030 0000 B0B5     		push	{r4, r5, r7, lr}
+ 1031              	.LCFI12:
+ 1032              		.cfi_def_cfa_offset 16
+ 1033              		.cfi_offset 14, -4
+ 1034              		.cfi_offset 7, -8
+ 1035              		.cfi_offset 5, -12
+ 1036              		.cfi_offset 4, -16
+ 1037 0002 84B0     		sub	sp, sp, #16
+ 1038              	.LCFI13:
+ 1039              		.cfi_def_cfa_offset 32
+ 1040 0004 02AF     		add	r7, sp, #8
+ 1041              	.LCFI14:
+ 1042              		.cfi_def_cfa 7, 24
+ 1043 0006 7860     		str	r0, [r7, #4]
+ 273:../Sources/Communication.c ****   sprintf(&Communication.CommunicationString[0], "Kp: %ld  Ki: %ld  Kd: %ld  Aw: %ld\n",Steering.Kp
+ 1044              		.loc 1 273 0
+ 1045 0008 40F20003 		movw	r3, #:lower16:.LC0
+ 1046 000c C0F20003 		movt	r3, #:upper16:.LC0
+ 1047 0010 40F20002 		movw	r2, #:lower16:Steering
+ 1048 0014 C0F20002 		movt	r2, #:upper16:Steering
+ 1049 0018 956A     		ldr	r5, [r2, #40]
+ 1050 001a 40F20002 		movw	r2, #:lower16:Steering
+ 1051 001e C0F20002 		movt	r2, #:upper16:Steering
+ 1052 0022 D46A     		ldr	r4, [r2, #44]
+ 1053 0024 40F20002 		movw	r2, #:lower16:Steering
+ 1054 0028 C0F20002 		movt	r2, #:upper16:Steering
+ 1055 002c 116B     		ldr	r1, [r2, #48]
+ 1056 002e 40F20002 		movw	r2, #:lower16:Steering
+ 1057 0032 C0F20002 		movt	r2, #:upper16:Steering
+ 1058 0036 126A     		ldr	r2, [r2, #32]
+ 1059 0038 0091     		str	r1, [sp, #0]
+ 1060 003a 0192     		str	r2, [sp, #4]
+ 1061 003c 0F48     		ldr	r0, .L34
+ 1062 003e 1946     		mov	r1, r3
+ 1063 0040 2A46     		mov	r2, r5
+ 1064 0042 2346     		mov	r3, r4
+ 1065 0044 FFF7FEFF 		bl	sprintf
+ 274:../Sources/Communication.c ****   Communication.Error = AS1_SendBlock(AS1_DeviceData, &Communication.CommunicationString[0], strlen
+ 1066              		.loc 1 274 0
+ 1067 0048 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 1068 004c C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 1069 0050 5C6A     		ldr	r4, [r3, #36]
+ 1070 0052 0A48     		ldr	r0, .L34
+ 1071 0054 FFF7FEFF 		bl	strlen
+ 1072 0058 0346     		mov	r3, r0
+ 1073 005a 9BB2     		uxth	r3, r3
+ 1074 005c 2046     		mov	r0, r4
+ 1075 005e 0749     		ldr	r1, .L34
+ 1076 0060 1A46     		mov	r2, r3
+ 1077 0062 FFF7FEFF 		bl	AS1_SendBlock
+ 1078 0066 0346     		mov	r3, r0
+ 1079 0068 1A46     		mov	r2, r3
+ 1080 006a 40F20003 		movw	r3, #:lower16:Communication
+ 1081 006e C0F20003 		movt	r3, #:upper16:Communication
+ 1082 0072 1A80     		strh	r2, [r3, #0]	@ movhi
+ 275:../Sources/Communication.c **** }
+ 1083              		.loc 1 275 0
+ 1084 0074 07F10807 		add	r7, r7, #8
+ 1085 0078 BD46     		mov	sp, r7
+ 1086 007a B0BD     		pop	{r4, r5, r7, pc}
+ 1087              	.L35:
+ 1088              		.align	2
+ 1089              	.L34:
+ 1090 007c 04000000 		.word	Communication+4
+ 1091              		.cfi_endproc
+ 1092              	.LFE4:
+ 1094              		.section	.text.IncrementSteeringKpCommandHandler,"ax",%progbits
+ 1095              		.align	2
+ 1096              		.global	IncrementSteeringKpCommandHandler
+ 1097              		.thumb
+ 1098              		.thumb_func
+ 1100              	IncrementSteeringKpCommandHandler:
+ 1101              	.LFB5:
+ 276:../Sources/Communication.c **** 
+ 277:../Sources/Communication.c **** void IncrementSteeringKpCommandHandler(uint8_t* PacketPattern)
+ 278:../Sources/Communication.c **** {
+ 1102              		.loc 1 278 0
+ 1103              		.cfi_startproc
+ 1104              		@ args = 0, pretend = 0, frame = 8
+ 1105              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1106              		@ link register save eliminated.
+ 1107 0000 80B4     		push	{r7}
+ 1108              	.LCFI15:
+ 1109              		.cfi_def_cfa_offset 4
+ 1110              		.cfi_offset 7, -4
+ 1111 0002 83B0     		sub	sp, sp, #12
+ 1112              	.LCFI16:
+ 1113              		.cfi_def_cfa_offset 16
+ 1114 0004 00AF     		add	r7, sp, #0
+ 1115              	.LCFI17:
+ 1116              		.cfi_def_cfa_register 7
+ 1117 0006 7860     		str	r0, [r7, #4]
+ 279:../Sources/Communication.c ****   Steering.Kp++;
+ 1118              		.loc 1 279 0
+ 1119 0008 40F20003 		movw	r3, #:lower16:Steering
+ 1120 000c C0F20003 		movt	r3, #:upper16:Steering
+ 1121 0010 9B6A     		ldr	r3, [r3, #40]
+ 1122 0012 03F10102 		add	r2, r3, #1
+ 1123 0016 40F20003 		movw	r3, #:lower16:Steering
+ 1124 001a C0F20003 		movt	r3, #:upper16:Steering
+ 1125 001e 9A62     		str	r2, [r3, #40]
+ 280:../Sources/Communication.c **** }
+ 1126              		.loc 1 280 0
+ 1127 0020 07F10C07 		add	r7, r7, #12
+ 1128 0024 BD46     		mov	sp, r7
+ 1129 0026 80BC     		pop	{r7}
+ 1130 0028 7047     		bx	lr
+ 1131              		.cfi_endproc
+ 1132              	.LFE5:
+ 1134 002a 00BF     		.section	.text.IncrementSteeringKiCommandHandler,"ax",%progbits
+ 1135              		.align	2
+ 1136              		.global	IncrementSteeringKiCommandHandler
+ 1137              		.thumb
+ 1138              		.thumb_func
+ 1140              	IncrementSteeringKiCommandHandler:
+ 1141              	.LFB6:
+ 281:../Sources/Communication.c **** 
+ 282:../Sources/Communication.c **** void IncrementSteeringKiCommandHandler(uint8_t* PacketPattern)
+ 283:../Sources/Communication.c **** {
+ 1142              		.loc 1 283 0
+ 1143              		.cfi_startproc
+ 1144              		@ args = 0, pretend = 0, frame = 8
+ 1145              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1146              		@ link register save eliminated.
+ 1147 0000 80B4     		push	{r7}
+ 1148              	.LCFI18:
+ 1149              		.cfi_def_cfa_offset 4
+ 1150              		.cfi_offset 7, -4
+ 1151 0002 83B0     		sub	sp, sp, #12
+ 1152              	.LCFI19:
+ 1153              		.cfi_def_cfa_offset 16
+ 1154 0004 00AF     		add	r7, sp, #0
+ 1155              	.LCFI20:
+ 1156              		.cfi_def_cfa_register 7
+ 1157 0006 7860     		str	r0, [r7, #4]
+ 284:../Sources/Communication.c ****   Steering.Ki++;
+ 1158              		.loc 1 284 0
+ 1159 0008 40F20003 		movw	r3, #:lower16:Steering
+ 1160 000c C0F20003 		movt	r3, #:upper16:Steering
+ 1161 0010 DB6A     		ldr	r3, [r3, #44]
+ 1162 0012 03F10102 		add	r2, r3, #1
+ 1163 0016 40F20003 		movw	r3, #:lower16:Steering
+ 1164 001a C0F20003 		movt	r3, #:upper16:Steering
+ 1165 001e DA62     		str	r2, [r3, #44]
+ 285:../Sources/Communication.c **** }
+ 1166              		.loc 1 285 0
+ 1167 0020 07F10C07 		add	r7, r7, #12
+ 1168 0024 BD46     		mov	sp, r7
+ 1169 0026 80BC     		pop	{r7}
+ 1170 0028 7047     		bx	lr
+ 1171              		.cfi_endproc
+ 1172              	.LFE6:
+ 1174 002a 00BF     		.section	.text.IncrementSteeringKdCommandHandler,"ax",%progbits
+ 1175              		.align	2
+ 1176              		.global	IncrementSteeringKdCommandHandler
+ 1177              		.thumb
+ 1178              		.thumb_func
+ 1180              	IncrementSteeringKdCommandHandler:
+ 1181              	.LFB7:
+ 286:../Sources/Communication.c **** 
+ 287:../Sources/Communication.c **** void IncrementSteeringKdCommandHandler(uint8_t* PacketPattern)
+ 288:../Sources/Communication.c **** {
+ 1182              		.loc 1 288 0
+ 1183              		.cfi_startproc
+ 1184              		@ args = 0, pretend = 0, frame = 8
+ 1185              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1186              		@ link register save eliminated.
+ 1187 0000 80B4     		push	{r7}
+ 1188              	.LCFI21:
+ 1189              		.cfi_def_cfa_offset 4
+ 1190              		.cfi_offset 7, -4
+ 1191 0002 83B0     		sub	sp, sp, #12
+ 1192              	.LCFI22:
+ 1193              		.cfi_def_cfa_offset 16
+ 1194 0004 00AF     		add	r7, sp, #0
+ 1195              	.LCFI23:
+ 1196              		.cfi_def_cfa_register 7
+ 1197 0006 7860     		str	r0, [r7, #4]
+ 289:../Sources/Communication.c ****   Steering.Kd++;
+ 1198              		.loc 1 289 0
+ 1199 0008 40F20003 		movw	r3, #:lower16:Steering
+ 1200 000c C0F20003 		movt	r3, #:upper16:Steering
+ 1201 0010 1B6B     		ldr	r3, [r3, #48]
+ 1202 0012 03F10102 		add	r2, r3, #1
+ 1203 0016 40F20003 		movw	r3, #:lower16:Steering
+ 1204 001a C0F20003 		movt	r3, #:upper16:Steering
+ 1205 001e 1A63     		str	r2, [r3, #48]
+ 290:../Sources/Communication.c **** }
+ 1206              		.loc 1 290 0
+ 1207 0020 07F10C07 		add	r7, r7, #12
+ 1208 0024 BD46     		mov	sp, r7
+ 1209 0026 80BC     		pop	{r7}
+ 1210 0028 7047     		bx	lr
+ 1211              		.cfi_endproc
+ 1212              	.LFE7:
+ 1214 002a 00BF     		.section	.text.IncrementSteeringWindupCommandHandler,"ax",%progbits
+ 1215              		.align	2
+ 1216              		.global	IncrementSteeringWindupCommandHandler
+ 1217              		.thumb
+ 1218              		.thumb_func
+ 1220              	IncrementSteeringWindupCommandHandler:
+ 1221              	.LFB8:
+ 291:../Sources/Communication.c **** 
+ 292:../Sources/Communication.c **** void IncrementSteeringWindupCommandHandler(uint8_t* PacketPattern)
+ 293:../Sources/Communication.c **** {
+ 1222              		.loc 1 293 0
+ 1223              		.cfi_startproc
+ 1224              		@ args = 0, pretend = 0, frame = 8
+ 1225              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1226              		@ link register save eliminated.
+ 1227 0000 80B4     		push	{r7}
+ 1228              	.LCFI24:
+ 1229              		.cfi_def_cfa_offset 4
+ 1230              		.cfi_offset 7, -4
+ 1231 0002 83B0     		sub	sp, sp, #12
+ 1232              	.LCFI25:
+ 1233              		.cfi_def_cfa_offset 16
+ 1234 0004 00AF     		add	r7, sp, #0
+ 1235              	.LCFI26:
+ 1236              		.cfi_def_cfa_register 7
+ 1237 0006 7860     		str	r0, [r7, #4]
+ 294:../Sources/Communication.c ****   Steering.AntiWindUp++;
+ 1238              		.loc 1 294 0
+ 1239 0008 40F20003 		movw	r3, #:lower16:Steering
+ 1240 000c C0F20003 		movt	r3, #:upper16:Steering
+ 1241 0010 1B6A     		ldr	r3, [r3, #32]
+ 1242 0012 03F10102 		add	r2, r3, #1
+ 1243 0016 40F20003 		movw	r3, #:lower16:Steering
+ 1244 001a C0F20003 		movt	r3, #:upper16:Steering
+ 1245 001e 1A62     		str	r2, [r3, #32]
+ 295:../Sources/Communication.c **** }
+ 1246              		.loc 1 295 0
+ 1247 0020 07F10C07 		add	r7, r7, #12
+ 1248 0024 BD46     		mov	sp, r7
+ 1249 0026 80BC     		pop	{r7}
+ 1250 0028 7047     		bx	lr
+ 1251              		.cfi_endproc
+ 1252              	.LFE8:
+ 1254 002a 00BF     		.section	.text.DecrementSteeringKpCommandHandler,"ax",%progbits
+ 1255              		.align	2
+ 1256              		.global	DecrementSteeringKpCommandHandler
+ 1257              		.thumb
+ 1258              		.thumb_func
+ 1260              	DecrementSteeringKpCommandHandler:
+ 1261              	.LFB9:
+ 296:../Sources/Communication.c **** 
+ 297:../Sources/Communication.c **** void DecrementSteeringKpCommandHandler(uint8_t* PacketPattern)
+ 298:../Sources/Communication.c **** {
+ 1262              		.loc 1 298 0
+ 1263              		.cfi_startproc
+ 1264              		@ args = 0, pretend = 0, frame = 8
+ 1265              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1266              		@ link register save eliminated.
+ 1267 0000 80B4     		push	{r7}
+ 1268              	.LCFI27:
+ 1269              		.cfi_def_cfa_offset 4
+ 1270              		.cfi_offset 7, -4
+ 1271 0002 83B0     		sub	sp, sp, #12
+ 1272              	.LCFI28:
+ 1273              		.cfi_def_cfa_offset 16
+ 1274 0004 00AF     		add	r7, sp, #0
+ 1275              	.LCFI29:
+ 1276              		.cfi_def_cfa_register 7
+ 1277 0006 7860     		str	r0, [r7, #4]
+ 299:../Sources/Communication.c ****   Steering.Kp--;
+ 1278              		.loc 1 299 0
+ 1279 0008 40F20003 		movw	r3, #:lower16:Steering
+ 1280 000c C0F20003 		movt	r3, #:upper16:Steering
+ 1281 0010 9B6A     		ldr	r3, [r3, #40]
+ 1282 0012 03F1FF32 		add	r2, r3, #-1
+ 1283 0016 40F20003 		movw	r3, #:lower16:Steering
+ 1284 001a C0F20003 		movt	r3, #:upper16:Steering
+ 1285 001e 9A62     		str	r2, [r3, #40]
+ 300:../Sources/Communication.c **** }
+ 1286              		.loc 1 300 0
+ 1287 0020 07F10C07 		add	r7, r7, #12
+ 1288 0024 BD46     		mov	sp, r7
+ 1289 0026 80BC     		pop	{r7}
+ 1290 0028 7047     		bx	lr
+ 1291              		.cfi_endproc
+ 1292              	.LFE9:
+ 1294 002a 00BF     		.section	.text.DecrementSteeringKiCommandHandler,"ax",%progbits
+ 1295              		.align	2
+ 1296              		.global	DecrementSteeringKiCommandHandler
+ 1297              		.thumb
+ 1298              		.thumb_func
+ 1300              	DecrementSteeringKiCommandHandler:
+ 1301              	.LFB10:
+ 301:../Sources/Communication.c **** 
+ 302:../Sources/Communication.c **** void DecrementSteeringKiCommandHandler(uint8_t* PacketPattern)
+ 303:../Sources/Communication.c **** {
+ 1302              		.loc 1 303 0
+ 1303              		.cfi_startproc
+ 1304              		@ args = 0, pretend = 0, frame = 8
+ 1305              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1306              		@ link register save eliminated.
+ 1307 0000 80B4     		push	{r7}
+ 1308              	.LCFI30:
+ 1309              		.cfi_def_cfa_offset 4
+ 1310              		.cfi_offset 7, -4
+ 1311 0002 83B0     		sub	sp, sp, #12
+ 1312              	.LCFI31:
+ 1313              		.cfi_def_cfa_offset 16
+ 1314 0004 00AF     		add	r7, sp, #0
+ 1315              	.LCFI32:
+ 1316              		.cfi_def_cfa_register 7
+ 1317 0006 7860     		str	r0, [r7, #4]
+ 304:../Sources/Communication.c ****   Steering.Ki--;
+ 1318              		.loc 1 304 0
+ 1319 0008 40F20003 		movw	r3, #:lower16:Steering
+ 1320 000c C0F20003 		movt	r3, #:upper16:Steering
+ 1321 0010 DB6A     		ldr	r3, [r3, #44]
+ 1322 0012 03F1FF32 		add	r2, r3, #-1
+ 1323 0016 40F20003 		movw	r3, #:lower16:Steering
+ 1324 001a C0F20003 		movt	r3, #:upper16:Steering
+ 1325 001e DA62     		str	r2, [r3, #44]
+ 305:../Sources/Communication.c **** }
+ 1326              		.loc 1 305 0
+ 1327 0020 07F10C07 		add	r7, r7, #12
+ 1328 0024 BD46     		mov	sp, r7
+ 1329 0026 80BC     		pop	{r7}
+ 1330 0028 7047     		bx	lr
+ 1331              		.cfi_endproc
+ 1332              	.LFE10:
+ 1334 002a 00BF     		.section	.text.DecrementSteeringKdCommandHandler,"ax",%progbits
+ 1335              		.align	2
+ 1336              		.global	DecrementSteeringKdCommandHandler
+ 1337              		.thumb
+ 1338              		.thumb_func
+ 1340              	DecrementSteeringKdCommandHandler:
+ 1341              	.LFB11:
+ 306:../Sources/Communication.c **** 
+ 307:../Sources/Communication.c **** void DecrementSteeringKdCommandHandler(uint8_t* PacketPattern)
+ 308:../Sources/Communication.c **** {
+ 1342              		.loc 1 308 0
+ 1343              		.cfi_startproc
+ 1344              		@ args = 0, pretend = 0, frame = 8
+ 1345              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1346              		@ link register save eliminated.
+ 1347 0000 80B4     		push	{r7}
+ 1348              	.LCFI33:
+ 1349              		.cfi_def_cfa_offset 4
+ 1350              		.cfi_offset 7, -4
+ 1351 0002 83B0     		sub	sp, sp, #12
+ 1352              	.LCFI34:
+ 1353              		.cfi_def_cfa_offset 16
+ 1354 0004 00AF     		add	r7, sp, #0
+ 1355              	.LCFI35:
+ 1356              		.cfi_def_cfa_register 7
+ 1357 0006 7860     		str	r0, [r7, #4]
+ 309:../Sources/Communication.c ****   Steering.Kd--;
+ 1358              		.loc 1 309 0
+ 1359 0008 40F20003 		movw	r3, #:lower16:Steering
+ 1360 000c C0F20003 		movt	r3, #:upper16:Steering
+ 1361 0010 1B6B     		ldr	r3, [r3, #48]
+ 1362 0012 03F1FF32 		add	r2, r3, #-1
+ 1363 0016 40F20003 		movw	r3, #:lower16:Steering
+ 1364 001a C0F20003 		movt	r3, #:upper16:Steering
+ 1365 001e 1A63     		str	r2, [r3, #48]
+ 310:../Sources/Communication.c **** }
+ 1366              		.loc 1 310 0
+ 1367 0020 07F10C07 		add	r7, r7, #12
+ 1368 0024 BD46     		mov	sp, r7
+ 1369 0026 80BC     		pop	{r7}
+ 1370 0028 7047     		bx	lr
+ 1371              		.cfi_endproc
+ 1372              	.LFE11:
+ 1374 002a 00BF     		.section	.text.DecrementSteeringWindupCommandHandler,"ax",%progbits
+ 1375              		.align	2
+ 1376              		.global	DecrementSteeringWindupCommandHandler
+ 1377              		.thumb
+ 1378              		.thumb_func
+ 1380              	DecrementSteeringWindupCommandHandler:
+ 1381              	.LFB12:
+ 311:../Sources/Communication.c **** 
+ 312:../Sources/Communication.c **** void DecrementSteeringWindupCommandHandler(uint8_t* PacketPattern)
+ 313:../Sources/Communication.c **** {
+ 1382              		.loc 1 313 0
+ 1383              		.cfi_startproc
+ 1384              		@ args = 0, pretend = 0, frame = 8
+ 1385              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1386              		@ link register save eliminated.
+ 1387 0000 80B4     		push	{r7}
+ 1388              	.LCFI36:
+ 1389              		.cfi_def_cfa_offset 4
+ 1390              		.cfi_offset 7, -4
+ 1391 0002 83B0     		sub	sp, sp, #12
+ 1392              	.LCFI37:
+ 1393              		.cfi_def_cfa_offset 16
+ 1394 0004 00AF     		add	r7, sp, #0
+ 1395              	.LCFI38:
+ 1396              		.cfi_def_cfa_register 7
+ 1397 0006 7860     		str	r0, [r7, #4]
+ 314:../Sources/Communication.c ****   Steering.AntiWindUp--;
+ 1398              		.loc 1 314 0
+ 1399 0008 40F20003 		movw	r3, #:lower16:Steering
+ 1400 000c C0F20003 		movt	r3, #:upper16:Steering
+ 1401 0010 1B6A     		ldr	r3, [r3, #32]
+ 1402 0012 03F1FF32 		add	r2, r3, #-1
+ 1403 0016 40F20003 		movw	r3, #:lower16:Steering
+ 1404 001a C0F20003 		movt	r3, #:upper16:Steering
+ 1405 001e 1A62     		str	r2, [r3, #32]
+ 315:../Sources/Communication.c **** }
+ 1406              		.loc 1 315 0
+ 1407 0020 07F10C07 		add	r7, r7, #12
+ 1408 0024 BD46     		mov	sp, r7
+ 1409 0026 80BC     		pop	{r7}
+ 1410 0028 7047     		bx	lr
+ 1411              		.cfi_endproc
+ 1412              	.LFE12:
+ 1414 002a 00BF     		.section	.text.GetCameraDataPacketHandler,"ax",%progbits
+ 1415              		.align	2
+ 1416              		.global	GetCameraDataPacketHandler
+ 1417              		.thumb
+ 1418              		.thumb_func
+ 1420              	GetCameraDataPacketHandler:
+ 1421              	.LFB13:
+ 316:../Sources/Communication.c **** 
+ 317:../Sources/Communication.c **** 
+ 318:../Sources/Communication.c **** 
+ 319:../Sources/Communication.c **** //Camera
+ 320:../Sources/Communication.c **** 
+ 321:../Sources/Communication.c **** void GetCameraDataPacketHandler(void)
+ 322:../Sources/Communication.c **** {
+ 1422              		.loc 1 322 0
+ 1423              		.cfi_startproc
+ 1424              		@ args = 0, pretend = 0, frame = 0
+ 1425              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1426 0000 80B5     		push	{r7, lr}
+ 1427              	.LCFI39:
+ 1428              		.cfi_def_cfa_offset 8
+ 1429              		.cfi_offset 14, -4
+ 1430              		.cfi_offset 7, -8
+ 1431 0002 00AF     		add	r7, sp, #0
+ 1432              	.LCFI40:
+ 1433              		.cfi_def_cfa_register 7
+ 323:../Sources/Communication.c ****   Communication.Error = AS1_SendBlock(AS1_DeviceData, &Camera.readPointerToBuffer[0], PIXEL_NUM);
+ 1434              		.loc 1 323 0
+ 1435 0004 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 1436 0008 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 1437 000c 5A6A     		ldr	r2, [r3, #36]
+ 1438 000e 40F20003 		movw	r3, #:lower16:Camera
+ 1439 0012 C0F20003 		movt	r3, #:upper16:Camera
+ 1440 0016 D3F89433 		ldr	r3, [r3, #916]
+ 1441 001a 1046     		mov	r0, r2
+ 1442 001c 1946     		mov	r1, r3
+ 1443 001e 4FF08002 		mov	r2, #128
+ 1444 0022 FFF7FEFF 		bl	AS1_SendBlock
+ 1445 0026 0346     		mov	r3, r0
+ 1446 0028 1A46     		mov	r2, r3
+ 1447 002a 40F20003 		movw	r3, #:lower16:Communication
+ 1448 002e C0F20003 		movt	r3, #:upper16:Communication
+ 1449 0032 1A80     		strh	r2, [r3, #0]	@ movhi
+ 324:../Sources/Communication.c ****   if(Communication.Error) {
+ 325:../Sources/Communication.c **** 
+ 326:../Sources/Communication.c ****   }
+ 327:../Sources/Communication.c **** }
+ 1450              		.loc 1 327 0
+ 1451 0034 80BD     		pop	{r7, pc}
+ 1452              		.cfi_endproc
+ 1453              	.LFE13:
+ 1455 0036 00BF     		.section	.rodata
+ 1456              		.align	2
+ 1457              	.LC1:
+ 1458 0024 256C750A 		.ascii	"%lu\012\000"
+ 1458      00
+ 1459              		.section	.text.GetOdometryTotalDistancePacketHandler,"ax",%progbits
+ 1460              		.align	2
+ 1461              		.global	GetOdometryTotalDistancePacketHandler
+ 1462              		.thumb
+ 1463              		.thumb_func
+ 1465              	GetOdometryTotalDistancePacketHandler:
+ 1466              	.LFB14:
+ 328:../Sources/Communication.c **** 
+ 329:../Sources/Communication.c **** void GetOdometryTotalDistancePacketHandler(void)
+ 330:../Sources/Communication.c **** {
+ 1467              		.loc 1 330 0
+ 1468              		.cfi_startproc
+ 1469              		@ args = 0, pretend = 0, frame = 0
+ 1470              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1471 0000 98B5     		push	{r3, r4, r7, lr}
+ 1472              	.LCFI41:
+ 1473              		.cfi_def_cfa_offset 16
+ 1474              		.cfi_offset 14, -4
+ 1475              		.cfi_offset 7, -8
+ 1476              		.cfi_offset 4, -12
+ 1477              		.cfi_offset 3, -16
+ 1478 0002 00AF     		add	r7, sp, #0
+ 1479              	.LCFI42:
+ 1480              		.cfi_def_cfa_register 7
+ 331:../Sources/Communication.c ****   sprintf(&Communication.CommunicationString[0], "%lu\n", Odometry.TotalDistance);
+ 1481              		.loc 1 331 0
+ 1482 0004 40F20003 		movw	r3, #:lower16:.LC1
+ 1483 0008 C0F20003 		movt	r3, #:upper16:.LC1
+ 1484 000c 40F20002 		movw	r2, #:lower16:Odometry
+ 1485 0010 C0F20002 		movt	r2, #:upper16:Odometry
+ 1486 0014 1268     		ldr	r2, [r2, #0]
+ 1487 0016 0D48     		ldr	r0, .L46
+ 1488 0018 1946     		mov	r1, r3
+ 1489 001a FFF7FEFF 		bl	sprintf
+ 332:../Sources/Communication.c ****   Communication.Error = AS1_SendBlock(AS1_DeviceData, &Communication.CommunicationString[0], strlen
+ 1490              		.loc 1 332 0
+ 1491 001e 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 1492 0022 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 1493 0026 5C6A     		ldr	r4, [r3, #36]
+ 1494 0028 0848     		ldr	r0, .L46
+ 1495 002a FFF7FEFF 		bl	strlen
+ 1496 002e 0346     		mov	r3, r0
+ 1497 0030 9BB2     		uxth	r3, r3
+ 1498 0032 2046     		mov	r0, r4
+ 1499 0034 0549     		ldr	r1, .L46
+ 1500 0036 1A46     		mov	r2, r3
+ 1501 0038 FFF7FEFF 		bl	AS1_SendBlock
+ 1502 003c 0346     		mov	r3, r0
+ 1503 003e 1A46     		mov	r2, r3
+ 1504 0040 40F20003 		movw	r3, #:lower16:Communication
+ 1505 0044 C0F20003 		movt	r3, #:upper16:Communication
+ 1506 0048 1A80     		strh	r2, [r3, #0]	@ movhi
+ 333:../Sources/Communication.c **** }
+ 1507              		.loc 1 333 0
+ 1508 004a 98BD     		pop	{r3, r4, r7, pc}
+ 1509              	.L47:
+ 1510              		.align	2
+ 1511              	.L46:
+ 1512 004c 04000000 		.word	Communication+4
+ 1513              		.cfi_endproc
+ 1514              	.LFE14:
+ 1516              		.section	.rodata
+ 1517 0029 000000   		.align	2
+ 1518              	.LC2:
+ 1519 002c 25692025 		.ascii	"%i %i %i\012\000"
+ 1519      69202569 
+ 1519      0A00
+ 1520 0036 0000     		.section	.text.GetAccelerometerDataPacketHandler,"ax",%progbits
+ 1521              		.align	2
+ 1522              		.global	GetAccelerometerDataPacketHandler
+ 1523              		.thumb
+ 1524              		.thumb_func
+ 1526              	GetAccelerometerDataPacketHandler:
+ 1527              	.LFB15:
+ 334:../Sources/Communication.c **** 
+ 335:../Sources/Communication.c **** void GetAccelerometerDataPacketHandler(void)
+ 336:../Sources/Communication.c **** {
+ 1528              		.loc 1 336 0
+ 1529              		.cfi_startproc
+ 1530              		@ args = 0, pretend = 0, frame = 0
+ 1531              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1532 0000 B0B5     		push	{r4, r5, r7, lr}
+ 1533              	.LCFI43:
+ 1534              		.cfi_def_cfa_offset 16
+ 1535              		.cfi_offset 14, -4
+ 1536              		.cfi_offset 7, -8
+ 1537              		.cfi_offset 5, -12
+ 1538              		.cfi_offset 4, -16
+ 1539 0002 82B0     		sub	sp, sp, #8
+ 1540              	.LCFI44:
+ 1541              		.cfi_def_cfa_offset 24
+ 1542 0004 02AF     		add	r7, sp, #8
+ 1543              	.LCFI45:
+ 1544              		.cfi_def_cfa 7, 16
+ 337:../Sources/Communication.c ****   sprintf(&Communication.CommunicationString[0], "%i %i %i\n", Accelerometer.X, Accelerometer.Y, Ac
+ 1545              		.loc 1 337 0
+ 1546 0006 40F20003 		movw	r3, #:lower16:.LC2
+ 1547 000a C0F20003 		movt	r3, #:upper16:.LC2
+ 1548 000e 40F20002 		movw	r2, #:lower16:Accelerometer
+ 1549 0012 C0F20002 		movt	r2, #:upper16:Accelerometer
+ 1550 0016 1288     		ldrh	r2, [r2, #0]
+ 1551 0018 15B2     		sxth	r5, r2
+ 1552 001a 40F20002 		movw	r2, #:lower16:Accelerometer
+ 1553 001e C0F20002 		movt	r2, #:upper16:Accelerometer
+ 1554 0022 5288     		ldrh	r2, [r2, #2]
+ 1555 0024 14B2     		sxth	r4, r2
+ 1556 0026 40F20002 		movw	r2, #:lower16:Accelerometer
+ 1557 002a C0F20002 		movt	r2, #:upper16:Accelerometer
+ 1558 002e 9288     		ldrh	r2, [r2, #4]
+ 1559 0030 12B2     		sxth	r2, r2
+ 1560 0032 0092     		str	r2, [sp, #0]
+ 1561 0034 0E48     		ldr	r0, .L49
+ 1562 0036 1946     		mov	r1, r3
+ 1563 0038 2A46     		mov	r2, r5
+ 1564 003a 2346     		mov	r3, r4
+ 1565 003c FFF7FEFF 		bl	sprintf
+ 338:../Sources/Communication.c ****   Communication.Error = AS1_SendBlock(AS1_DeviceData, &Communication.CommunicationString[0], strlen
+ 1566              		.loc 1 338 0
+ 1567 0040 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 1568 0044 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 1569 0048 5C6A     		ldr	r4, [r3, #36]
+ 1570 004a 0948     		ldr	r0, .L49
+ 1571 004c FFF7FEFF 		bl	strlen
+ 1572 0050 0346     		mov	r3, r0
+ 1573 0052 9BB2     		uxth	r3, r3
+ 1574 0054 2046     		mov	r0, r4
+ 1575 0056 0649     		ldr	r1, .L49
+ 1576 0058 1A46     		mov	r2, r3
+ 1577 005a FFF7FEFF 		bl	AS1_SendBlock
+ 1578 005e 0346     		mov	r3, r0
+ 1579 0060 1A46     		mov	r2, r3
+ 1580 0062 40F20003 		movw	r3, #:lower16:Communication
+ 1581 0066 C0F20003 		movt	r3, #:upper16:Communication
+ 1582 006a 1A80     		strh	r2, [r3, #0]	@ movhi
+ 339:../Sources/Communication.c ****   if(Communication.Error) {
+ 340:../Sources/Communication.c **** 
+ 341:../Sources/Communication.c ****   }
+ 342:../Sources/Communication.c **** }
+ 1583              		.loc 1 342 0
+ 1584 006c BD46     		mov	sp, r7
+ 1585 006e B0BD     		pop	{r4, r5, r7, pc}
+ 1586              	.L50:
+ 1587              		.align	2
+ 1588              	.L49:
+ 1589 0070 04000000 		.word	Communication+4
+ 1590              		.cfi_endproc
+ 1591              	.LFE15:
+ 1593              		.section	.text.GetConvolutionResultPacketHandler,"ax",%progbits
+ 1594              		.align	2
+ 1595              		.global	GetConvolutionResultPacketHandler
+ 1596              		.thumb
+ 1597              		.thumb_func
+ 1599              	GetConvolutionResultPacketHandler:
+ 1600              	.LFB16:
+ 343:../Sources/Communication.c **** 
+ 344:../Sources/Communication.c **** void GetConvolutionResultPacketHandler(void)
+ 345:../Sources/Communication.c **** {
+ 1601              		.loc 1 345 0
+ 1602              		.cfi_startproc
+ 1603              		@ args = 0, pretend = 0, frame = 0
+ 1604              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1605 0000 80B5     		push	{r7, lr}
+ 1606              	.LCFI46:
+ 1607              		.cfi_def_cfa_offset 8
+ 1608              		.cfi_offset 14, -4
+ 1609              		.cfi_offset 7, -8
+ 1610 0002 00AF     		add	r7, sp, #0
+ 1611              	.LCFI47:
+ 1612              		.cfi_def_cfa_register 7
+ 346:../Sources/Communication.c ****   Communication.Error = AS1_SendBlock(AS1_DeviceData, &Camera.ConvolutionResult[0], PIXEL_NUM);
+ 1613              		.loc 1 346 0
+ 1614 0004 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 1615 0008 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 1616 000c 5B6A     		ldr	r3, [r3, #36]
+ 1617 000e 1846     		mov	r0, r3
+ 1618 0010 0649     		ldr	r1, .L52
+ 1619 0012 4FF08002 		mov	r2, #128
+ 1620 0016 FFF7FEFF 		bl	AS1_SendBlock
+ 1621 001a 0346     		mov	r3, r0
+ 1622 001c 1A46     		mov	r2, r3
+ 1623 001e 40F20003 		movw	r3, #:lower16:Communication
+ 1624 0022 C0F20003 		movt	r3, #:upper16:Communication
+ 1625 0026 1A80     		strh	r2, [r3, #0]	@ movhi
+ 347:../Sources/Communication.c ****   if(Communication.Error) {
+ 348:../Sources/Communication.c **** 
+ 349:../Sources/Communication.c ****   }  
+ 350:../Sources/Communication.c **** }
+ 1626              		.loc 1 350 0
+ 1627 0028 80BD     		pop	{r7, pc}
+ 1628              	.L53:
+ 1629 002a 00BF     		.align	2
+ 1630              	.L52:
+ 1631 002c 9C040000 		.word	Camera+1180
+ 1632              		.cfi_endproc
+ 1633              	.LFE16:
+ 1635              		.section	.text.SetBothMotorSpeedCommandHandler,"ax",%progbits
+ 1636              		.align	2
+ 1637              		.global	SetBothMotorSpeedCommandHandler
+ 1638              		.thumb
+ 1639              		.thumb_func
+ 1641              	SetBothMotorSpeedCommandHandler:
+ 1642              	.LFB17:
+ 351:../Sources/Communication.c **** 
+ 352:../Sources/Communication.c **** void SetBothMotorSpeedCommandHandler(uint8_t* PacketPattern)
+ 353:../Sources/Communication.c **** {
+ 1643              		.loc 1 353 0
+ 1644              		.cfi_startproc
+ 1645              		@ args = 0, pretend = 0, frame = 8
+ 1646              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1647              		@ link register save eliminated.
+ 1648 0000 80B4     		push	{r7}
+ 1649              	.LCFI48:
+ 1650              		.cfi_def_cfa_offset 4
+ 1651              		.cfi_offset 7, -4
+ 1652 0002 83B0     		sub	sp, sp, #12
+ 1653              	.LCFI49:
+ 1654              		.cfi_def_cfa_offset 16
+ 1655 0004 00AF     		add	r7, sp, #0
+ 1656              	.LCFI50:
+ 1657              		.cfi_def_cfa_register 7
+ 1658 0006 7860     		str	r0, [r7, #4]
+ 354:../Sources/Communication.c **** 
+ 355:../Sources/Communication.c **** }
+ 1659              		.loc 1 355 0
+ 1660 0008 07F10C07 		add	r7, r7, #12
+ 1661 000c BD46     		mov	sp, r7
+ 1662 000e 80BC     		pop	{r7}
+ 1663 0010 7047     		bx	lr
+ 1664              		.cfi_endproc
+ 1665              	.LFE17:
+ 1667 0012 00BF     		.section	.text.SetServoCenterCommandHandler,"ax",%progbits
+ 1668              		.align	2
+ 1669              		.global	SetServoCenterCommandHandler
+ 1670              		.thumb
+ 1671              		.thumb_func
+ 1673              	SetServoCenterCommandHandler:
+ 1674              	.LFB18:
+ 356:../Sources/Communication.c **** 
+ 357:../Sources/Communication.c **** void SetServoCenterCommandHandler(uint8_t* PacketPattern)
+ 358:../Sources/Communication.c **** {
+ 1675              		.loc 1 358 0
+ 1676              		.cfi_startproc
+ 1677              		@ args = 0, pretend = 0, frame = 8
+ 1678              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1679 0000 90B5     		push	{r4, r7, lr}
+ 1680              	.LCFI51:
+ 1681              		.cfi_def_cfa_offset 12
+ 1682              		.cfi_offset 14, -4
+ 1683              		.cfi_offset 7, -8
+ 1684              		.cfi_offset 4, -12
+ 1685 0002 83B0     		sub	sp, sp, #12
+ 1686              	.LCFI52:
+ 1687              		.cfi_def_cfa_offset 24
+ 1688 0004 00AF     		add	r7, sp, #0
+ 1689              	.LCFI53:
+ 1690              		.cfi_def_cfa_register 7
+ 1691 0006 7860     		str	r0, [r7, #4]
+ 359:../Sources/Communication.c ****   Steering.ServoCenter = GetNumberFromCommandBuffer(&Communication, GetMatchCharNum(PacketPattern),
+ 1692              		.loc 1 359 0
+ 1693 0008 7868     		ldr	r0, [r7, #4]
+ 1694 000a FFF7FEFF 		bl	GetMatchCharNum
+ 1695 000e 0346     		mov	r3, r0
+ 1696 0010 1C46     		mov	r4, r3
+ 1697 0012 7868     		ldr	r0, [r7, #4]
+ 1698 0014 FFF7FEFF 		bl	GetParameterLength
+ 1699 0018 0346     		mov	r3, r0
+ 1700 001a 40F20000 		movw	r0, #:lower16:Communication
+ 1701 001e C0F20000 		movt	r0, #:upper16:Communication
+ 1702 0022 2146     		mov	r1, r4
+ 1703 0024 1A46     		mov	r2, r3
+ 1704 0026 FFF7FEFF 		bl	GetNumberFromCommandBuffer
+ 1705 002a 0346     		mov	r3, r0
+ 1706 002c 1A46     		mov	r2, r3
+ 1707 002e 40F20003 		movw	r3, #:lower16:Steering
+ 1708 0032 C0F20003 		movt	r3, #:upper16:Steering
+ 1709 0036 1A80     		strh	r2, [r3, #0]	@ movhi
+ 360:../Sources/Communication.c **** }
+ 1710              		.loc 1 360 0
+ 1711 0038 07F10C07 		add	r7, r7, #12
+ 1712 003c BD46     		mov	sp, r7
+ 1713 003e 90BD     		pop	{r4, r7, pc}
+ 1714              		.cfi_endproc
+ 1715              	.LFE18:
+ 1717              		.section	.text.IncrementServoCenterCommandHandler,"ax",%progbits
+ 1718              		.align	2
+ 1719              		.global	IncrementServoCenterCommandHandler
+ 1720              		.thumb
+ 1721              		.thumb_func
+ 1723              	IncrementServoCenterCommandHandler:
+ 1724              	.LFB19:
+ 361:../Sources/Communication.c **** 
+ 362:../Sources/Communication.c **** void IncrementServoCenterCommandHandler(uint8_t* PacketPattern)
+ 363:../Sources/Communication.c **** {
+ 1725              		.loc 1 363 0
+ 1726              		.cfi_startproc
+ 1727              		@ args = 0, pretend = 0, frame = 8
+ 1728              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1729              		@ link register save eliminated.
+ 1730 0000 80B4     		push	{r7}
+ 1731              	.LCFI54:
+ 1732              		.cfi_def_cfa_offset 4
+ 1733              		.cfi_offset 7, -4
+ 1734 0002 83B0     		sub	sp, sp, #12
+ 1735              	.LCFI55:
+ 1736              		.cfi_def_cfa_offset 16
+ 1737 0004 00AF     		add	r7, sp, #0
+ 1738              	.LCFI56:
+ 1739              		.cfi_def_cfa_register 7
+ 1740 0006 7860     		str	r0, [r7, #4]
+ 364:../Sources/Communication.c ****   Steering.ServoCenter += SERVO_INCREMENT;  
+ 1741              		.loc 1 364 0
+ 1742 0008 40F20003 		movw	r3, #:lower16:Steering
+ 1743 000c C0F20003 		movt	r3, #:upper16:Steering
+ 1744 0010 1B88     		ldrh	r3, [r3, #0]
+ 1745 0012 03F10A03 		add	r3, r3, #10
+ 1746 0016 9AB2     		uxth	r2, r3
+ 1747 0018 40F20003 		movw	r3, #:lower16:Steering
+ 1748 001c C0F20003 		movt	r3, #:upper16:Steering
+ 1749 0020 1A80     		strh	r2, [r3, #0]	@ movhi
+ 365:../Sources/Communication.c **** }
+ 1750              		.loc 1 365 0
+ 1751 0022 07F10C07 		add	r7, r7, #12
+ 1752 0026 BD46     		mov	sp, r7
+ 1753 0028 80BC     		pop	{r7}
+ 1754 002a 7047     		bx	lr
+ 1755              		.cfi_endproc
+ 1756              	.LFE19:
+ 1758              		.section	.text.DecrementServoCenterCommandHandler,"ax",%progbits
+ 1759              		.align	2
+ 1760              		.global	DecrementServoCenterCommandHandler
+ 1761              		.thumb
+ 1762              		.thumb_func
+ 1764              	DecrementServoCenterCommandHandler:
+ 1765              	.LFB20:
+ 366:../Sources/Communication.c **** 
+ 367:../Sources/Communication.c **** void DecrementServoCenterCommandHandler(uint8_t* PacketPattern)
+ 368:../Sources/Communication.c **** {
+ 1766              		.loc 1 368 0
+ 1767              		.cfi_startproc
+ 1768              		@ args = 0, pretend = 0, frame = 8
+ 1769              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1770              		@ link register save eliminated.
+ 1771 0000 80B4     		push	{r7}
+ 1772              	.LCFI57:
+ 1773              		.cfi_def_cfa_offset 4
+ 1774              		.cfi_offset 7, -4
+ 1775 0002 83B0     		sub	sp, sp, #12
+ 1776              	.LCFI58:
+ 1777              		.cfi_def_cfa_offset 16
+ 1778 0004 00AF     		add	r7, sp, #0
+ 1779              	.LCFI59:
+ 1780              		.cfi_def_cfa_register 7
+ 1781 0006 7860     		str	r0, [r7, #4]
+ 369:../Sources/Communication.c ****   Steering.ServoCenter -= SERVO_INCREMENT;  
+ 1782              		.loc 1 369 0
+ 1783 0008 40F20003 		movw	r3, #:lower16:Steering
+ 1784 000c C0F20003 		movt	r3, #:upper16:Steering
+ 1785 0010 1B88     		ldrh	r3, [r3, #0]
+ 1786 0012 A3F10A03 		sub	r3, r3, #10
+ 1787 0016 9AB2     		uxth	r2, r3
+ 1788 0018 40F20003 		movw	r3, #:lower16:Steering
+ 1789 001c C0F20003 		movt	r3, #:upper16:Steering
+ 1790 0020 1A80     		strh	r2, [r3, #0]	@ movhi
+ 370:../Sources/Communication.c **** }
+ 1791              		.loc 1 370 0
+ 1792 0022 07F10C07 		add	r7, r7, #12
+ 1793 0026 BD46     		mov	sp, r7
+ 1794 0028 80BC     		pop	{r7}
+ 1795 002a 7047     		bx	lr
+ 1796              		.cfi_endproc
+ 1797              	.LFE20:
+ 1799              		.section	.text.SetControllerKpCommandHandler,"ax",%progbits
+ 1800              		.align	2
+ 1801              		.global	SetControllerKpCommandHandler
+ 1802              		.thumb
+ 1803              		.thumb_func
+ 1805              	SetControllerKpCommandHandler:
+ 1806              	.LFB21:
+ 371:../Sources/Communication.c **** 
+ 372:../Sources/Communication.c **** // Set Kp constant of controller
+ 373:../Sources/Communication.c **** void SetControllerKpCommandHandler(uint8_t* PacketPattern)
+ 374:../Sources/Communication.c **** {
+ 1807              		.loc 1 374 0
+ 1808              		.cfi_startproc
+ 1809              		@ args = 0, pretend = 0, frame = 8
+ 1810              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1811 0000 90B5     		push	{r4, r7, lr}
+ 1812              	.LCFI60:
+ 1813              		.cfi_def_cfa_offset 12
+ 1814              		.cfi_offset 14, -4
+ 1815              		.cfi_offset 7, -8
+ 1816              		.cfi_offset 4, -12
+ 1817 0002 83B0     		sub	sp, sp, #12
+ 1818              	.LCFI61:
+ 1819              		.cfi_def_cfa_offset 24
+ 1820 0004 00AF     		add	r7, sp, #0
+ 1821              	.LCFI62:
+ 1822              		.cfi_def_cfa_register 7
+ 1823 0006 7860     		str	r0, [r7, #4]
+ 375:../Sources/Communication.c ****   Controller.Kp = GetNumberFromCommandBuffer(&Communication, GetMatchCharNum(PacketPattern), GetPar
+ 1824              		.loc 1 375 0
+ 1825 0008 7868     		ldr	r0, [r7, #4]
+ 1826 000a FFF7FEFF 		bl	GetMatchCharNum
+ 1827 000e 0346     		mov	r3, r0
+ 1828 0010 1C46     		mov	r4, r3
+ 1829 0012 7868     		ldr	r0, [r7, #4]
+ 1830 0014 FFF7FEFF 		bl	GetParameterLength
+ 1831 0018 0346     		mov	r3, r0
+ 1832 001a 40F20000 		movw	r0, #:lower16:Communication
+ 1833 001e C0F20000 		movt	r0, #:upper16:Communication
+ 1834 0022 2146     		mov	r1, r4
+ 1835 0024 1A46     		mov	r2, r3
+ 1836 0026 FFF7FEFF 		bl	GetNumberFromCommandBuffer
+ 1837 002a 0346     		mov	r3, r0
+ 1838 002c 1A46     		mov	r2, r3
+ 1839 002e 40F20003 		movw	r3, #:lower16:Controller
+ 1840 0032 C0F20003 		movt	r3, #:upper16:Controller
+ 1841 0036 1A60     		str	r2, [r3, #0]
+ 376:../Sources/Communication.c **** }
+ 1842              		.loc 1 376 0
+ 1843 0038 07F10C07 		add	r7, r7, #12
+ 1844 003c BD46     		mov	sp, r7
+ 1845 003e 90BD     		pop	{r4, r7, pc}
+ 1846              		.cfi_endproc
+ 1847              	.LFE21:
+ 1849              		.section	.text.SetControllerKiCommandHandler,"ax",%progbits
+ 1850              		.align	2
+ 1851              		.global	SetControllerKiCommandHandler
+ 1852              		.thumb
+ 1853              		.thumb_func
+ 1855              	SetControllerKiCommandHandler:
+ 1856              	.LFB22:
+ 377:../Sources/Communication.c **** 
+ 378:../Sources/Communication.c **** // Set Ki constant of controller
+ 379:../Sources/Communication.c **** void SetControllerKiCommandHandler(uint8_t* PacketPattern)
+ 380:../Sources/Communication.c **** {
+ 1857              		.loc 1 380 0
+ 1858              		.cfi_startproc
+ 1859              		@ args = 0, pretend = 0, frame = 8
+ 1860              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1861 0000 90B5     		push	{r4, r7, lr}
+ 1862              	.LCFI63:
+ 1863              		.cfi_def_cfa_offset 12
+ 1864              		.cfi_offset 14, -4
+ 1865              		.cfi_offset 7, -8
+ 1866              		.cfi_offset 4, -12
+ 1867 0002 83B0     		sub	sp, sp, #12
+ 1868              	.LCFI64:
+ 1869              		.cfi_def_cfa_offset 24
+ 1870 0004 00AF     		add	r7, sp, #0
+ 1871              	.LCFI65:
+ 1872              		.cfi_def_cfa_register 7
+ 1873 0006 7860     		str	r0, [r7, #4]
+ 381:../Sources/Communication.c ****   Controller.Ki = GetNumberFromCommandBuffer(&Communication, GetMatchCharNum(PacketPattern), GetPar
+ 1874              		.loc 1 381 0
+ 1875 0008 7868     		ldr	r0, [r7, #4]
+ 1876 000a FFF7FEFF 		bl	GetMatchCharNum
+ 1877 000e 0346     		mov	r3, r0
+ 1878 0010 1C46     		mov	r4, r3
+ 1879 0012 7868     		ldr	r0, [r7, #4]
+ 1880 0014 FFF7FEFF 		bl	GetParameterLength
+ 1881 0018 0346     		mov	r3, r0
+ 1882 001a 40F20000 		movw	r0, #:lower16:Communication
+ 1883 001e C0F20000 		movt	r0, #:upper16:Communication
+ 1884 0022 2146     		mov	r1, r4
+ 1885 0024 1A46     		mov	r2, r3
+ 1886 0026 FFF7FEFF 		bl	GetNumberFromCommandBuffer
+ 1887 002a 0346     		mov	r3, r0
+ 1888 002c 1A46     		mov	r2, r3
+ 1889 002e 40F20003 		movw	r3, #:lower16:Controller
+ 1890 0032 C0F20003 		movt	r3, #:upper16:Controller
+ 1891 0036 5A60     		str	r2, [r3, #4]
+ 382:../Sources/Communication.c **** }
+ 1892              		.loc 1 382 0
+ 1893 0038 07F10C07 		add	r7, r7, #12
+ 1894 003c BD46     		mov	sp, r7
+ 1895 003e 90BD     		pop	{r4, r7, pc}
+ 1896              		.cfi_endproc
+ 1897              	.LFE22:
+ 1899              		.section	.text.SetControllerKdCommandHandler,"ax",%progbits
+ 1900              		.align	2
+ 1901              		.global	SetControllerKdCommandHandler
+ 1902              		.thumb
+ 1903              		.thumb_func
+ 1905              	SetControllerKdCommandHandler:
+ 1906              	.LFB23:
+ 383:../Sources/Communication.c **** 
+ 384:../Sources/Communication.c **** // Set Kd constant of controller
+ 385:../Sources/Communication.c **** void SetControllerKdCommandHandler(uint8_t* PacketPattern)
+ 386:../Sources/Communication.c **** {
+ 1907              		.loc 1 386 0
+ 1908              		.cfi_startproc
+ 1909              		@ args = 0, pretend = 0, frame = 8
+ 1910              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1911 0000 90B5     		push	{r4, r7, lr}
+ 1912              	.LCFI66:
+ 1913              		.cfi_def_cfa_offset 12
+ 1914              		.cfi_offset 14, -4
+ 1915              		.cfi_offset 7, -8
+ 1916              		.cfi_offset 4, -12
+ 1917 0002 83B0     		sub	sp, sp, #12
+ 1918              	.LCFI67:
+ 1919              		.cfi_def_cfa_offset 24
+ 1920 0004 00AF     		add	r7, sp, #0
+ 1921              	.LCFI68:
+ 1922              		.cfi_def_cfa_register 7
+ 1923 0006 7860     		str	r0, [r7, #4]
+ 387:../Sources/Communication.c ****   Controller.Kd = GetNumberFromCommandBuffer(&Communication, GetMatchCharNum(PacketPattern), GetPar
+ 1924              		.loc 1 387 0
+ 1925 0008 7868     		ldr	r0, [r7, #4]
+ 1926 000a FFF7FEFF 		bl	GetMatchCharNum
+ 1927 000e 0346     		mov	r3, r0
+ 1928 0010 1C46     		mov	r4, r3
+ 1929 0012 7868     		ldr	r0, [r7, #4]
+ 1930 0014 FFF7FEFF 		bl	GetParameterLength
+ 1931 0018 0346     		mov	r3, r0
+ 1932 001a 40F20000 		movw	r0, #:lower16:Communication
+ 1933 001e C0F20000 		movt	r0, #:upper16:Communication
+ 1934 0022 2146     		mov	r1, r4
+ 1935 0024 1A46     		mov	r2, r3
+ 1936 0026 FFF7FEFF 		bl	GetNumberFromCommandBuffer
+ 1937 002a 0346     		mov	r3, r0
+ 1938 002c 1A46     		mov	r2, r3
+ 1939 002e 40F20003 		movw	r3, #:lower16:Controller
+ 1940 0032 C0F20003 		movt	r3, #:upper16:Controller
+ 1941 0036 9A60     		str	r2, [r3, #8]
+ 388:../Sources/Communication.c **** }
+ 1942              		.loc 1 388 0
+ 1943 0038 07F10C07 		add	r7, r7, #12
+ 1944 003c BD46     		mov	sp, r7
+ 1945 003e 90BD     		pop	{r4, r7, pc}
+ 1946              		.cfi_endproc
+ 1947              	.LFE23:
+ 1949              		.section	.text.SetControllerDesiredSpeedCommandHandler,"ax",%progbits
+ 1950              		.align	2
+ 1951              		.global	SetControllerDesiredSpeedCommandHandler
+ 1952              		.thumb
+ 1953              		.thumb_func
+ 1955              	SetControllerDesiredSpeedCommandHandler:
+ 1956              	.LFB24:
+ 389:../Sources/Communication.c **** 
+ 390:../Sources/Communication.c **** // Set desired value of speed controller
+ 391:../Sources/Communication.c **** void SetControllerDesiredSpeedCommandHandler(uint8_t* PacketPattern)
+ 392:../Sources/Communication.c **** {
+ 1957              		.loc 1 392 0
+ 1958              		.cfi_startproc
+ 1959              		@ args = 0, pretend = 0, frame = 8
+ 1960              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1961 0000 90B5     		push	{r4, r7, lr}
+ 1962              	.LCFI69:
+ 1963              		.cfi_def_cfa_offset 12
+ 1964              		.cfi_offset 14, -4
+ 1965              		.cfi_offset 7, -8
+ 1966              		.cfi_offset 4, -12
+ 1967 0002 83B0     		sub	sp, sp, #12
+ 1968              	.LCFI70:
+ 1969              		.cfi_def_cfa_offset 24
+ 1970 0004 00AF     		add	r7, sp, #0
+ 1971              	.LCFI71:
+ 1972              		.cfi_def_cfa_register 7
+ 1973 0006 7860     		str	r0, [r7, #4]
+ 393:../Sources/Communication.c ****   Controller.DesiredValue = GetNumberFromCommandBuffer(&Communication, GetMatchCharNum(PacketPatter
+ 1974              		.loc 1 393 0
+ 1975 0008 7868     		ldr	r0, [r7, #4]
+ 1976 000a FFF7FEFF 		bl	GetMatchCharNum
+ 1977 000e 0346     		mov	r3, r0
+ 1978 0010 1C46     		mov	r4, r3
+ 1979 0012 7868     		ldr	r0, [r7, #4]
+ 1980 0014 FFF7FEFF 		bl	GetParameterLength
+ 1981 0018 0346     		mov	r3, r0
+ 1982 001a 40F20000 		movw	r0, #:lower16:Communication
+ 1983 001e C0F20000 		movt	r0, #:upper16:Communication
+ 1984 0022 2146     		mov	r1, r4
+ 1985 0024 1A46     		mov	r2, r3
+ 1986 0026 FFF7FEFF 		bl	GetNumberFromCommandBuffer
+ 1987 002a 0346     		mov	r3, r0
+ 1988 002c 1A46     		mov	r2, r3
+ 1989 002e 40F20003 		movw	r3, #:lower16:Controller
+ 1990 0032 C0F20003 		movt	r3, #:upper16:Controller
+ 1991 0036 1A62     		str	r2, [r3, #32]
+ 394:../Sources/Communication.c **** }
+ 1992              		.loc 1 394 0
+ 1993 0038 07F10C07 		add	r7, r7, #12
+ 1994 003c BD46     		mov	sp, r7
+ 1995 003e 90BD     		pop	{r4, r7, pc}
+ 1996              		.cfi_endproc
+ 1997              	.LFE24:
+ 1999              		.section	.text.SetAntiWindupLevelCommandHandler,"ax",%progbits
+ 2000              		.align	2
+ 2001              		.global	SetAntiWindupLevelCommandHandler
+ 2002              		.thumb
+ 2003              		.thumb_func
+ 2005              	SetAntiWindupLevelCommandHandler:
+ 2006              	.LFB25:
+ 395:../Sources/Communication.c **** 
+ 396:../Sources/Communication.c **** // Set antiwindup level
+ 397:../Sources/Communication.c **** void SetAntiWindupLevelCommandHandler(uint8_t* PacketPattern)
+ 398:../Sources/Communication.c **** {
+ 2007              		.loc 1 398 0
+ 2008              		.cfi_startproc
+ 2009              		@ args = 0, pretend = 0, frame = 8
+ 2010              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2011 0000 90B5     		push	{r4, r7, lr}
+ 2012              	.LCFI72:
+ 2013              		.cfi_def_cfa_offset 12
+ 2014              		.cfi_offset 14, -4
+ 2015              		.cfi_offset 7, -8
+ 2016              		.cfi_offset 4, -12
+ 2017 0002 83B0     		sub	sp, sp, #12
+ 2018              	.LCFI73:
+ 2019              		.cfi_def_cfa_offset 24
+ 2020 0004 00AF     		add	r7, sp, #0
+ 2021              	.LCFI74:
+ 2022              		.cfi_def_cfa_register 7
+ 2023 0006 7860     		str	r0, [r7, #4]
+ 399:../Sources/Communication.c ****   Controller.AntiWindup = GetNumberFromCommandBuffer(&Communication, GetMatchCharNum(PacketPattern)
+ 2024              		.loc 1 399 0
+ 2025 0008 7868     		ldr	r0, [r7, #4]
+ 2026 000a FFF7FEFF 		bl	GetMatchCharNum
+ 2027 000e 0346     		mov	r3, r0
+ 2028 0010 1C46     		mov	r4, r3
+ 2029 0012 7868     		ldr	r0, [r7, #4]
+ 2030 0014 FFF7FEFF 		bl	GetParameterLength
+ 2031 0018 0346     		mov	r3, r0
+ 2032 001a 40F20000 		movw	r0, #:lower16:Communication
+ 2033 001e C0F20000 		movt	r0, #:upper16:Communication
+ 2034 0022 2146     		mov	r1, r4
+ 2035 0024 1A46     		mov	r2, r3
+ 2036 0026 FFF7FEFF 		bl	GetNumberFromCommandBuffer
+ 2037 002a 0346     		mov	r3, r0
+ 2038 002c 1A46     		mov	r2, r3
+ 2039 002e 40F20003 		movw	r3, #:lower16:Controller
+ 2040 0032 C0F20003 		movt	r3, #:upper16:Controller
+ 2041 0036 DA60     		str	r2, [r3, #12]
+ 400:../Sources/Communication.c **** }
+ 2042              		.loc 1 400 0
+ 2043 0038 07F10C07 		add	r7, r7, #12
+ 2044 003c BD46     		mov	sp, r7
+ 2045 003e 90BD     		pop	{r4, r7, pc}
+ 2046              		.cfi_endproc
+ 2047              	.LFE25:
+ 2049              		.text
+ 2050              	.Letext0:
+ 2051              		.file 2 "C:/Freescale/CW MCU v10.3_121211/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
+ 2052              		.file 3 "C:/temp2/Pex/Generated_Code/PE_Types.h"
+ 2053              		.file 4 "../Sources/Controller.h"
+ 2054              		.file 5 "../Sources/Communication.h"
+ 2055              		.file 6 "C:/temp2/Pex/Generated_Code/PE_LDD.h"
+ 2056              		.file 7 "../Sources/Accelerometer.h"
+ 2057              		.file 8 "../Sources/Camera.h"
+ 2058              		.file 9 "../Sources/Odometry.h"
+ 2059              		.file 10 "../Sources/Steering.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 Communication.c
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:23     .data.GetLinePositionPacket:00000000 GetLinePositionPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:20     .data.GetLinePositionPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:30     .data.GetCamera1ImagePacket:00000000 GetCamera1ImagePacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:27     .data.GetCamera1ImagePacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:37     .data.GetCamera2ImagePacket:00000000 GetCamera2ImagePacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:34     .data.GetCamera2ImagePacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:44     .data.GetCamerasImagePacket:00000000 GetCamerasImagePacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:41     .data.GetCamerasImagePacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:51     .data.GetServoPositionPacket:00000000 GetServoPositionPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:48     .data.GetServoPositionPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:58     .data.GetAllDataPacket:00000000 GetAllDataPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:55     .data.GetAllDataPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:65     .data.GetAccelerationPacket:00000000 GetAccelerationPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:62     .data.GetAccelerationPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:72     .data.SetRightMotorSpeedPacket:00000000 SetRightMotorSpeedPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:69     .data.SetRightMotorSpeedPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:79     .data.SetLeftMotorSpeedPacket:00000000 SetLeftMotorSpeedPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:76     .data.SetLeftMotorSpeedPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:86     .data.SetBothMotorSpeedPacket:00000000 SetBothMotorSpeedPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:83     .data.SetBothMotorSpeedPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:93     .data.SetDesiredSpeedPacket:00000000 SetDesiredSpeedPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:90     .data.SetDesiredSpeedPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:100    .data.SetRegulatorRecoverPacket:00000000 SetRegulatorRecoverPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:97     .data.SetRegulatorRecoverPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:107    .data.DecrementServoCenterPacket:00000000 DecrementServoCenterPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:104    .data.DecrementServoCenterPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:114    .data.IncrementServoCenterPacket:00000000 IncrementServoCenterPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:111    .data.IncrementServoCenterPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:121    .data.SetControllerKpPacket:00000000 SetControllerKpPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:118    .data.SetControllerKpPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:128    .data.SetControllerKiPacket:00000000 SetControllerKiPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:125    .data.SetControllerKiPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:135    .data.SetControllerKdPacket:00000000 SetControllerKdPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:132    .data.SetControllerKdPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:142    .data.SetControllerDesiredSpeedPacket:00000000 SetControllerDesiredSpeedPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:139    .data.SetControllerDesiredSpeedPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:149    .data.SetAntiWindupLevelPacket:00000000 SetAntiWindupLevelPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:146    .data.SetAntiWindupLevelPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:156    .data.GetSteeringControllerConstantsPacket:00000000 GetSteeringControllerConstantsPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:153    .data.GetSteeringControllerConstantsPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:163    .data.IncrementSteeringKpPacket:00000000 IncrementSteeringKpPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:160    .data.IncrementSteeringKpPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:170    .data.IncrementSteeringKiPacket:00000000 IncrementSteeringKiPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:167    .data.IncrementSteeringKiPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:177    .data.IncrementSteeringKdPacket:00000000 IncrementSteeringKdPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:174    .data.IncrementSteeringKdPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:184    .data.IncrementSteeringWindupPacket:00000000 IncrementSteeringWindupPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:181    .data.IncrementSteeringWindupPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:191    .data.DecrementSteeringKpPacket:00000000 DecrementSteeringKpPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:188    .data.DecrementSteeringKpPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:198    .data.DecrementSteeringKiPacket:00000000 DecrementSteeringKiPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:195    .data.DecrementSteeringKiPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:205    .data.DecrementSteeringKdPacket:00000000 DecrementSteeringKdPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:202    .data.DecrementSteeringKdPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:212    .data.DecrementSteeringWindupPacket:00000000 DecrementSteeringWindupPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:209    .data.DecrementSteeringWindupPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:219    .data.SetServoSensitivityPacket:00000000 SetServoSensitivityPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:216    .data.SetServoSensitivityPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:226    .data.SetServoPositionPacket:00000000 SetServoPositionPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:223    .data.SetServoPositionPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:233    .data.EnableRightDCMotorPacket:00000000 EnableRightDCMotorPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:230    .data.EnableRightDCMotorPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:240    .data.DisableRightDCMotorPacket:00000000 DisableRightDCMotorPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:237    .data.DisableRightDCMotorPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:247    .data.EnableLeftDCMotorPacket:00000000 EnableLeftDCMotorPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:244    .data.EnableLeftDCMotorPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:254    .data.DisableLeftDCMotorPacket:00000000 DisableLeftDCMotorPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:251    .data.DisableLeftDCMotorPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:261    .data.DisableBothDCMotorsPacket:00000000 DisableBothDCMotorsPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:258    .data.DisableBothDCMotorsPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:268    .data.ClearDistanceCounterPacket:00000000 ClearDistanceCounterPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:265    .data.ClearDistanceCounterPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:275    .data.SetServoCenterPacket:00000000 SetServoCenterPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:272    .data.SetServoCenterPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:282    .data.SetServoMaxLeftPacket:00000000 SetServoMaxLeftPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:279    .data.SetServoMaxLeftPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:289    .data.SetServoMaxRightPacket:00000000 SetServoMaxRightPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:286    .data.SetServoMaxRightPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:296    .data.GetMinMaxLine:00000000 GetMinMaxLine
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:293    .data.GetMinMaxLine:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:303    .data.GetCameraDataPacket:00000000 GetCameraDataPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:300    .data.GetCameraDataPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:310    .data.GetAccelerometerDataPacket:00000000 GetAccelerometerDataPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:307    .data.GetAccelerometerDataPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:317    .data.GetOdometryTotalDistancePacket:00000000 GetOdometryTotalDistancePacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:314    .data.GetOdometryTotalDistancePacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:324    .data.GetConvolutionResultPacket:00000000 GetConvolutionResultPacket
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:321    .data.GetConvolutionResultPacket:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:327    .text.GetNumberFromCommandBuffer:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:332    .text.GetNumberFromCommandBuffer:00000000 GetNumberFromCommandBuffer
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:402    .text.GetMatchCharNum:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:407    .text.GetMatchCharNum:00000000 GetMatchCharNum
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:463    .text.GetParameterLength:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:468    .text.GetParameterLength:00000000 GetParameterLength
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:527    .text.CommunicationHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:532    .text.CommunicationHandler:00000000 CommunicationHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1420   .text.GetCameraDataPacketHandler:00000000 GetCameraDataPacketHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1599   .text.GetConvolutionResultPacketHandler:00000000 GetConvolutionResultPacketHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1526   .text.GetAccelerometerDataPacketHandler:00000000 GetAccelerometerDataPacketHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1465   .text.GetOdometryTotalDistancePacketHandler:00000000 GetOdometryTotalDistancePacketHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1641   .text.SetBothMotorSpeedCommandHandler:00000000 SetBothMotorSpeedCommandHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1673   .text.SetServoCenterCommandHandler:00000000 SetServoCenterCommandHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1805   .text.SetControllerKpCommandHandler:00000000 SetControllerKpCommandHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1855   .text.SetControllerKiCommandHandler:00000000 SetControllerKiCommandHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1905   .text.SetControllerKdCommandHandler:00000000 SetControllerKdCommandHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1955   .text.SetControllerDesiredSpeedCommandHandler:00000000 SetControllerDesiredSpeedCommandHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:2005   .text.SetAntiWindupLevelCommandHandler:00000000 SetAntiWindupLevelCommandHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1024   .text.GetSteeringControllerConstantsCommandHandler:00000000 GetSteeringControllerConstantsCommandHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1100   .text.IncrementSteeringKpCommandHandler:00000000 IncrementSteeringKpCommandHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1140   .text.IncrementSteeringKiCommandHandler:00000000 IncrementSteeringKiCommandHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1180   .text.IncrementSteeringKdCommandHandler:00000000 IncrementSteeringKdCommandHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1220   .text.IncrementSteeringWindupCommandHandler:00000000 IncrementSteeringWindupCommandHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1260   .text.DecrementSteeringKpCommandHandler:00000000 DecrementSteeringKpCommandHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1300   .text.DecrementSteeringKiCommandHandler:00000000 DecrementSteeringKiCommandHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1340   .text.DecrementSteeringKdCommandHandler:00000000 DecrementSteeringKdCommandHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1380   .text.DecrementSteeringWindupCommandHandler:00000000 DecrementSteeringWindupCommandHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1015   .rodata:00000000 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1016   .rodata:00000000 .LC0
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1019   .text.GetSteeringControllerConstantsCommandHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1090   .text.GetSteeringControllerConstantsCommandHandler:0000007c $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1095   .text.IncrementSteeringKpCommandHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1135   .text.IncrementSteeringKiCommandHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1175   .text.IncrementSteeringKdCommandHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1215   .text.IncrementSteeringWindupCommandHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1255   .text.DecrementSteeringKpCommandHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1295   .text.DecrementSteeringKiCommandHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1335   .text.DecrementSteeringKdCommandHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1375   .text.DecrementSteeringWindupCommandHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1415   .text.GetCameraDataPacketHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1457   .rodata:00000024 .LC1
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1460   .text.GetOdometryTotalDistancePacketHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1512   .text.GetOdometryTotalDistancePacketHandler:0000004c $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1518   .rodata:0000002c .LC2
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1521   .text.GetAccelerometerDataPacketHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1589   .text.GetAccelerometerDataPacketHandler:00000070 $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1594   .text.GetConvolutionResultPacketHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1631   .text.GetConvolutionResultPacketHandler:0000002c $d
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1636   .text.SetBothMotorSpeedCommandHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1668   .text.SetServoCenterCommandHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1718   .text.IncrementServoCenterCommandHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1723   .text.IncrementServoCenterCommandHandler:00000000 IncrementServoCenterCommandHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1759   .text.DecrementServoCenterCommandHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1764   .text.DecrementServoCenterCommandHandler:00000000 DecrementServoCenterCommandHandler
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1800   .text.SetControllerKpCommandHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1850   .text.SetControllerKiCommandHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1900   .text.SetControllerKdCommandHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:1950   .text.SetControllerDesiredSpeedCommandHandler:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccpRNmN6.s:2000   .text.SetAntiWindupLevelCommandHandler:00000000 $t
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+atoi
+memcmp
+Steering
+sprintf
+PE_LDD_DeviceDataList
+strlen
+AS1_SendBlock
+Communication
+Camera
+Odometry
+Accelerometer
+Controller

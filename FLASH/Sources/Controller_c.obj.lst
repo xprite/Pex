@@ -1,0 +1,269 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"Controller.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.ControllerInit,"ax",%progbits
+  19              		.align	2
+  20              		.global	ControllerInit
+  21              		.thumb
+  22              		.thumb_func
+  24              	ControllerInit:
+  25              	.LFB0:
+  26              		.file 1 "../Sources/Controller.c"
+   1:../Sources/Controller.c **** /*
+   2:../Sources/Controller.c ****  * Controller.c
+   3:../Sources/Controller.c ****  *
+   4:../Sources/Controller.c ****  *  Created on: Apr 13, 2013
+   5:../Sources/Controller.c ****  *      Author: z
+   6:../Sources/Controller.c ****  */
+   7:../Sources/Controller.c **** 
+   8:../Sources/Controller.c **** #include "Controller.h"
+   9:../Sources/Controller.c **** #include "PWMMotor.h"
+  10:../Sources/Controller.c **** 
+  11:../Sources/Controller.c **** void ControllerInit(TController* aController)
+  12:../Sources/Controller.c **** {
+  27              		.loc 1 12 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 8
+  30              		@ frame_needed = 1, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32 0000 80B4     		push	{r7}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 4
+  35              		.cfi_offset 7, -4
+  36 0002 83B0     		sub	sp, sp, #12
+  37              	.LCFI1:
+  38              		.cfi_def_cfa_offset 16
+  39 0004 00AF     		add	r7, sp, #0
+  40              	.LCFI2:
+  41              		.cfi_def_cfa_register 7
+  42 0006 7860     		str	r0, [r7, #4]
+  13:../Sources/Controller.c ****   aController->DesiredValue = 0;
+  43              		.loc 1 13 0
+  44 0008 7B68     		ldr	r3, [r7, #4]
+  45 000a 4FF00002 		mov	r2, #0
+  46 000e 1A62     		str	r2, [r3, #32]
+  14:../Sources/Controller.c ****   aController->Integrator = 0;
+  47              		.loc 1 14 0
+  48 0010 7B68     		ldr	r3, [r7, #4]
+  49 0012 4FF00002 		mov	r2, #0
+  50 0016 5A61     		str	r2, [r3, #20]
+  15:../Sources/Controller.c ****   aController->Kp = 30;
+  51              		.loc 1 15 0
+  52 0018 7B68     		ldr	r3, [r7, #4]
+  53 001a 4FF01E02 		mov	r2, #30
+  54 001e 1A60     		str	r2, [r3, #0]
+  16:../Sources/Controller.c ****   aController->Ki = 20;
+  55              		.loc 1 16 0
+  56 0020 7B68     		ldr	r3, [r7, #4]
+  57 0022 4FF01402 		mov	r2, #20
+  58 0026 5A60     		str	r2, [r3, #4]
+  17:../Sources/Controller.c ****   aController->Kd = 20;
+  59              		.loc 1 17 0
+  60 0028 7B68     		ldr	r3, [r7, #4]
+  61 002a 4FF01402 		mov	r2, #20
+  62 002e 9A60     		str	r2, [r3, #8]
+  18:../Sources/Controller.c ****   aController->AntiWindup = ANTI_WINDUP;
+  63              		.loc 1 18 0
+  64 0030 7B68     		ldr	r3, [r7, #4]
+  65 0032 4FF4FA72 		mov	r2, #500
+  66 0036 DA60     		str	r2, [r3, #12]
+  19:../Sources/Controller.c **** }
+  67              		.loc 1 19 0
+  68 0038 07F10C07 		add	r7, r7, #12
+  69 003c BD46     		mov	sp, r7
+  70 003e 80BC     		pop	{r7}
+  71 0040 7047     		bx	lr
+  72              		.cfi_endproc
+  73              	.LFE0:
+  75 0042 00BF     		.section	.text.ControllerMain,"ax",%progbits
+  76              		.align	2
+  77              		.global	ControllerMain
+  78              		.thumb
+  79              		.thumb_func
+  81              	ControllerMain:
+  82              	.LFB1:
+  20:../Sources/Controller.c **** 
+  21:../Sources/Controller.c **** void ControllerMain(TController* aController)
+  22:../Sources/Controller.c **** {
+  83              		.loc 1 22 0
+  84              		.cfi_startproc
+  85              		@ args = 0, pretend = 0, frame = 16
+  86              		@ frame_needed = 1, uses_anonymous_args = 0
+  87 0000 80B5     		push	{r7, lr}
+  88              	.LCFI3:
+  89              		.cfi_def_cfa_offset 8
+  90              		.cfi_offset 14, -4
+  91              		.cfi_offset 7, -8
+  92 0002 84B0     		sub	sp, sp, #16
+  93              	.LCFI4:
+  94              		.cfi_def_cfa_offset 24
+  95 0004 00AF     		add	r7, sp, #0
+  96              	.LCFI5:
+  97              		.cfi_def_cfa_register 7
+  98 0006 7860     		str	r0, [r7, #4]
+  23:../Sources/Controller.c ****   int32_t temp;
+  24:../Sources/Controller.c ****   
+  25:../Sources/Controller.c ****   aController->Error = aController->DesiredValue - aController->RealValue;
+  99              		.loc 1 25 0
+ 100 0008 7B68     		ldr	r3, [r7, #4]
+ 101 000a 1A6A     		ldr	r2, [r3, #32]
+ 102 000c 7B68     		ldr	r3, [r7, #4]
+ 103 000e DB69     		ldr	r3, [r3, #28]
+ 104 0010 D21A     		subs	r2, r2, r3
+ 105 0012 7B68     		ldr	r3, [r7, #4]
+ 106 0014 9A61     		str	r2, [r3, #24]
+  26:../Sources/Controller.c ****   aController->Integrator += aController->Error;
+ 107              		.loc 1 26 0
+ 108 0016 7B68     		ldr	r3, [r7, #4]
+ 109 0018 5A69     		ldr	r2, [r3, #20]
+ 110 001a 7B68     		ldr	r3, [r7, #4]
+ 111 001c 9B69     		ldr	r3, [r3, #24]
+ 112 001e D218     		adds	r2, r2, r3
+ 113 0020 7B68     		ldr	r3, [r7, #4]
+ 114 0022 5A61     		str	r2, [r3, #20]
+  27:../Sources/Controller.c **** 
+  28:../Sources/Controller.c ****   /*Anti windup*/
+  29:../Sources/Controller.c ****   if(aController->Integrator > aController->AntiWindup) {
+ 115              		.loc 1 29 0
+ 116 0024 7B68     		ldr	r3, [r7, #4]
+ 117 0026 5A69     		ldr	r2, [r3, #20]
+ 118 0028 7B68     		ldr	r3, [r7, #4]
+ 119 002a DB68     		ldr	r3, [r3, #12]
+ 120 002c 9A42     		cmp	r2, r3
+ 121 002e 03DD     		ble	.L3
+  30:../Sources/Controller.c ****     aController->Integrator = aController->AntiWindup;
+ 122              		.loc 1 30 0
+ 123 0030 7B68     		ldr	r3, [r7, #4]
+ 124 0032 DA68     		ldr	r2, [r3, #12]
+ 125 0034 7B68     		ldr	r3, [r7, #4]
+ 126 0036 5A61     		str	r2, [r3, #20]
+ 127              	.L3:
+  31:../Sources/Controller.c ****   }
+  32:../Sources/Controller.c ****   
+  33:../Sources/Controller.c ****   if(aController->Integrator < - aController->AntiWindup) {
+ 128              		.loc 1 33 0
+ 129 0038 7B68     		ldr	r3, [r7, #4]
+ 130 003a 5A69     		ldr	r2, [r3, #20]
+ 131 003c 7B68     		ldr	r3, [r7, #4]
+ 132 003e DB68     		ldr	r3, [r3, #12]
+ 133 0040 C3F10003 		rsb	r3, r3, #0
+ 134 0044 9A42     		cmp	r2, r3
+ 135 0046 05DA     		bge	.L4
+  34:../Sources/Controller.c ****     aController->Integrator = - aController->AntiWindup;
+ 136              		.loc 1 34 0
+ 137 0048 7B68     		ldr	r3, [r7, #4]
+ 138 004a DB68     		ldr	r3, [r3, #12]
+ 139 004c C3F10002 		rsb	r2, r3, #0
+ 140 0050 7B68     		ldr	r3, [r7, #4]
+ 141 0052 5A61     		str	r2, [r3, #20]
+ 142              	.L4:
+  35:../Sources/Controller.c ****   }  
+  36:../Sources/Controller.c **** 
+  37:../Sources/Controller.c ****   
+  38:../Sources/Controller.c ****   aController->Output = (aController->Error * aController->Kp) + (aController->Integrator * aContro
+ 143              		.loc 1 38 0
+ 144 0054 7B68     		ldr	r3, [r7, #4]
+ 145 0056 9B69     		ldr	r3, [r3, #24]
+ 146 0058 7A68     		ldr	r2, [r7, #4]
+ 147 005a 1268     		ldr	r2, [r2, #0]
+ 148 005c 02FB03F2 		mul	r2, r2, r3
+ 149 0060 7B68     		ldr	r3, [r7, #4]
+ 150 0062 5B69     		ldr	r3, [r3, #20]
+ 151 0064 7968     		ldr	r1, [r7, #4]
+ 152 0066 4968     		ldr	r1, [r1, #4]
+ 153 0068 01FB03F3 		mul	r3, r1, r3
+ 154 006c D218     		adds	r2, r2, r3
+ 155 006e 7B68     		ldr	r3, [r7, #4]
+ 156 0070 9969     		ldr	r1, [r3, #24]
+ 157 0072 7B68     		ldr	r3, [r7, #4]
+ 158 0074 1B69     		ldr	r3, [r3, #16]
+ 159 0076 CB1A     		subs	r3, r1, r3
+ 160 0078 7968     		ldr	r1, [r7, #4]
+ 161 007a 8968     		ldr	r1, [r1, #8]
+ 162 007c 01FB03F3 		mul	r3, r1, r3
+ 163 0080 D218     		adds	r2, r2, r3
+ 164 0082 7B68     		ldr	r3, [r7, #4]
+ 165 0084 5A62     		str	r2, [r3, #36]
+  39:../Sources/Controller.c **** 
+  40:../Sources/Controller.c ****   
+  41:../Sources/Controller.c ****   temp = (int32_t) aController->Output;
+ 166              		.loc 1 41 0
+ 167 0086 7B68     		ldr	r3, [r7, #4]
+ 168 0088 5B6A     		ldr	r3, [r3, #36]
+ 169 008a FB60     		str	r3, [r7, #12]
+  42:../Sources/Controller.c ****   if(temp < 0) {
+ 170              		.loc 1 42 0
+ 171 008c FB68     		ldr	r3, [r7, #12]
+ 172 008e 002B     		cmp	r3, #0
+ 173 0090 02DA     		bge	.L5
+  43:../Sources/Controller.c ****     temp = 0;  
+ 174              		.loc 1 43 0
+ 175 0092 4FF00003 		mov	r3, #0
+ 176 0096 FB60     		str	r3, [r7, #12]
+ 177              	.L5:
+  44:../Sources/Controller.c ****   }
+  45:../Sources/Controller.c ****   
+  46:../Sources/Controller.c ****   aController->lastError = aController->Error;
+ 178              		.loc 1 46 0
+ 179 0098 7B68     		ldr	r3, [r7, #4]
+ 180 009a 9A69     		ldr	r2, [r3, #24]
+ 181 009c 7B68     		ldr	r3, [r7, #4]
+ 182 009e 1A61     		str	r2, [r3, #16]
+  47:../Sources/Controller.c ****   
+  48:../Sources/Controller.c ****   PWMMotor_SetOffsetTicks(PWMMotor_DeviceData, 0, temp);
+ 183              		.loc 1 48 0
+ 184 00a0 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 185 00a4 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 186 00a8 1A68     		ldr	r2, [r3, #0]
+ 187 00aa FB68     		ldr	r3, [r7, #12]
+ 188 00ac 1046     		mov	r0, r2
+ 189 00ae 4FF00001 		mov	r1, #0
+ 190 00b2 1A46     		mov	r2, r3
+ 191 00b4 FFF7FEFF 		bl	PWMMotor_SetOffsetTicks
+  49:../Sources/Controller.c ****   PWMMotor_SetOffsetTicks(PWMMotor_DeviceData, 1, temp);
+ 192              		.loc 1 49 0
+ 193 00b8 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 194 00bc C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 195 00c0 1A68     		ldr	r2, [r3, #0]
+ 196 00c2 FB68     		ldr	r3, [r7, #12]
+ 197 00c4 1046     		mov	r0, r2
+ 198 00c6 4FF00101 		mov	r1, #1
+ 199 00ca 1A46     		mov	r2, r3
+ 200 00cc FFF7FEFF 		bl	PWMMotor_SetOffsetTicks
+  50:../Sources/Controller.c **** }
+ 201              		.loc 1 50 0
+ 202 00d0 07F11007 		add	r7, r7, #16
+ 203 00d4 BD46     		mov	sp, r7
+ 204 00d6 80BD     		pop	{r7, pc}
+ 205              		.cfi_endproc
+ 206              	.LFE1:
+ 208              		.text
+ 209              	.Letext0:
+ 210              		.file 2 "../Sources/Controller.h"
+ 211              		.file 3 "C:/Freescale/CW MCU v10.3_121211/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
+ 212              		.file 4 "C:/temp2/Pex/Generated_Code/PE_LDD.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 Controller.c
+C:\Users\z\AppData\Local\Temp\ccP9KL6b.s:19     .text.ControllerInit:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccP9KL6b.s:24     .text.ControllerInit:00000000 ControllerInit
+C:\Users\z\AppData\Local\Temp\ccP9KL6b.s:76     .text.ControllerMain:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccP9KL6b.s:81     .text.ControllerMain:00000000 ControllerMain
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+PE_LDD_DeviceDataList
+PWMMotor_SetOffsetTicks

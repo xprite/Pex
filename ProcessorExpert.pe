@@ -3,8 +3,8 @@
   <Header>
     <Name>ProcessorExpert</Name>
     <SavedBy>z</SavedBy>
-    <ModificationStamp>103</ModificationStamp>
-    <Date>2013-04-13</Date>
+    <ModificationStamp>104</ModificationStamp>
+    <Date>2013-04-14</Date>
     <IDE>Eclipse IDE</IDE>
     <PEversion />
   </Header>
@@ -41,7 +41,7 @@
     <BeanType>MK40N512LQ100</BeanType>
     <Name>Cpu</Name>
     <CompNumb>2</CompNumb>
-    <CompEnabled>true</CompEnabled>
+    <CompEnabled>false</CompEnabled>
     <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
     <IconName>CPU_CHIP2</IconName>
     <Comment lines_count="0" />
@@ -10782,7 +10782,7 @@
     <BeanType>MK40N512LQ100</BeanType>
     <Name>Cpu</Name>
     <CompNumb>4</CompNumb>
-    <CompEnabled>false</CompEnabled>
+    <CompEnabled>true</CompEnabled>
     <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
     <IconName>CPU_CHIP2</IconName>
     <Comment lines_count="0" />
@@ -21614,7 +21614,7 @@
   <Configuration>
     <CompNumb>1</CompNumb>
     <NodeName>RAM</NodeName>
-    <CnfgEnabled>true</CnfgEnabled>
+    <CnfgEnabled>false</CnfgEnabled>
     <TargetCPU>2</TargetCPU>
     <ConfigurationComment lines_count="0" />
     <BoolList_FpgaConfig>
@@ -21710,7 +21710,7 @@
   <Configuration>
     <CompNumb>3</CompNumb>
     <NodeName>FLASH</NodeName>
-    <CnfgEnabled>false</CnfgEnabled>
+    <CnfgEnabled>true</CnfgEnabled>
     <TargetCPU>4</TargetCPU>
     <ConfigurationComment lines_count="0" />
     <BoolList_FpgaConfig>

@@ -10,10 +10,10 @@
 
 void ControllerInit(TController* aController)
 {
-  aController->DesiredValue = 20;
+  aController->DesiredValue = 0;
   aController->Integrator = 0;
   aController->Kp = 30;
-  aController->Ki = 10;
+  aController->Ki = 20;
   aController->Kd = 20;
   aController->AntiWindup = ANTI_WINDUP;
 }

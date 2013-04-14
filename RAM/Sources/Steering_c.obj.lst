@@ -133,30 +133,30 @@
  107 0010 7B68     		ldr	r3, [r7, #4]
  108 0012 4FF01402 		mov	r2, #20
  109 0016 5A60     		str	r2, [r3, #4]
-  30:../Sources/Steering.c ****   aSteering->Kp = 3;
+  30:../Sources/Steering.c ****   aSteering->Kp = 20;
  110              		.loc 1 30 0
  111 0018 7B68     		ldr	r3, [r7, #4]
- 112 001a 4FF00302 		mov	r2, #3
+ 112 001a 4FF01402 		mov	r2, #20
  113 001e 9A62     		str	r2, [r3, #40]
-  31:../Sources/Steering.c ****   aSteering->Ki = 5;
+  31:../Sources/Steering.c ****   aSteering->Ki = 1;
  114              		.loc 1 31 0
  115 0020 7B68     		ldr	r3, [r7, #4]
- 116 0022 4FF00502 		mov	r2, #5
+ 116 0022 4FF00102 		mov	r2, #1
  117 0026 DA62     		str	r2, [r3, #44]
-  32:../Sources/Steering.c ****   aSteering->Kd = 3;
+  32:../Sources/Steering.c ****   aSteering->Kd = 10;
  118              		.loc 1 32 0
  119 0028 7B68     		ldr	r3, [r7, #4]
- 120 002a 4FF00302 		mov	r2, #3
+ 120 002a 4FF00A02 		mov	r2, #10
  121 002e 1A63     		str	r2, [r3, #48]
   33:../Sources/Steering.c ****   aSteering->DesiredValue = 0;
  122              		.loc 1 33 0
  123 0030 7B68     		ldr	r3, [r7, #4]
  124 0032 4FF00002 		mov	r2, #0
  125 0036 5A61     		str	r2, [r3, #20]
-  34:../Sources/Steering.c ****   aSteering->AntiWindUp = 300;
+  34:../Sources/Steering.c ****   aSteering->AntiWindUp = 50;
  126              		.loc 1 34 0
  127 0038 7B68     		ldr	r3, [r7, #4]
- 128 003a 4FF49672 		mov	r2, #300
+ 128 003a 4FF03202 		mov	r2, #50
  129 003e 1A62     		str	r2, [r3, #32]
   35:../Sources/Steering.c **** }
  130              		.loc 1 35 0
@@ -298,12 +298,12 @@
  250              		.file 4 "C:/temp2/Pex/Generated_Code/PE_LDD.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 Steering.c
-C:\Users\z\AppData\Local\Temp\ccPUxSPG.s:19     .text.SetServoPosition:00000000 $t
-C:\Users\z\AppData\Local\Temp\ccPUxSPG.s:24     .text.SetServoPosition:00000000 SetServoPosition
-C:\Users\z\AppData\Local\Temp\ccPUxSPG.s:79     .text.SteeringInit:00000000 $t
-C:\Users\z\AppData\Local\Temp\ccPUxSPG.s:84     .text.SteeringInit:00000000 SteeringInit
-C:\Users\z\AppData\Local\Temp\ccPUxSPG.s:139    .text.SteeringControll:00000000 $t
-C:\Users\z\AppData\Local\Temp\ccPUxSPG.s:144    .text.SteeringControll:00000000 SteeringControll
+C:\Users\z\AppData\Local\Temp\ccRJda9n.s:19     .text.SetServoPosition:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccRJda9n.s:24     .text.SetServoPosition:00000000 SetServoPosition
+C:\Users\z\AppData\Local\Temp\ccRJda9n.s:79     .text.SteeringInit:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccRJda9n.s:84     .text.SteeringInit:00000000 SteeringInit
+C:\Users\z\AppData\Local\Temp\ccRJda9n.s:139    .text.SteeringControll:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccRJda9n.s:144    .text.SteeringControll:00000000 SteeringControll
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

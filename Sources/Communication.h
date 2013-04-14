@@ -42,6 +42,22 @@ void SetBothMotorSpeedCommandHandler(uint8_t* PacketPattern);
 
 //Steering
 void SetServoCenterCommandHandler(uint8_t* PacketPattern);
+void GetSteeringControllerConstantsCommandHandler(uint8_t* PacketPattern);
+void IncrementSteeringKpCommandHandler(uint8_t* PacketPattern);
+void IncrementSteeringKiCommandHandler(uint8_t* PacketPattern);
+void IncrementSteeringKdCommandHandler(uint8_t* PacketPattern);
+void IncrementSteeringWindupCommandHandler(uint8_t* PacketPattern);
+
+void DecrementSteeringKpCommandHandler(uint8_t* PacketPattern);
+void DecrementSteeringKiCommandHandler(uint8_t* PacketPattern);
+void DecrementSteeringKdCommandHandler(uint8_t* PacketPattern);
+void DecrementSteeringWindupCommandHandler(uint8_t* PacketPattern);
+
+
+
+
+
+
 
 //Controller
 void SetControllerKpCommandHandler(uint8_t* PacketPattern);

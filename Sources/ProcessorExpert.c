@@ -89,8 +89,8 @@ int main(void)
   /* Write your code here */
   /* For example: for(;;) { } */
 
-  //GPIO1_SetFieldBits(GPIO1_DeviceData, EnableLeftMotor, 0x01);
-  //GPIO1_SetFieldBits(GPIO1_DeviceData, EnableRightMotor, 0x01);
+  GPIO1_SetFieldBits(GPIO1_DeviceData, EnableLeftMotor, 0x01);
+  GPIO1_SetFieldBits(GPIO1_DeviceData, EnableRightMotor, 0x01);
   
   PWMMotor_SetOffsetTicks(PWMMotor_DeviceData, 0, 1000);
   PWMMotor_SetOffsetTicks(PWMMotor_DeviceData, 1, 1000);

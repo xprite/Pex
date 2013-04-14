@@ -1,0 +1,468 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"Accelerometer.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.AccelerometerInit,"ax",%progbits
+  19              		.align	2
+  20              		.global	AccelerometerInit
+  21              		.thumb
+  22              		.thumb_func
+  24              	AccelerometerInit:
+  25              	.LFB0:
+  26              		.file 1 "../Sources/Accelerometer.c"
+   1:../Sources/Accelerometer.c **** /*
+   2:../Sources/Accelerometer.c ****  * Accelerometer.c
+   3:../Sources/Accelerometer.c ****  *
+   4:../Sources/Accelerometer.c ****  *  Created on: Apr 9, 2013
+   5:../Sources/Accelerometer.c ****  *      Author: z
+   6:../Sources/Accelerometer.c ****  */
+   7:../Sources/Accelerometer.c **** 
+   8:../Sources/Accelerometer.c **** #include "Accelerometer.h"
+   9:../Sources/Accelerometer.c **** 
+  10:../Sources/Accelerometer.c **** void AccelerometerInit(TAccelerometer* aAccelerometer)
+  11:../Sources/Accelerometer.c **** {
+  27              		.loc 1 11 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 24
+  30              		@ frame_needed = 1, uses_anonymous_args = 0
+  31 0000 80B5     		push	{r7, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 14, -4
+  35              		.cfi_offset 7, -8
+  36 0002 86B0     		sub	sp, sp, #24
+  37              	.LCFI1:
+  38              		.cfi_def_cfa_offset 32
+  39 0004 00AF     		add	r7, sp, #0
+  40              	.LCFI2:
+  41              		.cfi_def_cfa_register 7
+  42 0006 7860     		str	r0, [r7, #4]
+  12:../Sources/Accelerometer.c ****   aAccelerometer->Received = FALSE;
+  43              		.loc 1 12 0
+  44 0008 7B68     		ldr	r3, [r7, #4]
+  45 000a 4FF00002 		mov	r2, #0
+  46 000e 5A76     		strb	r2, [r3, #25]
+  13:../Sources/Accelerometer.c ****   aAccelerometer->Sent = FALSE;
+  47              		.loc 1 13 0
+  48 0010 7B68     		ldr	r3, [r7, #4]
+  49 0012 4FF00002 		mov	r2, #0
+  50 0016 1A76     		strb	r2, [r3, #24]
+  14:../Sources/Accelerometer.c ****   
+  15:../Sources/Accelerometer.c ****   uint8_t temp[10];
+  16:../Sources/Accelerometer.c ****     temp[0] = CTRL_REG1;
+  51              		.loc 1 16 0
+  52 0018 4FF02A03 		mov	r3, #42
+  53 001c 3B73     		strb	r3, [r7, #12]
+  17:../Sources/Accelerometer.c ****     temp[1] = 0x00;
+  54              		.loc 1 17 0
+  55 001e 4FF00003 		mov	r3, #0
+  56 0022 7B73     		strb	r3, [r7, #13]
+  18:../Sources/Accelerometer.c ****     aAccelerometer->Sent = FALSE;
+  57              		.loc 1 18 0
+  58 0024 7B68     		ldr	r3, [r7, #4]
+  59 0026 4FF00002 		mov	r2, #0
+  60 002a 1A76     		strb	r2, [r3, #24]
+  19:../Sources/Accelerometer.c ****     aAccelerometer->Error = I2C2_MasterSendBlock(I2C2_DeviceData, &temp[0], 0x02U, LDD_I2C_SEND_STO
+  61              		.loc 1 19 0
+  62 002c 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+  63 0030 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+  64 0034 9A6A     		ldr	r2, [r3, #40]
+  65 0036 07F10C03 		add	r3, r7, #12
+  66 003a 1046     		mov	r0, r2
+  67 003c 1946     		mov	r1, r3
+  68 003e 4FF00202 		mov	r2, #2
+  69 0042 4FF00103 		mov	r3, #1
+  70 0046 FFF7FEFF 		bl	I2C2_MasterSendBlock
+  71 004a 0346     		mov	r3, r0
+  72 004c 1A46     		mov	r2, r3
+  73 004e 7B68     		ldr	r3, [r7, #4]
+  74 0050 5A83     		strh	r2, [r3, #26]	@ movhi
+  20:../Sources/Accelerometer.c ****     if(aAccelerometer->Error) PE_DEBUGHALT();
+  75              		.loc 1 20 0
+  76 0052 7B68     		ldr	r3, [r7, #4]
+  77 0054 5B8B     		ldrh	r3, [r3, #26]
+  78 0056 002B     		cmp	r3, #0
+  79 0058 00D0     		beq	.L17
+  80              		.loc 1 20 0 is_stmt 0 discriminator 1
+  81              	@ 20 "../Sources/Accelerometer.c" 1
+  82 005a FFBE     		BKPT 255
+  83              	@ 0 "" 2
+  84              		.thumb
+  85              	.L17:
+  21:../Sources/Accelerometer.c ****     while(!aAccelerometer->Sent);
+  86              		.loc 1 21 0 is_stmt 1
+  87 005c 00BF     		nop
+  88              	.L3:
+  89              		.loc 1 21 0 is_stmt 0 discriminator 1
+  90 005e 7B68     		ldr	r3, [r7, #4]
+  91 0060 1B7E     		ldrb	r3, [r3, #24]
+  92 0062 DBB2     		uxtb	r3, r3
+  93 0064 002B     		cmp	r3, #0
+  94 0066 FAD0     		beq	.L3
+  22:../Sources/Accelerometer.c ****     aAccelerometer->Sent = FALSE;
+  95              		.loc 1 22 0 is_stmt 1
+  96 0068 7B68     		ldr	r3, [r7, #4]
+  97 006a 4FF00002 		mov	r2, #0
+  98 006e 1A76     		strb	r2, [r3, #24]
+  99              	.L4:
+  23:../Sources/Accelerometer.c ****     
+  24:../Sources/Accelerometer.c ****     do{
+  25:../Sources/Accelerometer.c ****       I2C2_CheckBus(I2C2_DeviceData, &aAccelerometer->BusState);
+ 100              		.loc 1 25 0 discriminator 1
+ 101 0070 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 102 0074 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 103 0078 9A6A     		ldr	r2, [r3, #40]
+ 104 007a 7B68     		ldr	r3, [r7, #4]
+ 105 007c 03F11C03 		add	r3, r3, #28
+ 106 0080 1046     		mov	r0, r2
+ 107 0082 1946     		mov	r1, r3
+ 108 0084 FFF7FEFF 		bl	I2C2_CheckBus
+  26:../Sources/Accelerometer.c ****     }
+  27:../Sources/Accelerometer.c ****     while(aAccelerometer->BusState != LDD_I2C_IDLE);
+ 109              		.loc 1 27 0 discriminator 1
+ 110 0088 7B68     		ldr	r3, [r7, #4]
+ 111 008a 1B7F     		ldrb	r3, [r3, #28]	@ zero_extendqisi2
+ 112 008c 012B     		cmp	r3, #1
+ 113 008e EFD1     		bne	.L4
+  28:../Sources/Accelerometer.c ****       
+  29:../Sources/Accelerometer.c ****     temp[0] = CTRL_REG4;
+ 114              		.loc 1 29 0
+ 115 0090 4FF02D03 		mov	r3, #45
+ 116 0094 3B73     		strb	r3, [r7, #12]
+  30:../Sources/Accelerometer.c ****     temp[1] = INT_EN_DRDY;
+ 117              		.loc 1 30 0
+ 118 0096 4FF00103 		mov	r3, #1
+ 119 009a 7B73     		strb	r3, [r7, #13]
+  31:../Sources/Accelerometer.c ****     aAccelerometer->Sent = FALSE;
+ 120              		.loc 1 31 0
+ 121 009c 7B68     		ldr	r3, [r7, #4]
+ 122 009e 4FF00002 		mov	r2, #0
+ 123 00a2 1A76     		strb	r2, [r3, #24]
+  32:../Sources/Accelerometer.c ****     aAccelerometer->Error = I2C2_MasterSendBlock(I2C2_DeviceData, &temp[0], 0x02U, LDD_I2C_SEND_STO
+ 124              		.loc 1 32 0
+ 125 00a4 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 126 00a8 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 127 00ac 9A6A     		ldr	r2, [r3, #40]
+ 128 00ae 07F10C03 		add	r3, r7, #12
+ 129 00b2 1046     		mov	r0, r2
+ 130 00b4 1946     		mov	r1, r3
+ 131 00b6 4FF00202 		mov	r2, #2
+ 132 00ba 4FF00103 		mov	r3, #1
+ 133 00be FFF7FEFF 		bl	I2C2_MasterSendBlock
+ 134 00c2 0346     		mov	r3, r0
+ 135 00c4 1A46     		mov	r2, r3
+ 136 00c6 7B68     		ldr	r3, [r7, #4]
+ 137 00c8 5A83     		strh	r2, [r3, #26]	@ movhi
+  33:../Sources/Accelerometer.c ****     if(aAccelerometer->Error) PE_DEBUGHALT();
+ 138              		.loc 1 33 0
+ 139 00ca 7B68     		ldr	r3, [r7, #4]
+ 140 00cc 5B8B     		ldrh	r3, [r3, #26]
+ 141 00ce 002B     		cmp	r3, #0
+ 142 00d0 00D0     		beq	.L18
+ 143              		.loc 1 33 0 is_stmt 0 discriminator 1
+ 144              	@ 33 "../Sources/Accelerometer.c" 1
+ 145 00d2 FFBE     		BKPT 255
+ 146              	@ 0 "" 2
+ 147              		.thumb
+ 148              	.L18:
+  34:../Sources/Accelerometer.c ****     while(!aAccelerometer->Sent);
+ 149              		.loc 1 34 0 is_stmt 1
+ 150 00d4 00BF     		nop
+ 151              	.L6:
+ 152              		.loc 1 34 0 is_stmt 0 discriminator 1
+ 153 00d6 7B68     		ldr	r3, [r7, #4]
+ 154 00d8 1B7E     		ldrb	r3, [r3, #24]
+ 155 00da DBB2     		uxtb	r3, r3
+ 156 00dc 002B     		cmp	r3, #0
+ 157 00de FAD0     		beq	.L6
+  35:../Sources/Accelerometer.c ****     aAccelerometer->Sent = FALSE;
+ 158              		.loc 1 35 0 is_stmt 1
+ 159 00e0 7B68     		ldr	r3, [r7, #4]
+ 160 00e2 4FF00002 		mov	r2, #0
+ 161 00e6 1A76     		strb	r2, [r3, #24]
+ 162              	.L7:
+  36:../Sources/Accelerometer.c ****    
+  37:../Sources/Accelerometer.c ****     do{
+  38:../Sources/Accelerometer.c ****       I2C2_CheckBus(I2C2_DeviceData,  &aAccelerometer->BusState);
+ 163              		.loc 1 38 0 discriminator 1
+ 164 00e8 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 165 00ec C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 166 00f0 9A6A     		ldr	r2, [r3, #40]
+ 167 00f2 7B68     		ldr	r3, [r7, #4]
+ 168 00f4 03F11C03 		add	r3, r3, #28
+ 169 00f8 1046     		mov	r0, r2
+ 170 00fa 1946     		mov	r1, r3
+ 171 00fc FFF7FEFF 		bl	I2C2_CheckBus
+  39:../Sources/Accelerometer.c ****     }
+  40:../Sources/Accelerometer.c ****     while(aAccelerometer->BusState!= LDD_I2C_IDLE);
+ 172              		.loc 1 40 0 discriminator 1
+ 173 0100 7B68     		ldr	r3, [r7, #4]
+ 174 0102 1B7F     		ldrb	r3, [r3, #28]	@ zero_extendqisi2
+ 175 0104 012B     		cmp	r3, #1
+ 176 0106 EFD1     		bne	.L7
+  41:../Sources/Accelerometer.c ****     
+  42:../Sources/Accelerometer.c ****     temp[0] = CTRL_REG5;
+ 177              		.loc 1 42 0
+ 178 0108 4FF02E03 		mov	r3, #46
+ 179 010c 3B73     		strb	r3, [r7, #12]
+  43:../Sources/Accelerometer.c ****     temp[1] = INT_CFG_DRDY;
+ 180              		.loc 1 43 0
+ 181 010e 4FF00103 		mov	r3, #1
+ 182 0112 7B73     		strb	r3, [r7, #13]
+  44:../Sources/Accelerometer.c ****     aAccelerometer->Sent = FALSE;
+ 183              		.loc 1 44 0
+ 184 0114 7B68     		ldr	r3, [r7, #4]
+ 185 0116 4FF00002 		mov	r2, #0
+ 186 011a 1A76     		strb	r2, [r3, #24]
+  45:../Sources/Accelerometer.c ****     aAccelerometer->Error = I2C2_MasterSendBlock(I2C2_DeviceData, &temp[0], 0x02U, LDD_I2C_SEND_STO
+ 187              		.loc 1 45 0
+ 188 011c 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 189 0120 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 190 0124 9A6A     		ldr	r2, [r3, #40]
+ 191 0126 07F10C03 		add	r3, r7, #12
+ 192 012a 1046     		mov	r0, r2
+ 193 012c 1946     		mov	r1, r3
+ 194 012e 4FF00202 		mov	r2, #2
+ 195 0132 4FF00103 		mov	r3, #1
+ 196 0136 FFF7FEFF 		bl	I2C2_MasterSendBlock
+ 197 013a 0346     		mov	r3, r0
+ 198 013c 1A46     		mov	r2, r3
+ 199 013e 7B68     		ldr	r3, [r7, #4]
+ 200 0140 5A83     		strh	r2, [r3, #26]	@ movhi
+  46:../Sources/Accelerometer.c ****     if(aAccelerometer->Error) PE_DEBUGHALT();
+ 201              		.loc 1 46 0
+ 202 0142 7B68     		ldr	r3, [r7, #4]
+ 203 0144 5B8B     		ldrh	r3, [r3, #26]
+ 204 0146 002B     		cmp	r3, #0
+ 205 0148 00D0     		beq	.L19
+ 206              		.loc 1 46 0 is_stmt 0 discriminator 1
+ 207              	@ 46 "../Sources/Accelerometer.c" 1
+ 208 014a FFBE     		BKPT 255
+ 209              	@ 0 "" 2
+ 210              		.thumb
+ 211              	.L19:
+  47:../Sources/Accelerometer.c ****     while(!aAccelerometer->Sent);
+ 212              		.loc 1 47 0 is_stmt 1
+ 213 014c 00BF     		nop
+ 214              	.L9:
+ 215              		.loc 1 47 0 is_stmt 0 discriminator 1
+ 216 014e 7B68     		ldr	r3, [r7, #4]
+ 217 0150 1B7E     		ldrb	r3, [r3, #24]
+ 218 0152 DBB2     		uxtb	r3, r3
+ 219 0154 002B     		cmp	r3, #0
+ 220 0156 FAD0     		beq	.L9
+  48:../Sources/Accelerometer.c ****     aAccelerometer->Sent = FALSE;
+ 221              		.loc 1 48 0 is_stmt 1
+ 222 0158 7B68     		ldr	r3, [r7, #4]
+ 223 015a 4FF00002 		mov	r2, #0
+ 224 015e 1A76     		strb	r2, [r3, #24]
+ 225              	.L10:
+  49:../Sources/Accelerometer.c ****     
+  50:../Sources/Accelerometer.c ****     do{
+  51:../Sources/Accelerometer.c ****       I2C2_CheckBus(I2C2_DeviceData, &aAccelerometer->BusState);
+ 226              		.loc 1 51 0 discriminator 1
+ 227 0160 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 228 0164 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 229 0168 9A6A     		ldr	r2, [r3, #40]
+ 230 016a 7B68     		ldr	r3, [r7, #4]
+ 231 016c 03F11C03 		add	r3, r3, #28
+ 232 0170 1046     		mov	r0, r2
+ 233 0172 1946     		mov	r1, r3
+ 234 0174 FFF7FEFF 		bl	I2C2_CheckBus
+  52:../Sources/Accelerometer.c ****     }
+  53:../Sources/Accelerometer.c ****     while(aAccelerometer->BusState != LDD_I2C_IDLE);
+ 235              		.loc 1 53 0 discriminator 1
+ 236 0178 7B68     		ldr	r3, [r7, #4]
+ 237 017a 1B7F     		ldrb	r3, [r3, #28]	@ zero_extendqisi2
+ 238 017c 012B     		cmp	r3, #1
+ 239 017e EFD1     		bne	.L10
+  54:../Sources/Accelerometer.c ****     
+  55:../Sources/Accelerometer.c ****     
+  56:../Sources/Accelerometer.c ****     temp[0] = CTRL_REG3;
+ 240              		.loc 1 56 0
+ 241 0180 4FF02C03 		mov	r3, #44
+ 242 0184 3B73     		strb	r3, [r7, #12]
+  57:../Sources/Accelerometer.c ****     temp[1] = 0x01;
+ 243              		.loc 1 57 0
+ 244 0186 4FF00103 		mov	r3, #1
+ 245 018a 7B73     		strb	r3, [r7, #13]
+  58:../Sources/Accelerometer.c ****     aAccelerometer->Sent = FALSE;
+ 246              		.loc 1 58 0
+ 247 018c 7B68     		ldr	r3, [r7, #4]
+ 248 018e 4FF00002 		mov	r2, #0
+ 249 0192 1A76     		strb	r2, [r3, #24]
+  59:../Sources/Accelerometer.c ****     aAccelerometer->Error = I2C2_MasterSendBlock(I2C2_DeviceData, &temp[0], 0x02U, LDD_I2C_SEND_STO
+ 250              		.loc 1 59 0
+ 251 0194 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 252 0198 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 253 019c 9A6A     		ldr	r2, [r3, #40]
+ 254 019e 07F10C03 		add	r3, r7, #12
+ 255 01a2 1046     		mov	r0, r2
+ 256 01a4 1946     		mov	r1, r3
+ 257 01a6 4FF00202 		mov	r2, #2
+ 258 01aa 4FF00103 		mov	r3, #1
+ 259 01ae FFF7FEFF 		bl	I2C2_MasterSendBlock
+ 260 01b2 0346     		mov	r3, r0
+ 261 01b4 1A46     		mov	r2, r3
+ 262 01b6 7B68     		ldr	r3, [r7, #4]
+ 263 01b8 5A83     		strh	r2, [r3, #26]	@ movhi
+  60:../Sources/Accelerometer.c ****     if(aAccelerometer->Error) PE_DEBUGHALT();
+ 264              		.loc 1 60 0
+ 265 01ba 7B68     		ldr	r3, [r7, #4]
+ 266 01bc 5B8B     		ldrh	r3, [r3, #26]
+ 267 01be 002B     		cmp	r3, #0
+ 268 01c0 00D0     		beq	.L20
+ 269              		.loc 1 60 0 is_stmt 0 discriminator 1
+ 270              	@ 60 "../Sources/Accelerometer.c" 1
+ 271 01c2 FFBE     		BKPT 255
+ 272              	@ 0 "" 2
+ 273              		.thumb
+ 274              	.L20:
+  61:../Sources/Accelerometer.c ****     while(!aAccelerometer->Sent);
+ 275              		.loc 1 61 0 is_stmt 1
+ 276 01c4 00BF     		nop
+ 277              	.L12:
+ 278              		.loc 1 61 0 is_stmt 0 discriminator 1
+ 279 01c6 7B68     		ldr	r3, [r7, #4]
+ 280 01c8 1B7E     		ldrb	r3, [r3, #24]
+ 281 01ca DBB2     		uxtb	r3, r3
+ 282 01cc 002B     		cmp	r3, #0
+ 283 01ce FAD0     		beq	.L12
+  62:../Sources/Accelerometer.c ****     aAccelerometer->Sent = FALSE;
+ 284              		.loc 1 62 0 is_stmt 1
+ 285 01d0 7B68     		ldr	r3, [r7, #4]
+ 286 01d2 4FF00002 		mov	r2, #0
+ 287 01d6 1A76     		strb	r2, [r3, #24]
+ 288              	.L13:
+  63:../Sources/Accelerometer.c ****     
+  64:../Sources/Accelerometer.c ****     do{
+  65:../Sources/Accelerometer.c ****       I2C2_CheckBus(I2C2_DeviceData, &aAccelerometer->BusState);
+ 289              		.loc 1 65 0 discriminator 1
+ 290 01d8 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 291 01dc C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 292 01e0 9A6A     		ldr	r2, [r3, #40]
+ 293 01e2 7B68     		ldr	r3, [r7, #4]
+ 294 01e4 03F11C03 		add	r3, r3, #28
+ 295 01e8 1046     		mov	r0, r2
+ 296 01ea 1946     		mov	r1, r3
+ 297 01ec FFF7FEFF 		bl	I2C2_CheckBus
+  66:../Sources/Accelerometer.c ****     }
+  67:../Sources/Accelerometer.c ****     while(aAccelerometer->BusState != LDD_I2C_IDLE);
+ 298              		.loc 1 67 0 discriminator 1
+ 299 01f0 7B68     		ldr	r3, [r7, #4]
+ 300 01f2 1B7F     		ldrb	r3, [r3, #28]	@ zero_extendqisi2
+ 301 01f4 012B     		cmp	r3, #1
+ 302 01f6 EFD1     		bne	.L13
+  68:../Sources/Accelerometer.c ****     
+  69:../Sources/Accelerometer.c ****     
+  70:../Sources/Accelerometer.c ****     temp[0] = CTRL_REG1;
+ 303              		.loc 1 70 0
+ 304 01f8 4FF02A03 		mov	r3, #42
+ 305 01fc 3B73     		strb	r3, [r7, #12]
+  71:../Sources/Accelerometer.c ****     temp[1] = 0x31;
+ 306              		.loc 1 71 0
+ 307 01fe 4FF03103 		mov	r3, #49
+ 308 0202 7B73     		strb	r3, [r7, #13]
+  72:../Sources/Accelerometer.c ****     aAccelerometer->Sent = FALSE;
+ 309              		.loc 1 72 0
+ 310 0204 7B68     		ldr	r3, [r7, #4]
+ 311 0206 4FF00002 		mov	r2, #0
+ 312 020a 1A76     		strb	r2, [r3, #24]
+  73:../Sources/Accelerometer.c ****     aAccelerometer->Error = I2C2_MasterSendBlock(I2C2_DeviceData, &temp[0], 0x02U, LDD_I2C_SEND_STO
+ 313              		.loc 1 73 0
+ 314 020c 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 315 0210 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 316 0214 9A6A     		ldr	r2, [r3, #40]
+ 317 0216 07F10C03 		add	r3, r7, #12
+ 318 021a 1046     		mov	r0, r2
+ 319 021c 1946     		mov	r1, r3
+ 320 021e 4FF00202 		mov	r2, #2
+ 321 0222 4FF00103 		mov	r3, #1
+ 322 0226 FFF7FEFF 		bl	I2C2_MasterSendBlock
+ 323 022a 0346     		mov	r3, r0
+ 324 022c 1A46     		mov	r2, r3
+ 325 022e 7B68     		ldr	r3, [r7, #4]
+ 326 0230 5A83     		strh	r2, [r3, #26]	@ movhi
+  74:../Sources/Accelerometer.c ****     if(aAccelerometer->Error) PE_DEBUGHALT();
+ 327              		.loc 1 74 0
+ 328 0232 7B68     		ldr	r3, [r7, #4]
+ 329 0234 5B8B     		ldrh	r3, [r3, #26]
+ 330 0236 002B     		cmp	r3, #0
+ 331 0238 00D0     		beq	.L21
+ 332              		.loc 1 74 0 is_stmt 0 discriminator 1
+ 333              	@ 74 "../Sources/Accelerometer.c" 1
+ 334 023a FFBE     		BKPT 255
+ 335              	@ 0 "" 2
+ 336              		.thumb
+ 337              	.L21:
+  75:../Sources/Accelerometer.c ****     while(!aAccelerometer->Sent);
+ 338              		.loc 1 75 0 is_stmt 1
+ 339 023c 00BF     		nop
+ 340              	.L15:
+ 341              		.loc 1 75 0 is_stmt 0 discriminator 1
+ 342 023e 7B68     		ldr	r3, [r7, #4]
+ 343 0240 1B7E     		ldrb	r3, [r3, #24]
+ 344 0242 DBB2     		uxtb	r3, r3
+ 345 0244 002B     		cmp	r3, #0
+ 346 0246 FAD0     		beq	.L15
+  76:../Sources/Accelerometer.c ****     aAccelerometer->Sent = FALSE;
+ 347              		.loc 1 76 0 is_stmt 1
+ 348 0248 7B68     		ldr	r3, [r7, #4]
+ 349 024a 4FF00002 		mov	r2, #0
+ 350 024e 1A76     		strb	r2, [r3, #24]
+ 351              	.L16:
+  77:../Sources/Accelerometer.c ****     
+  78:../Sources/Accelerometer.c ****     do{
+  79:../Sources/Accelerometer.c ****       I2C2_CheckBus(I2C2_DeviceData, &aAccelerometer->BusState);
+ 352              		.loc 1 79 0 discriminator 1
+ 353 0250 40F20003 		movw	r3, #:lower16:PE_LDD_DeviceDataList
+ 354 0254 C0F20003 		movt	r3, #:upper16:PE_LDD_DeviceDataList
+ 355 0258 9A6A     		ldr	r2, [r3, #40]
+ 356 025a 7B68     		ldr	r3, [r7, #4]
+ 357 025c 03F11C03 		add	r3, r3, #28
+ 358 0260 1046     		mov	r0, r2
+ 359 0262 1946     		mov	r1, r3
+ 360 0264 FFF7FEFF 		bl	I2C2_CheckBus
+  80:../Sources/Accelerometer.c ****     }
+  81:../Sources/Accelerometer.c ****     while(aAccelerometer->BusState != LDD_I2C_IDLE);
+ 361              		.loc 1 81 0 discriminator 1
+ 362 0268 7B68     		ldr	r3, [r7, #4]
+ 363 026a 1B7F     		ldrb	r3, [r3, #28]	@ zero_extendqisi2
+ 364 026c 012B     		cmp	r3, #1
+ 365 026e EFD1     		bne	.L16
+  82:../Sources/Accelerometer.c **** }
+ 366              		.loc 1 82 0
+ 367 0270 07F11807 		add	r7, r7, #24
+ 368 0274 BD46     		mov	sp, r7
+ 369 0276 80BD     		pop	{r7, pc}
+ 370              		.cfi_endproc
+ 371              	.LFE0:
+ 373              		.text
+ 374              	.Letext0:
+ 375              		.file 2 "C:/Freescale/CW MCU v10.3_121211/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
+ 376              		.file 3 "C:/temp2/Pex/Generated_Code/PE_Types.h"
+ 377              		.file 4 "C:/temp2/Pex/Generated_Code/PE_LDD.h"
+ 378              		.file 5 "../Sources/Accelerometer.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 Accelerometer.c
+C:\Users\z\AppData\Local\Temp\ccnMtahi.s:19     .text.AccelerometerInit:00000000 $t
+C:\Users\z\AppData\Local\Temp\ccnMtahi.s:24     .text.AccelerometerInit:00000000 AccelerometerInit
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+PE_LDD_DeviceDataList
+I2C2_MasterSendBlock
+I2C2_CheckBus

@@ -959,7 +959,7 @@ PE_DEBUGHALT();
       </enumgroup>
       <enumgroup name="Counter restart" v="On-match">
         <Period_device v="PIT_LDVAL0" />
-        <Period v="100 ms" />
+        <Period v="30 ms" />
         <boolgroup name="Interrupt" v="Enabled">
           <Interrupt v="INT_PIT0" />
           <Interrupt_priority v="medium priority" />

@@ -16,7 +16,7 @@
 #define KI 0.12
 #define KD 0.0001
 
-#define ANTI_WINDUP 100
+#define ANTI_WINDUP 500
 
 typedef struct Controller{
 #if FLOAT_SUPPORT

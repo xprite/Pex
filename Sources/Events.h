@@ -323,10 +323,10 @@ void CameraTimer_OnChannel1(LDD_TUserData *UserDataPtr);
 ** ===================================================================
 */
 
-void Cpu_OnNMIINT(void);
+void Cpu_OnNMIINT0(void);
 /*
 ** ===================================================================
-**     Event       :  Cpu_OnNMIINT (module Events)
+**     Event       :  Cpu_OnNMIINT0 (module Events)
 **
 **     Component   :  Cpu [MK40N512LQ100]
 **     Description :
